@@ -44,8 +44,9 @@ CCOMMServer* CCOMMServer::getinstance( )
 	}
 	else
 	{
-	     instance = new CCOMMServer("192.168.0.115", 6000);
+	     //instance = new CCOMMServer("192.168.0.103", 6000);
 		 //instance->Start();
+		 instance = new CCOMMServer();
 		 return instance;
 	}
 }
@@ -62,7 +63,7 @@ CCOMMServer::CCOMMServer()
 {
 	memset(&serveraddr, 0, sizeof(SOCKADDR_IN)); 
 	serveraddr.sin_family = PF_INET; 
-	serveraddr.sin_addr.s_addr = inet_addr(INADDR_ANY);
+	serveraddr.sin_addr.s_addr = INADDR_ANY;
 	serveraddr.sin_port = htons(6000); 
 	commtype = 1;
 	clientnum = 0;
@@ -80,7 +81,9 @@ void CCOMMServer::Start( )
 
 	localsocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);//创建服务器监听套节字。TCP协议
 	bind(localsocket, (struct sockaddr *)&serveraddr, sizeof(SOCKADDR_IN));//地址绑定到套接字
-
+     //发送缓冲区
+     int nSendBuf=32*1024;//设置为32K
+     setsockopt(localsocket,SOL_SOCKET,SO_SNDBUF,(const char*)&nSendBuf,sizeof(int));
 	listen(localsocket, clientmaxnum);//开始监听
 	hThreadAccept =(HANDLE)_beginthread(AgentAccept, 0, (void *)this);
 	CloseHandle(hThreadAccept);
@@ -173,7 +176,8 @@ void CCOMMClient::Start( )
 	WSAStartup(0x0202, &wsaData); //Initialize Windows socket library
 
 	localsocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);//创建服务器监听套节字。TCP协议
-
+    int nRecvBuf=32*1024;//设置为32K
+    setsockopt(localsocket,SOL_SOCKET,SO_RCVBUF,(const char*)&nRecvBuf,sizeof(int));
 	//unsigned long ul = 0;
  //   ioctlsocket(localsocket, FIONBIO, (unsigned long*)&ul);
 
@@ -232,10 +236,20 @@ void CCOMMClient::RunReceive( )
 	   errornum=0;
 	   isnewsocket = false;
 	   CRTMarketData* pmarketdata=(CRTMarketData* )s_Message;
-		if( comm_prtmarketdatamap[ pmarketdata->constractname ] != NULL)
-		{
-			*comm_prtmarketdatamap[pmarketdata->constractname] = *pmarketdata;
+	   try 
+	   {
+			if((pmarketdata!=NULL)
+				&&((pmarketdata->constractname.capacity()!=NULL))
+				&&((pmarketdata->constractname.capacity()!=0))
+				&&( comm_prtmarketdatamap[ pmarketdata->constractname ] != NULL))
+			{
+				*comm_prtmarketdatamap[pmarketdata->constractname] = *pmarketdata;
 
-		}
+			}
+	   }
+	   catch(exception& e)
+	   {
+	       continue;
+	   }
 	}
 }

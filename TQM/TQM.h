@@ -17,7 +17,7 @@
 #include "TraderSpi.h"
 #include "CRTMarketData.h"
 
-#define USETESTDATA 0         //是否使用测试数据库，1:是/ 0:否
+#define USETESTDATA  0        //是否使用测试数据库，1:是/ 0:否
 /*internal*/
 extern char *pInstrumentID[1024];	 // 行情订阅列表	
 extern int iInstrumentID;	 // 行情订阅数量
@@ -38,7 +38,7 @@ extern TQM_API std::map<std::string, CRTMarketData*> tqm_prtmarketdatamap;
 extern TQM_API bool SetSubscribeMarketData(std::map<std::string, CRTMarketData*> marketdatamap);
 extern TQM_API char tqm_startdate[20]; 
 extern TQM_API char tqm_starttime[20]; 
-
+extern TQM_API bool tqm_issavetodb; 
 
 // This class is exported from the TQM.dll
 class TQM_API CTQM {

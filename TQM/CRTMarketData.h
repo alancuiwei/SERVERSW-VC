@@ -9,11 +9,6 @@
 #define __SSMClassDiagram_CRTMarketData_h
 //#include "stdafx.h"
 
-#ifdef FUTURESDATA_EXPORTS
-#define FUTURESDATA_API __declspec(dllexport)
-#else
-#define FUTURESDATA_API __declspec(dllimport)
-#endif
 
 
 class  CRTMarketData

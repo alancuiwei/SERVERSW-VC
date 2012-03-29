@@ -27,7 +27,7 @@ public:
 	~CCOMM(void);
 	CCOMM(char *pserveraddr, int serverportid);
 	int commtype; //连接的种类 1代表server，2代表client
-	static const int msgsize = 1024;
+	static const int msgsize = 32*1024;
 	char sMessage[msgsize];
 	SOCKADDR_IN serveraddr;
 	SOCKET   localsocket; //监听套接字

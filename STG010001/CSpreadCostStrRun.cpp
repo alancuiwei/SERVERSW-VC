@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 #include "CSpreadCostStrRun.h"
 #include <fstream>
+#include <sstream>
 HANDLE g_hEvent;
 
 
@@ -22,17 +23,44 @@ CSpreadCostStrRun::~CSpreadCostStrRun()
 void CSpreadCostStrRun::Run(void)
 {
   ofstream objectdata;
-  ofstream xmldata;
-  char xmlfilename[128] = ".//SpreadCost//CSpreadCostStrRunOnTime.xml";
-  xmldata.open(xmlfilename, ios::trunc);
-  xmldata<<"<pairstrade>"<< endl;
+  ofstream xmlfs;
+  ostringstream xmlss;
+  xmlss<<"<pairstrade>"<< endl;
+  //xmldata<<"<pairstrade>"<< endl;
   //objectdata.open("..//Debug//SpreadCost//CSpreadCostStrRun.txt", ios::trunc);
   for(unsigned i=0; i<runtradeparameters.size();i++)
   {
       runtradeparameters[i]->startprice = runpairs[i]->computeannualrateofreturn( );
 	  cout<<runtradeparameters[i]->startprice<<endl;
 	  // 保存到xml文件中
-	  xmldata<<"<pair>"<< endl;
+	  xmlss<<"<pair>"<< endl;
+	  xmlss<<"<name>"<<runpairs[i]->firstcontract->contractname <<"-"
+		  <<runpairs[i]->secondcontract->contractname<<"</name>" <<endl;
+	  xmlss<<"<time>"<<((runpairs[i]->firstcontract->marketdata->time>runpairs[i]->secondcontract->marketdata->time)?
+		  runpairs[i]->firstcontract->marketdata->time:runpairs[i]->secondcontract->marketdata->time)<<" "<<"</time>"<<endl;
+	  xmlss<<"<firstprice>"<<runpairs[i]->firstcontract->marketdata->rtprice<<"</firstprice>"<<endl;
+	  xmlss<<"<secondprice>"<<runpairs[i]->secondcontract->marketdata->rtprice<<"</secondprice>"<<endl;
+	  xmlss<<"<diffprice>"<<runpairs[i]->secondcontract->marketdata->rtprice-runpairs[i]->firstcontract->marketdata->rtprice<<"</diffprice>"<<endl;
+	  xmlss<<"<startprice>"<<runtradeparameters[i]->startprice<<"</startprice>"<<endl;
+	  xmlss<<"<computestoragefee>"<<runpairs[i]->computestoragefee()<<"</computestoragefee>"<<endl;
+	  xmlss<<"<computestoragedays>"<<runpairs[i]->computestoragedays()<<"</computestoragedays>"<<endl;
+	  xmlss<<"<computevatrate>"<<runpairs[i]->computevatrate()<<"</computevatrate>"<<endl;
+	  xmlss<<"<computefirstconstractmargin>"<<runpairs[i]->computefirstconstractmargin()<<"</computefirstconstractmargin>"<<endl;
+	  xmlss<<"<computesecondconstractmargin>"<<runpairs[i]->computesecondconstractmargin()<<"</computesecondconstractmargin>"<<endl;
+	  xmlss<<"<computetransfee>"<<runpairs[i]->computetransfee()<<"</computetransfee>"<<endl;
+	  xmlss<<"<computedeliverfee>"<<runpairs[i]->computedeliverfee()<<"</computedeliverfee>"<<endl;
+	  xmlss<<"<computedelivermarginfee>"<<runpairs[i]->computedelivermarginfee()<<"</computedelivermarginfee>"<<endl;
+	  xmlss<<"<computetrademarginfee>"<<runpairs[i]->computetrademarginfee()<<"</computetrademarginfee>"<<endl;
+	  xmlss<<"<computevatfee>"<<runpairs[i]->computevatfee()<<"</computevatfee>"<<endl;
+	  xmlss<<"<computearbfee>"<<runpairs[i]->computearbfee()<<"</computearbfee>"<<endl;
+	  xmlss<<"<D2>"<<runpairs[i]->secondcontract->daystolastdeliverdate<<"</D2>"<<endl;
+	  xmlss<<"<D1>"<<runpairs[i]->firstcontract->daystolastdeliverdate<<"</D1>"<<endl;
+	  xmlss<<"<computetotalincome>"<<runpairs[i]->computetotalincome()<<"</computetotalincome>"<<endl;
+	  xmlss<<"<computerateofreturn>"<<runpairs[i]->computerateofreturn()<<"</computerateofreturn>"<<endl;
+	  xmlss<<"<lendrate>"<<runpairs[i]->commodity->lendrate<<"</lendrate>"<<endl;
+	  xmlss<<"<computeinvestmoneyamount>"<<runpairs[i]->computeinvestmoneyamount()<<"</computeinvestmoneyamount>"<<endl;
+	  xmlss<<"</pair>"<<endl;
+	  /*xmldata<<"<pair>"<< endl;
 	  xmldata<<"<name>"<<runpairs[i]->firstcontract->contractname <<"-"
 		  <<runpairs[i]->secondcontract->contractname<<"</name>" <<endl;
 	  xmldata<<"<time>"<<runpairs[i]->firstcontract->marketdata->time<<"</time>"<<endl;
@@ -57,7 +85,8 @@ void CSpreadCostStrRun::Run(void)
 	  xmldata<<"<computerateofreturn>"<<runpairs[i]->computerateofreturn()<<"</computerateofreturn>"<<endl;
 	  xmldata<<"<lendrate>"<<runpairs[i]->commodity->lendrate<<"</lendrate>"<<endl;
 	  xmldata<<"<computeinvestmoneyamount>"<<runpairs[i]->computeinvestmoneyamount()<<"</computeinvestmoneyamount>"<<endl;
-	  xmldata<<"</pair>"<<endl;
+	  xmldata<<"</pair>"<<endl;*/
+
 	  // 保存到xml文件中
 	  runtradeparameters[i]->direction = 0;
 	  runtradeparameters[i]->tradesize = 0;
@@ -126,9 +155,11 @@ void CSpreadCostStrRun::Run(void)
 		objectdata.close();
       }
   }
-  xmldata<<"</pairstrade>"<< endl;
-  xmldata.close();
-  //objectdata.close();
+  xmlss<<"</pairstrade>"<< endl;
+  char xmlfilename[128] = "C:\\Sites\\tongtianshun\\app\\assets\\images\\CSpreadCostStrRunOnTime.xml";//".//SpreadCost//CSpreadCostStrRunOnTime.xml";
+  xmlfs.open(xmlfilename, ios::trunc);
+  xmlfs<<xmlss.str();
+  xmlfs.close();
 }
 
 void CSpreadCostStrRun::Start()

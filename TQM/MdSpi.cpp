@@ -7,38 +7,43 @@ using namespace std;
 extern int iRequestID;
 extern bool tqm_isloginok;
 CMySQLAPI MDDatabase;
+bool tqm_issavetodb;
 
 void CMdSpi::GetMarketData(CThostFtdcDepthMarketDataField *pDepthMarketData)
 {
-	char str[1024*4];
-	sprintf(str,"insert markettodaydata_t \
-			   values('%s','%s','%s',%10.2lf,%10.2lf,%10.2lf,%10.2lf,%10.2lf,%10ld,%10.2lf,%10.2lf,%10.2lf,%10.2lf)",
-		pDepthMarketData->InstrumentID,
-		// pDepthMarketData->TradingDay,
-		tqm_startdate,
-		pDepthMarketData->UpdateTime,
-		pDepthMarketData->LastPrice,
-		pDepthMarketData->OpenPrice,
-		pDepthMarketData->HighestPrice,
-		pDepthMarketData->LowestPrice,
-		pDepthMarketData->ClosePrice,
-		pDepthMarketData->Volume,
-		pDepthMarketData->OpenInterest,
-		pDepthMarketData->SettlementPrice,
-		pDepthMarketData->AskPrice1,
-		pDepthMarketData->BidPrice1
-		);
-	//MDDatabase.Open();
-	MDDatabase.ExecuteNonQuery(str);
+	if (tqm_issavetodb)
+	{
+		char str[1024*4];
+		sprintf(str,"insert markettodaydata_t \
+				   values('%s','%s','%s',%10.2lf,%10.2lf,%10.2lf,%10.2lf,%10.2lf,%10ld,%10.2lf,%10.2lf,%10.2lf,%10.2lf)",
+			pDepthMarketData->InstrumentID,
+			// pDepthMarketData->TradingDay,
+			tqm_startdate,
+			pDepthMarketData->UpdateTime,
+			pDepthMarketData->LastPrice,
+			pDepthMarketData->OpenPrice,
+			pDepthMarketData->HighestPrice,
+			pDepthMarketData->LowestPrice,
+			pDepthMarketData->ClosePrice,
+			pDepthMarketData->Volume,
+			pDepthMarketData->OpenInterest,
+			pDepthMarketData->SettlementPrice,
+			pDepthMarketData->AskPrice1,
+			pDepthMarketData->BidPrice1
+			);
+		//MDDatabase.Open();
+		MDDatabase.ExecuteNonQuery(str);
+	}
 	if(tqm_prtmarketdatamap[pDepthMarketData->InstrumentID] != NULL)
 	{
+		tqm_prtmarketdatamap[pDepthMarketData->InstrumentID]->constractname=(char *)pDepthMarketData->InstrumentID;
 		tqm_prtmarketdatamap[pDepthMarketData->InstrumentID]->bidprice1 = pDepthMarketData->BidPrice1;
 		tqm_prtmarketdatamap[pDepthMarketData->InstrumentID]->askprice1 = pDepthMarketData->AskPrice1;
 		tqm_prtmarketdatamap[pDepthMarketData->InstrumentID]->openprice = pDepthMarketData->OpenPrice;
 		tqm_prtmarketdatamap[pDepthMarketData->InstrumentID]->highestprice = pDepthMarketData->HighestPrice;
 		tqm_prtmarketdatamap[pDepthMarketData->InstrumentID]->lowestprice = pDepthMarketData->LowestPrice;
 		tqm_prtmarketdatamap[pDepthMarketData->InstrumentID]->volume = pDepthMarketData->Volume;	    
-		tqm_prtmarketdatamap[pDepthMarketData->InstrumentID]->time = pDepthMarketData->UpdateTime;
+		tqm_prtmarketdatamap[pDepthMarketData->InstrumentID]->time = (char *)pDepthMarketData->UpdateTime;
 		tqm_prtmarketdatamap[pDepthMarketData->InstrumentID]->rtprice = pDepthMarketData->LastPrice;
 		CCOMMServer::getinstance()->SendToAllClient((char *)tqm_prtmarketdatamap[pDepthMarketData->InstrumentID], 
 			sizeof(*tqm_prtmarketdatamap[pDepthMarketData->InstrumentID]));
@@ -114,32 +119,30 @@ void CMdSpi::SubscribeMarketData(char *pInstrumentID[], int nCount)
 
 	if(!tqm_isloginok)
 	{
-		string sqlstr="";
-		for(int k = 0; k < nCount; k++)
+		if(tqm_issavetodb)
 		{
-			sqlstr=sqlstr+"('";
-			sqlstr=sqlstr+pInstrumentID[k];
-			sqlstr=sqlstr+"'),";
+			MDDatabase.Init();
+			MDDatabase.Open();
+			std::string str(tqm_starttime);
+			if(str<"08:30:00")
+			{
+				string sqlstr="";
+				for(int k = 0; k < nCount; k++)
+				{
+					sqlstr=sqlstr+"('";
+					sqlstr=sqlstr+pInstrumentID[k];
+					sqlstr=sqlstr+"'),";
+				}
+				sqlstr=sqlstr.substr(0,sqlstr.length() - 1);
+				sqlstr="insert into validcontracts_t values"+sqlstr;
+				MDDatabase.ExecuteNonQuery("delete from validcontracts_t");
+				MDDatabase.ExecuteNonQuery("delete from arbitragecontractpairs_t");
+				MDDatabase.ExecuteNonQuery(sqlstr.c_str());
+				MDDatabase.ExecuteNonQuery("CALL updatepairs_p()");
+				MDDatabase.ExecuteNonQuery("CALL updatecontractbeforemarket_p()");	
+			}
 		}
-		sqlstr=sqlstr.substr(0,sqlstr.length() - 1);
-		sqlstr="insert into validcontracts_t values"+sqlstr;
 		tqm_isloginok = true;
-		MDDatabase.Init();
-		MDDatabase.Open();
-		MDDatabase.ExecuteNonQuery("delete from validcontracts_t");
-		MDDatabase.ExecuteNonQuery("delete from arbitragecontractpairs_t");
-		MDDatabase.ExecuteNonQuery(sqlstr.c_str());
-		MDDatabase.ExecuteNonQuery("CALL updatepairs_p()");
-		std::string str(tqm_starttime);
-		if(str>"15:30:00")
-		{
-			//MDDatabase.ExecuteNonQuery("CALL updatecontractaftermarket_p()");
-		}
-		else
-		{
-			MDDatabase.ExecuteNonQuery("CALL updatecontractbeforemarket_p()");		
-		}
-
 	}
 
 

@@ -20,25 +20,25 @@ void StartReceiveMD()
 	exittm=*nowtm;
 
 	// 只有在7点到17间才可以正常运行
-	if((exittm.tm_hour>=8)&&(exittm.tm_hour<=18))
+	if((exittm.tm_hour>=8)&&(exittm.tm_hour<=17))
 	{
-		if((exittm.tm_hour<15)||((exittm.tm_hour==15)&&(exittm.tm_min<30)))
+		if((exittm.tm_hour<15)||((exittm.tm_hour==15)&&(exittm.tm_min<1)))
 		{
 			exittm.tm_hour = 15;
-			exittm.tm_min = 30;
+			exittm.tm_min = 1;
 			exittm.tm_sec = 0;
 			// 得到结束时间
 			exittime = mktime(&exittm);
 			secnum = difftime( exittime, nowtime );
 			// 接受行情
-			CCOMMClient *pclientobj = new CCOMMClient("192.168.0.108",6000);
+			CCOMMClient *pclientobj = new CCOMMClient("127.0.0.1",6000);
 			pclientobj->Start();
 			Sleep(1000*secnum);
 		}
 		else
 		{
 			// 接受行情
-			CCOMMClient *pclientobj = new CCOMMClient("192.168.0.108",6000);
+			CCOMMClient *pclientobj = new CCOMMClient("127.0.0.1",6000);
 			pclientobj->Start();
 			// 延迟五分钟
 			Sleep(1000*300);
