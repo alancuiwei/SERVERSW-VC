@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "CStrategyRun.h"
 
 CStrategyRun::CStrategyRun(std::string strategyid)

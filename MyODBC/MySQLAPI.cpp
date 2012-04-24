@@ -1,16 +1,15 @@
-#include "StdAfx.h"
 #include "MySQLAPI.h"
-
+#include <string.h>
 
 
 CMySQLAPI::CMySQLAPI(void)
 {
 	pServer="localhost";  //服务器
-    pUName="root";       //用户名   
-    pUPassword="123456";  //密码   
-    pDSN="futuretest";         //数据源名 
+    pUName="root";       //用户名
+    pUPassword="123456";  //密码
+    pDSN="futuretest";         //数据源名
 	pPort=3306;
-    Init(); 
+    Init();
 }
 
 
@@ -63,9 +62,8 @@ void CMySQLAPI::CheckError()
 //执行查询语句
 void CMySQLAPI::ExecuteNonQuery(const char* pSql)
 {
-	if( NULL != mysql_query(&mydata,pSql) )
-	//	ReportResult(SQLQUERY_SUCCESS);
-	//else
+	if( 0 != mysql_query(&mydata,pSql) )
+	//if( 0 != mysql_real_query(&mydata,pSql,(unsigned long)strlen(pSql)) )
 		ReportResult(SQLQUERY_FAILURE);
 }
 
@@ -73,7 +71,7 @@ void CMySQLAPI::ExecuteNonQuery(const char* pSql)
 //连接数据库
 bool CMySQLAPI::Open()
 {
-	if( mysql_real_connect(&mydata,pServer,pUName,pUPassword,pDSN,pPort,0,0) != NULL)
+	if( mysql_real_connect(&mydata,pServer,pUName,pUPassword,pDSN,pPort, 0, CLIENT_ALL_FLAGS/*0,131072/*CLIENT_ALL_FLAGS*/) != NULL)
 		return true;
 	else
 		return false;
@@ -115,14 +113,14 @@ vector<string*> CMySQLAPI::ExecuteQueryVector(const char* pSql)
 
 	int j=0;
 	while( NULL!=line )//查看是否为空行，是则结束，否则将这一行的数据转存到data的一行中并取下一行
-	{	 
-		string* rowData=new string[colCount]; 
+	{
+		string* rowData=new string[colCount];
 		for(int i=0; i<colCount;i++)
 		{
 			rowData[i]=line[i];
 		}
 		j++;
-		v.push_back(rowData); 
+		v.push_back(rowData);
 		line=mysql_fetch_row(result);
 	}
 
@@ -160,7 +158,7 @@ string* CMySQLAPI::ExecuteSingleQuery(const char* pSql)
 		rowData[i]=line[i];
 	}
 
-	return rowData;  
+	return rowData;
 }
 
 int CMySQLAPI::ExecuteQueryNum(const char* pSql)  //执行查询数目

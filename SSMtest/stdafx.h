@@ -8,19 +8,19 @@
 #include "targetver.h"
 
 #include <stdio.h>
-#include <tchar.h>
+//#include <tchar.h>
 #include <stdlib.h>
 #include <iostream>
 #include <string>
 #include <vector>
 #include <map>
-#include <windows.h>
+//#include <windows.h>
 // TODO: reference additional headers your program requires here
 //#include "..\\futuresdata\\futuresdata.h"
 //#pragma comment(lib,"..\\Debug\\futuresdata.lib")
 //#include "..\\MyODBC\\MyODBC.h"
 //#pragma comment(lib,"..\\Debug\\MyODBC.lib")
-#include "..\\SSM\\SSM.h"
+#include "../SSM/SSM.h"
 //#pragma comment(lib,"..\\Debug\\SSM.lib")
 //#include "..\\MyMD5\\MyMD5.h"
 //#pragma comment(lib,"..\\Debug\\MyMD5.lib")

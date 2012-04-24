@@ -83,14 +83,16 @@ CPair::CPair(std::string firstcontractname, std::string secondcontractname, std:
 void CPair::initialization(void)
 {
     cout<<"CPair:"<<pairid<<"套利对初始化"<<endl;
-	CMyODBC* pmyodbc = new CMyODBC();
-	pmyodbc->Connect();
+	//CMySQLAPI* pmyodbc = new CMySQLAPI();
+    //pmyodbc->Init();
+    //pmyodbc->Open();
 	std::string sqlstr = "select isinstrumentsupport from commodityright_t where rightid='" + productid + "'";
-	std::string* pairinfo = pmyodbc->ExecuteSingleQuery(sqlstr.c_str()); 
+	//std::string* pairinfo = pmyodbc->ExecuteSingleQuery(sqlstr.c_str());
+	std::string* pairinfo = SSMDatabase.ExecuteSingleQuery(sqlstr.c_str());
 	if(pairinfo!=NULL)
 	{
 		isinstrumentsupport = atoi(pairinfo[0].c_str())>0 ? true:false;
 		delete [] pairinfo;
 	}
-	delete pmyodbc;
+	//delete pmyodbc;
 }

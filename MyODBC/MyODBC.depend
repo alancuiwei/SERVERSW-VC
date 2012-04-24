@@ -1,0 +1,124 @@
+# depslib dependency file v1.0
+1333264675 source:d:\users\administrator\documents\codeblocks\zr-cross\myodbc\mysqlapi.cpp
+	"StdAfx.h"
+	"MySQLAPI.h"
+
+1310562542 h"
+
+1319591766 d:\users\administrator\documents\codeblocks\zr-cross\myodbc\stdafx.h
+	"targetver.h"
+	<windows.h>
+
+1198433342 >
+
+1333176140 d:\users\administrator\documents\codeblocks\zr-cross\myodbc\targetver.h
+
+1333184699 d:\users\administrator\documents\codeblocks\zr-cross\myodbc\mysqlapi.h
+	"winsock.h"
+	<string>
+	"include/mysql.h"
+	<string>
+	<iostream>
+	<vector>
+
+1320331036 
+
+1310562542 d:\users\administrator\documents\codeblocks\zr-cross\myodbc\include\mysql.h
+	<standards.h>
+	<sys/types.h>
+	<winsock2.h>
+	"mysql_version.h"
+	"mysql_com.h"
+	"mysql_time.h"
+	"my_list.h"
+	"typelib.h"
+	"my_alloc.h"
+
+1310565002 d:\users\administrator\documents\codeblocks\zr-cross\myodbc\include\mysql_version.h
+	<custom_conf.h>
+
+1310565002 nf.h>
+
+1310562542 d:\users\administrator\documents\codeblocks\zr-cross\myodbc\include\mysql_com.h
+
+1310562542 d:\users\administrator\documents\codeblocks\zr-cross\myodbc\include\mysql_time.h
+
+1310562542 d:\users\administrator\documents\codeblocks\zr-cross\myodbc\include\my_list.h
+
+1310562542 d:\users\administrator\documents\codeblocks\zr-cross\myodbc\include\typelib.h
+	"my_alloc.h"
+
+1310562542 d:\users\administrator\documents\codeblocks\zr-cross\myodbc\include\my_alloc.h
+
+1333183200 source:d:\users\administrator\documents\codeblocks\zr-cross\myodbc\dllmain.cpp
+	"stdafx.h"
+
+1198433342 source:d:\users\administrator\documents\codeblocks\zr-cross\myodbc\main.cpp
+	"main.h"
+
+1198433342 d:\users\administrator\documents\codeblocks\zr-cross\myodbc\main.h
+	<windows.h>
+
+1319591766 source:d:\users\administrator\documents\codeblocks\zr-cross\myodbc\stdafx.cpp
+	"stdafx.h"
+
+1320331036 source:d:\users\administrator\documents\codeblocks\zr-cross\myodbc\myodbc.cpp
+	"stdafx.h"
+	"MyODBC.h"
+
+1331830691 d:\users\administrator\documents\codeblocks\zr-cross\myodbc\myodbc.h
+	"MySQLAPI.h"
+	<iostream>
+	<sql.h>
+	<sqlext.h>
+	<vector>
+	<string>
+
+1334282818 source:/home/wukang/Documents/zr-cross/MyODBC/MySQLAPI.cpp
+	"MySQLAPI.h"
+	<string.h>
+
+1333637755 /home/wukang/Documents/zr-cross/MyODBC/MySQLAPI.h
+	<sys/socket.h>
+	<string>
+	"mysql/mysql.h"
+	<string>
+	<iostream>
+	<vector>
+
+1310562542 /home/wukang/Documents/zr-cross/MyODBC/mysql.h
+	<standards.h>
+	<sys/types.h>
+	<winsock2.h>
+	"mysql_version.h"
+	"mysql_com.h"
+	"mysql_time.h"
+	"my_list.h"
+	"typelib.h"
+	"my_alloc.h"
+
+1330374332 /usr/include/mysql/mysql_version.h
+	<custom_conf.h>
+
+1330374332 /usr/include/mysql/mysql_com.h
+
+1330374332 /usr/include/mysql/mysql_time.h
+
+1330374332 /usr/include/mysql/my_list.h
+
+1330374332 /usr/include/mysql/typelib.h
+	"my_alloc.h"
+
+1330374332 /usr/include/mysql/my_alloc.h
+
+1330374332 /usr/include/mysql/mysql.h
+	<standards.h>
+	<sys/types.h>
+	<winsock2.h>
+	"mysql_version.h"
+	"mysql_com.h"
+	"mysql_time.h"
+	"my_list.h"
+	"typelib.h"
+	"my_alloc.h"
+

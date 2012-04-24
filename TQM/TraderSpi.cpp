@@ -1,13 +1,11 @@
-//#include <windows.h>
-
-#include "stdafx.h"
 #include "TQM.h"
 #include "TraderSpi.h"
+#include "../COMM/COMM.h"
 using namespace std;
-
+extern CLightThreadMutex g_ThreadMutex;
 //全局文件流
 ofstream TdDebugLog;
-//temp 
+//temp
 char *strtemp[600];
 int numofstr=0;
 /*
@@ -29,7 +27,7 @@ extern int iRequestID;
 
 bool isTdOnRspOrderInsert;
 
-//tydef strct 
+//tydef strct
 //{
 //DCE 大连商品交易所
 std::vector<std::string>  DCE_A; ///黄大豆1号
@@ -277,7 +275,7 @@ void CTraderSpi::ReqOrderInsert(char *param)
 		<<','<<tmp->VolumeTotalOriginal
 		<<','<<tmp->LimitPrice<<endl;
 	TdDebugLog.close();
-	
+
 	CThostFtdcInputOrderField req;
 	memset(&req, 0, sizeof(req));
 	///经纪公司代码
@@ -291,7 +289,7 @@ void CTraderSpi::ReqOrderInsert(char *param)
 	//TThostFtdcUserIDType	UserID;
 	///报单价格条件: 限价
 	req.OrderPriceType = THOST_FTDC_OPT_LimitPrice;
-	///买卖方向: 
+	///买卖方向:
 	req.Direction = tmp->Direction;
 	///组合开平标志: 开仓
 	req.CombOffsetFlag[0] = tmp->CombOffsetFlag[0];
@@ -467,8 +465,8 @@ int CTraderSpi::ReqQryOrder(char *param)
 	strcpy(req.InstrumentID, tmp->InstrumentID);
 	strcpy(req.ExchangeID, tmp->ExchangeID);
 	strcpy(req.OrderSysID, tmp->OrderSysID);
-	strcpy(req.InsertTimeStart, tmp->InsertTimeStart);	
-	strcpy(req.InsertTimeEnd, tmp->InsertTimeEnd);	
+	strcpy(req.InsertTimeStart, tmp->InsertTimeStart);
+	strcpy(req.InsertTimeEnd, tmp->InsertTimeEnd);
 
 	int iResult = pTraderUserApi->ReqQryOrder(&req, ++iRequestID);
 	printf("ReqQryOrder %s",((iResult == 0) ? "Successful" : "failed"));
@@ -506,8 +504,8 @@ int CTraderSpi::ReqQryTrade(char *param)
 	strcpy(req.InvestorID, INVESTOR_ID);
 	strcpy(req.ExchangeID, tmp->ExchangeID);
 	strcpy(req.OrderSysID, tmp->OrderSysID);
-	strcpy(req.InsertTimeStart, tmp->InsertTimeStart);	
-	strcpy(req.InsertTimeEnd, tmp->InsertTimeEnd);	
+	strcpy(req.InsertTimeStart, tmp->InsertTimeStart);
+	strcpy(req.InsertTimeEnd, tmp->InsertTimeEnd);
 
 	int iResult = pTraderUserApi->ReqQryOrder(&req, ++iRequestID);
 	printf("ReqQryTrade %s",((iResult == 0) ? "Successful" : "failed"));
@@ -554,7 +552,7 @@ int CTraderSpi::ReqQryInvestorPosition(char *param)
 			printf("ReqQryInvestorPosition %d, FlowControl",iResult);
 			Sleep(1000);
 		}
-	} 
+	}
 	if(iResult == 0)
 	{
 		TdDebugLog<<"Send ReqQryInvestorPosition Successful"<<endl;
@@ -599,7 +597,7 @@ int CTraderSpi::ReqQryInvestorPositionDetail(char *param)
 			printf("ReqQryInvestorPositionDetail %d, FlowControl",iResult);
 			Sleep(1000);
 		}
-	} 
+	}
 	if(iResult == 0)
 	{
 		TdDebugLog<<"Send ReqQryInvestorPositionDetail Successful"<<endl;
@@ -651,7 +649,7 @@ int CTraderSpi::ReqQryTradingAccount(char *param)
 }
 
 ///请求查询报单响应
-void CTraderSpi::OnRspQryOrder(CThostFtdcOrderField *pOrder, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast) 
+void CTraderSpi::OnRspQryOrder(CThostFtdcOrderField *pOrder, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast)
 {
 	printf("%s",__FUNCTION__);
 	if (bIsLast && !IsErrorRspInfo(pRspInfo))
@@ -662,13 +660,13 @@ void CTraderSpi::OnRspQryOrder(CThostFtdcOrderField *pOrder, CThostFtdcRspInfoFi
 		TdDebugLog<<pOrder->InstrumentID
 			<<','<<pOrder->LimitPrice
 			<<','<<pOrder->VolumeTotalOriginal
-			<<endl;		
+			<<endl;
 		TdDebugLog.close();
 	}
 }
 
 ///请求查询成交响应
-void CTraderSpi::OnRspQryTrade(CThostFtdcTradeField *pTrade, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast) 
+void CTraderSpi::OnRspQryTrade(CThostFtdcTradeField *pTrade, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast)
 {
 	printf("%s",__FUNCTION__);
 	if (bIsLast && !IsErrorRspInfo(pRspInfo))
@@ -680,14 +678,14 @@ void CTraderSpi::OnRspQryTrade(CThostFtdcTradeField *pTrade, CThostFtdcRspInfoFi
 			<<','<<pTrade->TradeID
 			<<','<<pTrade->OrderSysID
 			<<','<<pTrade->Volume
-			<<endl;		
+			<<endl;
 		TdDebugLog.close();
 	}
 
 }
 
 ///请求查询投资者持仓响应
-void CTraderSpi::OnRspQryInvestorPosition(CThostFtdcInvestorPositionField *pInvestorPosition, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast) 
+void CTraderSpi::OnRspQryInvestorPosition(CThostFtdcInvestorPositionField *pInvestorPosition, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast)
 {
 	printf("%s",__FUNCTION__);
 	if (bIsLast && !IsErrorRspInfo(pRspInfo))
@@ -700,14 +698,14 @@ void CTraderSpi::OnRspQryInvestorPosition(CThostFtdcInvestorPositionField *pInve
 			<<','<<pInvestorPosition->CloseVolume
 			<<','<<pInvestorPosition->OpenAmount
 			<<','<<pInvestorPosition->CloseAmount
-			<<endl;		
+			<<endl;
 		TdDebugLog.close();
 	}
 
 }
 
 ///请求查询投资者持仓明细响应
-void CTraderSpi::OnRspQryInvestorPositionDetail(CThostFtdcInvestorPositionDetailField *pInvestorPositionDetail, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast) 
+void CTraderSpi::OnRspQryInvestorPositionDetail(CThostFtdcInvestorPositionDetailField *pInvestorPositionDetail, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast)
 {
 	printf("%s",__FUNCTION__);
 	if (bIsLast && !IsErrorRspInfo(pRspInfo))
@@ -718,7 +716,7 @@ void CTraderSpi::OnRspQryInvestorPositionDetail(CThostFtdcInvestorPositionDetail
 		TdDebugLog<<pInvestorPositionDetail->InstrumentID
 			<<','<<pInvestorPositionDetail->OpenPrice
 			<<','<<pInvestorPositionDetail->CombInstrumentID
-			<<endl;		
+			<<endl;
 		TdDebugLog.close();
 	}
 
@@ -742,7 +740,7 @@ int CTraderSpi::ReqQryInstrument(char *param)
 		else
 		{
 			printf("ReqQryInstrument %d, FlowControl",iResult);
-			Sleep(1000);
+			usleep(1000000);
 		}
 	} // while
 	return iResult;
@@ -753,7 +751,8 @@ void CTraderSpi::OnRspQryInstrument(CThostFtdcInstrumentField *pInstrument, CTho
 	//if last Rsp, Sort and save
 	if (bIsLast && !IsErrorRspInfo(pRspInfo))
 	{
-		SetEvent(g_hMdReadyEvent);
+		//SetEvent(g_hMdReadyEvent);
+		g_ThreadMutex.Unlock();
 	}
 	else
 	{

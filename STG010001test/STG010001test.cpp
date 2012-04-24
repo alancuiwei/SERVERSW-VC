@@ -1,11 +1,16 @@
 // STG010001test.cpp : Defines the entry point for the console application.
 //
-
-
-#include "stdafx.h"
 #include <fstream>
 #include <time.h>
-
+#include <stdio.h>
+#include <stdlib.h>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <map>
+#include "../COMM/COMM.h"
+#include "../SSM/SSM.h"
+#include "../STG010001/STG010001.h"
 
 void StartReceiveMD()
 {
@@ -20,7 +25,7 @@ void StartReceiveMD()
 	exittm=*nowtm;
 
 	// 只有在7点到17间才可以正常运行
-	if((exittm.tm_hour>=8)&&(exittm.tm_hour<=17))
+	if((exittm.tm_hour>=8)&&(exittm.tm_hour<=25))
 	{
 		if((exittm.tm_hour<15)||((exittm.tm_hour==15)&&(exittm.tm_min<1)))
 		{
@@ -33,7 +38,7 @@ void StartReceiveMD()
 			// 接受行情
 			CCOMMClient *pclientobj = new CCOMMClient("127.0.0.1",6000);
 			pclientobj->Start();
-			Sleep(1000*secnum);
+			sleep(secnum);
 		}
 		else
 		{
@@ -41,13 +46,13 @@ void StartReceiveMD()
 			CCOMMClient *pclientobj = new CCOMMClient("127.0.0.1",6000);
 			pclientobj->Start();
 			// 延迟五分钟
-			Sleep(1000*300);
+			sleep(300);
 		}
 
 	}
 }
 
-int _tmain(int argc, _TCHAR* argv[])
+int main( )
 {
 	//std::string test=g_ssm_puser->get_username();
 	//std::cout<<test<<"OK"<<std::endl;
@@ -131,15 +136,6 @@ int _tmain(int argc, _TCHAR* argv[])
 	comm_prtmarketdatamap = ssm_prtmarketdatamap;
 	pstrategy->Start();
 	StartReceiveMD();
-	while(false)
-	{
-		for(std::vector<CContract*>::size_type i=0; i<ssm_pcontractvector.size();i++)
-		{
-			printf("%s:%lf\n", 
-				ssm_pcontractvector[i]->contractname.c_str(),
-				ssm_pcontractvector[i]->marketdata->rtprice);
-		}	
-	}
 	//Sleep(60);
 	return 0;
 }

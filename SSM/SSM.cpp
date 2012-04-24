@@ -13,11 +13,13 @@ std::vector<CCommodity*> ssm_pcommodityvector;
 
 /*内部对象构建器*/
 CSSMCreator SSMcreator;
-
+CMySQLAPI SSMDatabase;
 
 /*SSM启动入口*/
 int StartSSM(std::string username)
 {
+	SSMDatabase.Init();
+	SSMDatabase.Open();
 	ssm_puser = SSMcreator.CreateUser(username);
 	ssm_puser->initialization();
 
@@ -27,21 +29,21 @@ int StartSSM(std::string username)
     std::vector<CPair*>::iterator pairiter;
 
 	for(commosityiter=ssm_pcommodityvector.begin();
-		commosityiter<ssm_pcommodityvector.end(); 
+		commosityiter<ssm_pcommodityvector.end();
 		commosityiter++)
 	{
 		(*commosityiter)->initialization();
 	}
 
 	for(contractiter=ssm_pcontractvector.begin();
-		contractiter<ssm_pcontractvector.end(); 
+		contractiter<ssm_pcontractvector.end();
 		contractiter++)
 	{
 		(*contractiter)->initialization( );
 	}
 
 	for(pairiter=ssm_ppairvector.begin();
-		pairiter<ssm_ppairvector.end(); 
+		pairiter<ssm_ppairvector.end();
 		pairiter++)
 	{
 		(*pairiter)->initialization( );

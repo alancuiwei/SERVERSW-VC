@@ -1,8 +1,5 @@
-// TQM.cpp : Defines the exported functions for the DLL application.
-//
-
-#include "stdafx.h"
 #include "TQM.h"
+#include "../COMM/COMM.h"
 using namespace std;
 
 
@@ -15,12 +12,14 @@ bool tqm_isloginok = false;
 int iRequestID = 0;
 
 /*Trader线程*/
-HANDLE hTraderThread; 
-DWORD TraderThreadId;
+//HANDLE hTraderThread;
+//DWORD TraderThreadId;
+CLightThread g_TraderThread;
 //DWORD WINAPI Login(LPVOID m  );
 /*Market线程*/
-HANDLE hMdThread; 
-DWORD MdThreadId;
+//HANDLE hMdThread;
+//DWORD MdThreadId;
+CLightThread g_MdThread;
 //DWORD WINAPI TraderThreadProcess(LPVOID  m );
 // UserApi对象
 CThostFtdcMdApi* pMdUserApi;
@@ -29,10 +28,11 @@ CThostFtdcTraderApi* pTraderUserApi;
 CTraderSpi* pTraderUserSpi;
 
 /*Trader线程*/
-HANDLE g_hMdReadyEvent=CreateEvent(NULL, FALSE, FALSE, NULL);
+//HANDLE g_hMdReadyEvent=CreateEvent(NULL, FALSE, FALSE, NULL);
+CLightThreadMutex g_ThreadMutex;
 //HANDLE g_hSubcribeReadyEvent=CreateEvent(NULL, FALSE, FALSE, NULL);;
 
-char *pInstrumentID[1024];	 // 行情订阅列表	
+char *pInstrumentID[1024];	 // 行情订阅列表
 int iInstrumentID=0;	 // 行情订阅数量
 char tqm_startdate[20]; //程序开始执行日期
 char tqm_starttime[20]; //程序开始执行时间
@@ -56,9 +56,10 @@ TThostFtdcPasswordType  PASSWORD = "118403";			// 用户密码
 #endif
 
 //DWORD WINAPI   TraderThreadProcess( LPVOID  m)
-void  TraderThreadProcess( LPVOID )
+void*  TraderThreadProcess( void * )
 {
 	//numofstr=0;
+	g_ThreadMutex.Lock();
 	pTraderUserApi = CThostFtdcTraderApi::CreateFtdcTraderApi("td");		// 创建UserApi
 	pTraderUserSpi = new CTraderSpi();
 	pTraderUserApi->RegisterSpi((CThostFtdcTraderSpi*)pTraderUserSpi);		// 注册事件类
@@ -66,11 +67,11 @@ void  TraderThreadProcess( LPVOID )
 	pTraderUserApi->SubscribePrivateTopic(THOST_TERT_QUICK);				// 注册私有流
 	pTraderUserApi->RegisterFront(TRADE_FRONT_ADDR);						// connect
 	pTraderUserApi->Init();
-	LPMSG pMessage = (LPMSG)new char [sizeof(MSG)];
-	Trader_MsgQData_t* pTmp = NULL;
-	//pTraderUserApi->Join();
-	
-	while(true)
+	//LPMSG pMessage = (LPMSG)new char [sizeof(MSG)];
+	//Trader_MsgQData_t* pTmp = NULL;
+	pTraderUserApi->Join();
+
+	/*while(true)
 	{
 
 		//收msg
@@ -116,15 +117,15 @@ void  TraderThreadProcess( LPVOID )
 				default:
 					break;
 				}
-			}/**/
+			}
 		}
-	}
+	}*/
 	delete pTraderUserSpi;
 	//return 0;
 }
 
 
-void MdThreadProcess( LPVOID )
+void* MdThreadProcess( void *)
 {
 	// 初始化UserApi
 	pMdUserApi = CThostFtdcMdApi::CreateFtdcMdApi("md");		// 创建UserApi
@@ -142,7 +143,7 @@ void SetSubscribeMarketData( )
 {
 	 iInstrumentID = 0;
      std::map<std::string, CRTMarketData*>::iterator iter;
-	 for(iter=tqm_prtmarketdatamap.begin(); 
+	 for(iter=tqm_prtmarketdatamap.begin();
 		 iter!=tqm_prtmarketdatamap.end();
 		 ++iter)
 	 {
@@ -155,29 +156,45 @@ void SetSubscribeMarketData( )
 
 void StartTraderThreadProcess(  )
 {
-	_beginthread(TraderThreadProcess, 0, 0);
+	//_beginthread(TraderThreadProcess, 0, 0);
+	// g_TraderThread.CreateThread(TraderThreadProcess, NULL);
+	CLightThread::CreateThread(TraderThreadProcess, NULL);
 }
 
 void StartMdThreadProcess(  )
 {
 	//CTime time = CTime::GetCurrentTime();   ///构造CTime对象
-	//gtodaydate = time.Format("%Y-%m-%d"); 
+	//gtodaydate = time.Format("%Y-%m-%d");
 	//SetSubscribeMarketData( );
     //hMdThread=CreateThread(NULL, 0, Login, 0, 0, &MdThreadId);
-	SYSTEMTIME sys;
-	GetLocalTime( &sys );
-	sprintf(tqm_startdate,"%4d-%02d-%02d", sys.wYear, sys.wMonth, sys.wDay);
-	sprintf(tqm_starttime,"%02d:%02d:%02d", sys.wHour, sys.wMinute, sys.wSecond);
-	_beginthread(MdThreadProcess, 0, 0);
+	//SYSTEMTIME sys;
+	//GetLocalTime( &sys );
+	//sprintf(tqm_startdate,"%4d-%02d-%02d", sys.wYear, sys.wMonth, sys.wDay);
+	//sprintf(tqm_starttime,"%02d:%02d:%02d", sys.wHour, sys.wMinute, sys.wSecond);
+
+    struct tm *nowtm;
+	time_t nowtime;
+    struct tm exittm;
+	time_t exittime;
+	double secnum;
+
+	nowtime=time(NULL);
+	nowtm=localtime(&nowtime);
+	sprintf(tqm_startdate,"%4d-%02d-%02d", 1900+nowtm->tm_year, 1+nowtm->tm_mon, nowtm->tm_mday);
+	sprintf(tqm_starttime,"%02d:%02d:%02d", nowtm->tm_hour, nowtm->tm_min, nowtm->tm_sec);
+
+	//_beginthread(MdThreadProcess, 0, 0);
+	//g_MdThread.CreateThread(MdThreadProcess, NULL);
+	CLightThread::CreateThread(MdThreadProcess, NULL);
 
 }
 
 
 // This is an example of an exported variable
-TQM_API int nTQM=0;
+int nTQM=0;
 
 // This is an example of an exported function.
-TQM_API int fnTQM(void)
+int fnTQM(void)
 {
 	return 42;
 }

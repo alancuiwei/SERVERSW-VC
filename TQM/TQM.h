@@ -1,25 +1,28 @@
-// The following ifdef block is the standard way of creating macros which make exporting 
-// from a DLL simpler. All files within this DLL are compiled with the TQM_EXPORTS
-// symbol defined on the command line. This symbol should not be defined on any project
-// that uses this DLL. This way any other project whose source files include this file see 
-// TQM_API functions as being imported from a DLL, whereas this DLL sees symbols
-// defined with this macro as being exported.
 #pragma once
+#include <map>
+//#include <tchar.h>
+#include <string.h>
+#include <stdio.h>
+#include <stdarg.h>
+#include <time.h>
+//#include <wtypes.h>
+#include <iostream>
+#include <stdio.h>
+#include <vector>
+#include <iostream>
+#include <fstream>
+#include <algorithm>
+#include <pthread.h>
+#include <unistd.h>
+#include <sys/errno.h>
 
-#ifdef TQM_EXPORTS
-#define TQM_API __declspec(dllexport)
-#else
-#define TQM_API __declspec(dllimport)
-#endif
-
-#include "stdafx.h"
 #include "MdSpi.h"
 #include "TraderSpi.h"
 #include "CRTMarketData.h"
 
-#define USETESTDATA  0        //是否使用测试数据库，1:是/ 0:否
+#define USETESTDATA  0       //是否使用测试数据库，1:是/ 0:否
 /*internal*/
-extern char *pInstrumentID[1024];	 // 行情订阅列表	
+extern char *pInstrumentID[1024];	 // 行情订阅列表
 extern int iInstrumentID;	 // 行情订阅数量
 extern  TThostFtdcBrokerIDType BROKER_ID;
 extern  TThostFtdcInvestorIDType INVESTOR_ID;
@@ -28,37 +31,38 @@ extern  CThostFtdcMdApi* pMdUserApi;
 extern  CMdSpi* pMdUserSpi;
 extern  CThostFtdcTraderApi* pTraderUserApi;
 extern  CTraderSpi* pTraderUserSpi;
-extern  HANDLE g_hMdReadyEvent;
+// extern  HANDLE g_hMdReadyEvent;
+
 //extern  HANDLE g_hSubcribeReadyEvent;
 /*external*/
-extern TQM_API bool tqm_isloginok;
-extern TQM_API void StartMdThreadProcess( );
-extern TQM_API void StartTraderThreadProcess(  );
-extern TQM_API std::map<std::string, CRTMarketData*> tqm_prtmarketdatamap;
-extern TQM_API bool SetSubscribeMarketData(std::map<std::string, CRTMarketData*> marketdatamap);
-extern TQM_API char tqm_startdate[20]; 
-extern TQM_API char tqm_starttime[20]; 
-extern TQM_API bool tqm_issavetodb; 
+extern  bool tqm_isloginok;
+extern  void StartMdThreadProcess( );
+extern  void StartTraderThreadProcess(  );
+extern  std::map<std::string, CRTMarketData*> tqm_prtmarketdatamap;
+extern  bool SetSubscribeMarketData(std::map<std::string, CRTMarketData*> marketdatamap);
+extern  char tqm_startdate[20];
+extern  char tqm_starttime[20];
+extern  bool tqm_issavetodb;
 
 // This class is exported from the TQM.dll
-class TQM_API CTQM {
+class  CTQM {
 public:
 	CTQM(void);
 	// TODO: add your methods here.
 };
 
-extern TQM_API int nTQM;
+extern  int nTQM;
 
-TQM_API int fnTQM(void);
+int fnTQM(void);
 
 
 //extern FUTURESDATA_API void  Login(void);
 
-typedef TQM_API struct 
+typedef  struct
 {
 	///合约代码
 	char InstrumentID[31];
-	///买卖方向	
+	///买卖方向
 	char Direction;
 	///组合开平标志
 	char CombOffsetFlag[5];
@@ -69,7 +73,7 @@ typedef TQM_API struct
 } Trader_InputOrderReq_t;
 
 
-typedef TQM_API struct 
+typedef  struct
 {
 	///经纪公司代码
 	TThostFtdcBrokerIDType	BrokerID;
@@ -89,7 +93,7 @@ typedef TQM_API struct
 
 
 ///查询投资者持仓明细
-typedef struct TQM_API  
+typedef struct
 {
 	///经纪公司代码
 	TThostFtdcBrokerIDType	BrokerID;
@@ -100,7 +104,7 @@ typedef struct TQM_API
 }Trader_ReqQryInvestorPosition_t;
 
 
-typedef struct TQM_API
+typedef struct
 {
 	///经纪公司代码
 	TThostFtdcBrokerIDType	BrokerID;
@@ -111,7 +115,7 @@ typedef struct TQM_API
 }Trader_ReqQryInvestorPositionCombineDetail_t;
 
 ///查询合约
-typedef struct TQM_API
+typedef struct
 {
 	///合约代码
 	TThostFtdcInstrumentIDType	InstrumentID;
@@ -123,7 +127,7 @@ typedef struct TQM_API
 	TThostFtdcInstrumentIDType	ProductID;
 } Trader_ReqQryInstrument_t;
 
-typedef struct TQM_API
+typedef struct
 {
 	///经纪公司代码
 	TThostFtdcBrokerIDType	BrokerID;
@@ -131,7 +135,7 @@ typedef struct TQM_API
 	TThostFtdcInvestorIDType	InvestorID;
 } Trader_ReqQryTraderAccount_t;
 
-typedef TQM_API struct
+typedef  struct
 {
   union
   {
@@ -146,11 +150,11 @@ typedef TQM_API struct
   } Parameters;
 } Trader_MessageParameters_Req_t;
 
-typedef TQM_API struct
+typedef  struct
 {
-    unsigned long MessageId;     
+    unsigned long MessageId;
     Trader_MessageParameters_Req_t MsgParameter;
-} Trader_MsgQData_t; 
+} Trader_MsgQData_t;
 
 #define Trader_InputOrder_Req                            0x1101
 #define Trader_ReqQryOrder_Req                           0x1102

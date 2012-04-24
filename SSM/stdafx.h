@@ -6,11 +6,11 @@
 #pragma once
 #pragma warning(disable: 4251)
 
-#include "targetver.h"
+//#include "targetver.h"
 
-#define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
+//#define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
 // Windows Header Files:
-#include <windows.h>
+//#include <windows.h>
 #include <string>
 #include <vector>
 #include <map>
@@ -19,7 +19,7 @@
 
 #include "../COMM/COMM.h"
 // TODO: reference additional headers your program requires here
-#include "../MyODBC/MyODBC.h"
+#include "../MyODBC/MySQLAPI.h"
 #include "../TQM/CRTMarketData.h"
 //#pragma comment(lib,"..\\Debug\\MyODBC.lib")
 //#include "..\\futuresdata\\futuresdata.h"
@@ -28,3 +28,9 @@
 
 //#pragma comment(lib,"..\\Debug\\TQM.lib")
 #include "SSM.h"
+#if defined(WIN32) || defined(WIN64)
+#include <windows.h>
+#else
+#include <unistd.h>
+#endif
+#include <stdio.h>

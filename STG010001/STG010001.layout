@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_layout_file>
+	<ActiveTarget name="Release" />
+	<File name="CSpreadCostStrRun.cpp" open="0" top="0" tabpos="1">
+		<Cursor position="2644" topLine="51" />
+	</File>
+	<File name="CSpreadCostStrRun.h" open="0" top="0" tabpos="0">
+		<Cursor position="420" topLine="4" />
+	</File>
+	<File name="CStrategyRun.cpp" open="0" top="0" tabpos="6">
+		<Cursor position="177" topLine="0" />
+	</File>
+	<File name="CStrategyRun.h" open="0" top="0" tabpos="0">
+		<Cursor position="408" topLine="0" />
+	</File>
+	<File name="CTradeStru.cpp" open="0" top="0" tabpos="5">
+		<Cursor position="14" topLine="0" />
+	</File>
+	<File name="CTradeStru.h" open="0" top="0" tabpos="6">
+		<Cursor position="100" topLine="2" />
+	</File>
+	<File name="STG010001.cpp" open="0" top="0" tabpos="2">
+		<Cursor position="131" topLine="0" />
+	</File>
+	<File name="STG010001.h" open="0" top="0" tabpos="4">
+		<Cursor position="496" topLine="0" />
+	</File>
+	<File name="stdafx.h" open="0" top="0" tabpos="3">
+		<Cursor position="353" topLine="4" />
+	</File>
+</CodeBlocks_layout_file>

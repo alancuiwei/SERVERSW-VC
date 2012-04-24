@@ -1,11 +1,13 @@
-#include "stdafx.h"
 #include "TQM.h"
 #include "MdSpi.h"
-
+#include <string.h>
+#include "../MyODBC/MySQLAPI.h"
+#include "../COMM/COMM.h"
 using namespace std;
 // 请求编号
 extern int iRequestID;
 extern bool tqm_isloginok;
+extern CLightThreadMutex g_ThreadMutex;
 CMySQLAPI MDDatabase;
 bool tqm_issavetodb;
 
@@ -36,16 +38,18 @@ void CMdSpi::GetMarketData(CThostFtdcDepthMarketDataField *pDepthMarketData)
 	}
 	if(tqm_prtmarketdatamap[pDepthMarketData->InstrumentID] != NULL)
 	{
-		tqm_prtmarketdatamap[pDepthMarketData->InstrumentID]->constractname=(char *)pDepthMarketData->InstrumentID;
+		//tqm_prtmarketdatamap[pDepthMarketData->InstrumentID]->constractname= pDepthMarketData->InstrumentID;
+		strcpy(tqm_prtmarketdatamap[pDepthMarketData->InstrumentID]->constractname, pDepthMarketData->InstrumentID);
 		tqm_prtmarketdatamap[pDepthMarketData->InstrumentID]->bidprice1 = pDepthMarketData->BidPrice1;
 		tqm_prtmarketdatamap[pDepthMarketData->InstrumentID]->askprice1 = pDepthMarketData->AskPrice1;
 		tqm_prtmarketdatamap[pDepthMarketData->InstrumentID]->openprice = pDepthMarketData->OpenPrice;
 		tqm_prtmarketdatamap[pDepthMarketData->InstrumentID]->highestprice = pDepthMarketData->HighestPrice;
 		tqm_prtmarketdatamap[pDepthMarketData->InstrumentID]->lowestprice = pDepthMarketData->LowestPrice;
-		tqm_prtmarketdatamap[pDepthMarketData->InstrumentID]->volume = pDepthMarketData->Volume;	    
-		tqm_prtmarketdatamap[pDepthMarketData->InstrumentID]->time = (char *)pDepthMarketData->UpdateTime;
+		tqm_prtmarketdatamap[pDepthMarketData->InstrumentID]->volume = pDepthMarketData->Volume;
+		//tqm_prtmarketdatamap[pDepthMarketData->InstrumentID]->time = pDepthMarketData->UpdateTime;
+		strcpy(tqm_prtmarketdatamap[pDepthMarketData->InstrumentID]->time, pDepthMarketData->UpdateTime);
 		tqm_prtmarketdatamap[pDepthMarketData->InstrumentID]->rtprice = pDepthMarketData->LastPrice;
-		CCOMMServer::getinstance()->SendToAllClient((char *)tqm_prtmarketdatamap[pDepthMarketData->InstrumentID], 
+		CCOMMServer::getinstance()->SendToAllClient((char *)tqm_prtmarketdatamap[pDepthMarketData->InstrumentID],
 			sizeof(*tqm_prtmarketdatamap[pDepthMarketData->InstrumentID]));
 	}
 	//MDDatabase.Close();
@@ -104,7 +108,8 @@ void CMdSpi::OnRspUserLogin(CThostFtdcRspUserLoginField *pRspUserLogin,
 		if(!tqm_isloginok)
 		{
 			//tqm_isloginok = true;
-			WaitForSingleObject(g_hMdReadyEvent, INFINITE);
+			//WaitForSingleObject(g_hMdReadyEvent, INFINITE);
+			g_ThreadMutex.TryLock(20000);
 			CCOMMServer::getinstance();
 			CCOMMServer::getinstance()->Start();
 		}
@@ -134,12 +139,12 @@ void CMdSpi::SubscribeMarketData(char *pInstrumentID[], int nCount)
 					sqlstr=sqlstr+"'),";
 				}
 				sqlstr=sqlstr.substr(0,sqlstr.length() - 1);
-				sqlstr="insert into validcontracts_t values"+sqlstr;
-				MDDatabase.ExecuteNonQuery("delete from validcontracts_t");
-				MDDatabase.ExecuteNonQuery("delete from arbitragecontractpairs_t");
+				sqlstr="insert into validcontracts_t values"+sqlstr+";";
+				MDDatabase.ExecuteNonQuery("delete from validcontracts_t;");
+				//MDDatabase.ExecuteNonQuery("delete from arbitragecontractpairs_t;");
 				MDDatabase.ExecuteNonQuery(sqlstr.c_str());
-				MDDatabase.ExecuteNonQuery("CALL updatepairs_p()");
-				MDDatabase.ExecuteNonQuery("CALL updatecontractbeforemarket_p()");	
+				//MDDatabase.ExecuteNonQuery("CALL updatepairs_p();");
+				//MDDatabase.ExecuteNonQuery("CALL updatecontractbeforemarket_p();");
 			}
 		}
 		tqm_isloginok = true;
@@ -174,50 +179,50 @@ void CMdSpi::OnRtnDepthMarketData(CThostFtdcDepthMarketDataField *pDepthMarketDa
 	/*
 	LocalLog.open(filename, ios::app);
 	LocalLog<<pDepthMarketData->TradingDay          ///交易日
-	<<","<<pDepthMarketData->UpdateTime        ///最后修改时间 
-	//<<","<<pDepthMarketData->SettlementPrice   ///本次结算价 
-	<<","<<pDepthMarketData->InstrumentID      ///合约代码                                                         
-	//<<","<<pDepthMarketData->ExchangeID        ///交易所代码                                                       
-	//<<","<<pDepthMarketData->ExchangeInstID    ///合约在交易所的代码                                               
-	<<","<<pDepthMarketData->LastPrice         ///最新价                                                         
-	//<<","<<pDepthMarketData->PreSettlementPrice///上次结算价                                                       
-	//<<","<<pDepthMarketData->PreClosePrice     ///昨收盘                                                         
-	//<<","<<pDepthMarketData->PreOpenInterest   ///上次结算价                                                       
-	<<","<<pDepthMarketData->OpenPrice         ///今开盘                                                         
-	<<","<<pDepthMarketData->HighestPrice      ///最高价                                                         
+	<<","<<pDepthMarketData->UpdateTime        ///最后修改时间
+	//<<","<<pDepthMarketData->SettlementPrice   ///本次结算价
+	<<","<<pDepthMarketData->InstrumentID      ///合约代码
+	//<<","<<pDepthMarketData->ExchangeID        ///交易所代码
+	//<<","<<pDepthMarketData->ExchangeInstID    ///合约在交易所的代码
+	<<","<<pDepthMarketData->LastPrice         ///最新价
+	//<<","<<pDepthMarketData->PreSettlementPrice///上次结算价
+	//<<","<<pDepthMarketData->PreClosePrice     ///昨收盘
+	//<<","<<pDepthMarketData->PreOpenInterest   ///上次结算价
+	<<","<<pDepthMarketData->OpenPrice         ///今开盘
+	<<","<<pDepthMarketData->HighestPrice      ///最高价
 	<<","<<pDepthMarketData->LowestPrice       ///最低价
-	<<","<<pDepthMarketData->ClosePrice        ///今收盘 
-	<<","<<pDepthMarketData->Volume            ///数量                                                         
-	<<","<<pDepthMarketData->Turnover          ///成交金额                                                         
-	<<","<<pDepthMarketData->OpenInterest      ///持仓量                                                                                                                
+	<<","<<pDepthMarketData->ClosePrice        ///今收盘
+	<<","<<pDepthMarketData->Volume            ///数量
+	<<","<<pDepthMarketData->Turnover          ///成交金额
+	<<","<<pDepthMarketData->OpenInterest      ///持仓量
 
-	<<","<<pDepthMarketData->UpperLimitPrice   ///涨停板价                                                         
-	<<","<<pDepthMarketData->LowerLimitPrice   ///跌停板价                                                         
-	<<","<<pDepthMarketData->PreDelta          ///昨虚实度                                                         
-	<<","<<pDepthMarketData->CurrDelta         ///今虚实度                                                         
+	<<","<<pDepthMarketData->UpperLimitPrice   ///涨停板价
+	<<","<<pDepthMarketData->LowerLimitPrice   ///跌停板价
+	<<","<<pDepthMarketData->PreDelta          ///昨虚实度
+	<<","<<pDepthMarketData->CurrDelta         ///今虚实度
 
-	<<","<<pDepthMarketData->UpdateMillisec    ///最后修改毫秒                                                     
-	<<","<<pDepthMarketData->BidPrice1         ///申买价一                                                         
-	<<","<<pDepthMarketData->BidVolume1        ///申买量一                                                         
-	<<","<<pDepthMarketData->AskPrice1         ///申卖价一                                                         
-	<<","<<pDepthMarketData->AskVolume1        ///申卖量一                                                         
-	<<","<<pDepthMarketData->BidPrice2         ///申买价二                                                         
-	<<","<<pDepthMarketData->BidVolume2        ///申买量二                                                         
-	<<","<<pDepthMarketData->AskPrice2         ///申卖价二                                                         
-	<<","<<pDepthMarketData->AskVolume2        ///申卖量二                                                         
-	<<","<<pDepthMarketData->BidPrice3         ///申买价三                                                         
-	<<","<<pDepthMarketData->BidVolume3        ///申买量三                                                         
-	<<","<<pDepthMarketData->AskPrice3         ///申卖价三                                                         
-	<<","<<pDepthMarketData->AskVolume3        ///申卖量三                                                         
-	<<","<<pDepthMarketData->BidPrice4         ///申买价四                                                         
-	<<","<<pDepthMarketData->BidVolume4        ///申买量四                                                         
-	<<","<<pDepthMarketData->AskPrice4         ///申卖价四                                                         
-	<<","<<pDepthMarketData->AskVolume4        ///申卖量四                                                         
-	<<","<<pDepthMarketData->BidPrice5         ///申买价五                                                         
-	<<","<<pDepthMarketData->BidVolume5        ///申买量五                                                         
-	<<","<<pDepthMarketData->AskPrice5         ///申卖价五                                                         
-	<<","<<pDepthMarketData->AskVolume5        ///申卖量五                                                         
-	<<","<<pDepthMarketData->AveragePrice      //当日均价  
+	<<","<<pDepthMarketData->UpdateMillisec    ///最后修改毫秒
+	<<","<<pDepthMarketData->BidPrice1         ///申买价一
+	<<","<<pDepthMarketData->BidVolume1        ///申买量一
+	<<","<<pDepthMarketData->AskPrice1         ///申卖价一
+	<<","<<pDepthMarketData->AskVolume1        ///申卖量一
+	<<","<<pDepthMarketData->BidPrice2         ///申买价二
+	<<","<<pDepthMarketData->BidVolume2        ///申买量二
+	<<","<<pDepthMarketData->AskPrice2         ///申卖价二
+	<<","<<pDepthMarketData->AskVolume2        ///申卖量二
+	<<","<<pDepthMarketData->BidPrice3         ///申买价三
+	<<","<<pDepthMarketData->BidVolume3        ///申买量三
+	<<","<<pDepthMarketData->AskPrice3         ///申卖价三
+	<<","<<pDepthMarketData->AskVolume3        ///申卖量三
+	<<","<<pDepthMarketData->BidPrice4         ///申买价四
+	<<","<<pDepthMarketData->BidVolume4        ///申买量四
+	<<","<<pDepthMarketData->AskPrice4         ///申卖价四
+	<<","<<pDepthMarketData->AskVolume4        ///申卖量四
+	<<","<<pDepthMarketData->BidPrice5         ///申买价五
+	<<","<<pDepthMarketData->BidVolume5        ///申买量五
+	<<","<<pDepthMarketData->AskPrice5         ///申卖价五
+	<<","<<pDepthMarketData->AskVolume5        ///申卖量五
+	<<","<<pDepthMarketData->AveragePrice      //当日均价
 	<<endl;
 	LocalLog.close();
 	*/
@@ -230,17 +235,17 @@ void CMdSpi::OnRtnDepthMarketData(CThostFtdcDepthMarketDataField *pDepthMarketDa
 	}
 
 	///收集当日所有Active合约的信息存入Md_Day_Instrument.csv
-	if((strcmp(pDepthMarketData->UpdateTime, "15:00:01") >=0) && (strcmp(pDepthMarketData->UpdateTime, "15:00:59")<=0))  
+	if((strcmp(pDepthMarketData->UpdateTime, "15:00:01") >=0) && (strcmp(pDepthMarketData->UpdateTime, "15:00:59")<=0))
 	{
 		LocalLog.open("..\\Debug\\Md_Day_Instrument.csv", ios::app);
 		LocalLog<<pDepthMarketData->InstrumentID       ///合约代码
-			<<","<<pDepthMarketData->TradingDay        ///交易日                                                                                                                                                                                                               
-			<<","<<pDepthMarketData->OpenPrice         ///今开盘                                                         
-			<<","<<pDepthMarketData->HighestPrice      ///最高价                                                         
+			<<","<<pDepthMarketData->TradingDay        ///交易日
+			<<","<<pDepthMarketData->OpenPrice         ///今开盘
+			<<","<<pDepthMarketData->HighestPrice      ///最高价
 			<<","<<pDepthMarketData->LowestPrice       ///最低价
-			<<","<<pDepthMarketData->ClosePrice        ///今收盘 
-			<<","<<pDepthMarketData->Volume            ///数量                                                                                                               
-			<<","<<pDepthMarketData->OpenInterest      ///持仓量 
+			<<","<<pDepthMarketData->ClosePrice        ///今收盘
+			<<","<<pDepthMarketData->Volume            ///数量
+			<<","<<pDepthMarketData->OpenInterest      ///持仓量
 			<<","<<pDepthMarketData->BidPrice1         ///申买价一
 			<<","<<pDepthMarketData->AskPrice1         ///申卖价一
 			<<endl;
@@ -250,11 +255,11 @@ void CMdSpi::OnRtnDepthMarketData(CThostFtdcDepthMarketDataField *pDepthMarketDa
 	/*{
 	LocalLog.open("..\\Debug\\Md_Second_Instrument.csv", ios::app);
 	LocalLog<<pDepthMarketData->InstrumentID       ///合约代码
-	<<","<<pDepthMarketData->TradingDay        ///交易日  
-	<<","<<pDepthMarketData->UpdateTime        ///最后修改时间 
-	<<","<<pDepthMarketData->LastPrice         ///最新价 
-	<<","<<pDepthMarketData->Volume            ///数量                                                                                                               
-	<<","<<pDepthMarketData->OpenInterest      ///持仓量                                                                                                                                                                        
+	<<","<<pDepthMarketData->TradingDay        ///交易日
+	<<","<<pDepthMarketData->UpdateTime        ///最后修改时间
+	<<","<<pDepthMarketData->LastPrice         ///最新价
+	<<","<<pDepthMarketData->Volume            ///数量
+	<<","<<pDepthMarketData->OpenInterest      ///持仓量
 	<<endl;
 	LocalLog.close();
 	}*/
@@ -274,17 +279,17 @@ void CMdSpi::OnRtnDepthMarketData(CThostFtdcDepthMarketDataField *pDepthMarketDa
 				CString f = pExcelMain->GetAppPath()+"\\"+MD_FILES[nFile]+".csv";
 				if ( pExcelMain->IsFileExist( f, FALSE ) ) ///若Md_Sec_$InstrumentID_$TradingDay.csv存在
 				{
-					pExcelMain->Open( f ); 
-					pExcelMain->OpenSheet( MD_FILES[nFile] ); 
+					pExcelMain->Open( f );
+					pExcelMain->OpenSheet( MD_FILES[nFile] );
 					pExcelMain->AutoRange();
 					CString ins = pExcelMain->GetItemText(1, 1);
 					CString dat = pExcelMain->GetItemText(1, 2);
 					instr_val = ins.GetBuffer(dat.GetLength());
-					date_val = dat.GetBuffer(dat.GetLength());					
+					date_val = dat.GetBuffer(dat.GetLength());
 					for(j=1; !pExcelMain->GetItemText(j, 1).IsEmpty(); j++) ///第j行1列非空
-					{ 
+					{
 						///共12列数据
-						CString record = " '" + pExcelMain->GetItemText(j, 1) + "'," 
+						CString record = " '" + pExcelMain->GetItemText(j, 1) + "',"
 							+ "'" + pExcelMain->GetItemText(j, 2) + "',"
 							+ "'" + pExcelMain->GetItemText(j, 3) + "',"
 							+ pExcelMain->GetItemText(j, 4) + ","
@@ -335,24 +340,24 @@ void CMdSpi::OnRtnDepthMarketData(CThostFtdcDepthMarketDataField *pDepthMarketDa
 			cout<<"Could not connect DB"<<endl;
 		}
 	}
-	else	
+	else
 	{
 		///收集每秒的数据存入Md_Sec_$InstrumentID_$TradingDay.csv
 		char filename[64] = "";
 		sprintf(filename, "..\\Debug\\Md_Sec_%s_%s.csv", pDepthMarketData->InstrumentID, pDepthMarketData->TradingDay);
 		LocalLog.open(filename, ios::app);
 		LocalLog<<pDepthMarketData->InstrumentID       ///合约代码
-			<<","<<pDepthMarketData->TradingDay        ///交易日  
+			<<","<<pDepthMarketData->TradingDay        ///交易日
 			<<", "<<pDepthMarketData->UpdateTime       ///最后修改时间前面加了空格", "是为了让CMyExcel类能够正确读取
-			<<","<<pDepthMarketData->LastPrice         ///最新价 
-			<<","<<pDepthMarketData->Volume            ///数量                                                                                                               
-			<<","<<pDepthMarketData->OpenInterest      ///持仓量  
-			<<","<<pDepthMarketData->OpenPrice         ///今开盘                                                         
-			<<","<<pDepthMarketData->HighestPrice      ///最高价                                                         
+			<<","<<pDepthMarketData->LastPrice         ///最新价
+			<<","<<pDepthMarketData->Volume            ///数量
+			<<","<<pDepthMarketData->OpenInterest      ///持仓量
+			<<","<<pDepthMarketData->OpenPrice         ///今开盘
+			<<","<<pDepthMarketData->HighestPrice      ///最高价
 			<<","<<pDepthMarketData->LowestPrice       ///最低价
-			<<","<<pDepthMarketData->ClosePrice        ///今收盘		
+			<<","<<pDepthMarketData->ClosePrice        ///今收盘
 			<<","<<pDepthMarketData->BidPrice1         ///申买价一
-			<<","<<pDepthMarketData->AskPrice1         ///申卖价一	
+			<<","<<pDepthMarketData->AskPrice1         ///申卖价一
 			<<endl;
 		LocalLog.close();
 	}*/

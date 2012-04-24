@@ -8,17 +8,12 @@
 #if !defined(__SSMClassDiagram_CCommodity_h)
 #define __SSMClassDiagram_CCommodity_h
 
-#ifdef SSM_EXPORTS
-#define SSM_API __declspec(dllexport)
-#else
-#define SSM_API __declspec(dllimport)
-#endif
 
 #include "stdafx.h"
 
 class CContract;
 
-class SSM_API  CCommodity
+class  CCommodity
 {
 public:
    CCommodity(std::string commodityname);

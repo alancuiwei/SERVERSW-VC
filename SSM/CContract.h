@@ -8,19 +8,13 @@
 #if !defined(__SSMClassDiagram_CConstract_h)
 #define __SSMClassDiagram_CConstract_h
 
-#ifdef SSM_EXPORTS
-#define SSM_API __declspec(dllexport)
-#else
-#define SSM_API __declspec(dllimport)
-#endif
-
 #include "CCommodity.h"
 
 class CCommodity;
 class CPair;
 //class CRTMarketData;
 
-class SSM_API CContract
+class  CContract
 {
 public:
    CContract(std::string contractname);
@@ -43,11 +37,11 @@ public:
    /* 明日跌停价 */
    double downlimitprice;
    /* 距离最后交易日还有多少天 */
-   int daystolasttradedate;
+   double daystolasttradedate;
    /* 持仓限额 */
-   int oilimit;
+   double oilimit;
    /* 距离交割还有多少天 */
-   int daystolastdeliverdate;
+   double daystolastdeliverdate;
    /* 贷款利率 */
    double lendrate;
    /* 实际保证金率 */

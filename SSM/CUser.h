@@ -8,15 +8,9 @@
 #if !defined(__SSMClassDiagram_CUser_h)
 #define __SSMClassDiagram_CUser_h
 
-#ifdef SSM_EXPORTS
-#define SSM_API __declspec(dllexport)
-#else
-#define SSM_API __declspec(dllimport)
-#endif
-
 #include "CPair.h"
 
-class SSM_API CUser
+class  CUser
 {
 public:
    /* 该构造函数对username进行赋值。 */

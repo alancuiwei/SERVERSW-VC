@@ -4,7 +4,7 @@
 #include "stdafx.h"
 #include <fstream>
 
-int _tmain(int argc, _TCHAR* argv[])
+int main()
 {
 	//std::string test=g_ssm_puser->get_username();
 	//std::cout<<test<<"OK"<<std::endl;
@@ -95,10 +95,10 @@ int _tmain(int argc, _TCHAR* argv[])
 	{
 		for(std::vector<CContract*>::size_type i=0; i<ssm_pcontractvector.size();i++)
 		{
-			printf("%s:%lf\n", 
+			printf("%s:%lf\n",
 				ssm_pcontractvector[i]->contractname.c_str(),
 				ssm_pcontractvector[i]->marketdata->rtprice);
-		}	
+		}
 	}
 	//Sleep(60);
 	system("pause");

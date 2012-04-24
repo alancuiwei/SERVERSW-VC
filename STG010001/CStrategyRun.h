@@ -1,12 +1,7 @@
 #pragma once
-#ifdef STG010001_EXPORTS
-#define STG010001_API __declspec(dllexport)
-#else
-#define STG010001_API __declspec(dllimport)
-#endif
 #include "CTradeStru.h"
 
-class STG010001_API CStrategyRun
+class  CStrategyRun
 {
 public:
     CStrategyRun(void);

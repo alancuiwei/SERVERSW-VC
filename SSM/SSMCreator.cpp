@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "SSMCreator.h"
 #include "CSpreadCostPair.h"
 #include "CRTMarketData.h"
@@ -19,10 +19,10 @@ CUser* CSSMCreator::CreateUser(std::string username)
 	{
 		return NULL;
 	}
-	return new CUser(username); 
+	return new CUser(username);
 }
 
-CPair* CSSMCreator::CreatePair(std::string firstconstractname, 
+CPair* CSSMCreator::CreatePair(std::string firstconstractname,
 		std::string secondconstractname, std::string rightid)
 {
 	if((firstconstractname=="")||(secondconstractname=="")||(rightid==""))
@@ -44,7 +44,7 @@ CContract* CSSMCreator::CreateContract(std::string contractname)
 	{
 		return NULL;
 	}
-	return new CContract(contractname); 
+	return new CContract(contractname);
 }
 
 CCommodity* CSSMCreator::CreateCommodity(std::string commodityname)
@@ -53,7 +53,7 @@ CCommodity* CSSMCreator::CreateCommodity(std::string commodityname)
 	{
 		return NULL;
 	}
-	return new CCommodity(commodityname); 
+	return new CCommodity(commodityname);
 }
 
 CRTMarketData* CSSMCreator::CreateRTMarketData(std::string constractname)
@@ -62,6 +62,6 @@ CRTMarketData* CSSMCreator::CreateRTMarketData(std::string constractname)
 	{
 		return NULL;
 	}
-	return new CRTMarketData(constractname); 
+	return new CRTMarketData(constractname);
 }
 

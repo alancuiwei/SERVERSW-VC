@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="TQM" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/TQM" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-Wall" />
+					<Add option="-g" />
+					<Add option="-DBUILD_DLL" />
+				</Compiler>
+				<Linker>
+					<Add library="/usr/lib/thosttraderapi.so" />
+					<Add library="/usr/lib/thostmduserapi.so" />
+					<Add library="/home/wukang/Documents/zr-cross/MyODBC/bin/Debug/MyODBC.so" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="../ZRApp/lib/TQM" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-Wall" />
+					<Add option="-DBUILD_DLL" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="../ZRApp/lib/MyODBC.so" />
+					<Add library="../ZRApp/lib/thosttraderapi.so" />
+					<Add library="../ZRApp/lib/thostmduserapi.so" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-fPIC" />
+		</Compiler>
+		<ResourceCompiler>
+			<Add directory="../TQM" />
+		</ResourceCompiler>
+		<Linker>
+			<Add directory="../TQM" />
+		</Linker>
+		<Unit filename="CRTMarketData.cpp" />
+		<Unit filename="CRTMarketData.h" />
+		<Unit filename="MdSpi.cpp" />
+		<Unit filename="MdSpi.h" />
+		<Unit filename="TQM.cpp" />
+		<Unit filename="TQM.h" />
+		<Unit filename="ThostFtdcMdApi.h" />
+		<Unit filename="ThostFtdcTraderApi.h" />
+		<Unit filename="ThostFtdcUserApiDataType.h" />
+		<Unit filename="ThostFtdcUserApiStruct.h" />
+		<Unit filename="TraderSpi.cpp" />
+		<Unit filename="TraderSpi.h" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

@@ -1,35 +1,35 @@
-// COMM.cpp : Defines the exported functions for the DLL application.
-//
-
-#include "stdafx.h"
 #include <algorithm>
 #include "COMM.h"
+#include <stdio.h>
+#include <string.h>
+#include <sys/wait.h>
+
 
 std::map<std::string, CRTMarketData*> comm_prtmarketdatamap;
 
 CCOMM::CCOMM(char *pserveraddr, int serverportid)
 {
-	memset(&serveraddr, 0, sizeof(SOCKADDR_IN)); 
-	serveraddr.sin_family = PF_INET; 
+	memset(&serveraddr, 0, sizeof(SOCKADDR_IN));
+	serveraddr.sin_family = PF_INET;
 	serveraddr.sin_addr.s_addr = inet_addr(pserveraddr);
-	serveraddr.sin_port = htons(serverportid); 
+	serveraddr.sin_port = htons(serverportid);
 }
 
 CCOMM::~CCOMM()
 {
 	// 释放连接和进行结束工作
-	closesocket(localsocket);
-	WSACleanup();
+	close(localsocket);
+	//WSACleanup();
 }
 // 调用Accept
-void CCOMM::AgentAccept(void *p)
+void* CCOMM::AgentAccept(void *p)
 {
     CCOMM *agt = (CCOMM *)p;
     agt->RunAccept();
 }
 
 // 调用Receive
-void CCOMM::AgentReceive(void *p)
+void* CCOMM::AgentReceive(void *p)
 {
     CCOMM *agt = (CCOMM *)p;
     agt->RunReceive();
@@ -52,7 +52,7 @@ CCOMMServer* CCOMMServer::getinstance( )
 }
 
 // 构造函数
-CCOMMServer::CCOMMServer(char *pserveraddr, int serverportid) : 
+CCOMMServer::CCOMMServer(char *pserveraddr, int serverportid) :
       CCOMM(pserveraddr, serverportid)
 {
 	commtype = 1;
@@ -61,10 +61,10 @@ CCOMMServer::CCOMMServer(char *pserveraddr, int serverportid) :
 
 CCOMMServer::CCOMMServer()
 {
-	memset(&serveraddr, 0, sizeof(SOCKADDR_IN)); 
-	serveraddr.sin_family = PF_INET; 
+	memset(&serveraddr, 0, sizeof(SOCKADDR_IN));
+	serveraddr.sin_family = PF_INET;
 	serveraddr.sin_addr.s_addr = INADDR_ANY;
-	serveraddr.sin_port = htons(6000); 
+	serveraddr.sin_port = htons(6000);
 	commtype = 1;
 	clientnum = 0;
 }
@@ -76,17 +76,20 @@ CCOMMServer::~CCOMMServer()
 // 激活通讯对象
 void CCOMMServer::Start( )
 {
-	WSADATA     wsaData;
-	WSAStartup(0x0202, &wsaData); //Initialize Windows socket library
+	//WSADATA     wsaData;
+	//WSAStartup(0x0202, &wsaData); //Initialize Windows socket library
 
-	localsocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);//创建服务器监听套节字。TCP协议
-	bind(localsocket, (struct sockaddr *)&serveraddr, sizeof(SOCKADDR_IN));//地址绑定到套接字
+	//localsocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);//创建服务器监听套节字。TCP协议
+	localsocket = SocketOpen(SOCK_STREAM);
+	//bind(localsocket, (struct sockaddr *)&serveraddr, sizeof(SOCKADDR_IN));//地址绑定到套接字
      //发送缓冲区
-     int nSendBuf=32*1024;//设置为32K
-     setsockopt(localsocket,SOL_SOCKET,SO_SNDBUF,(const char*)&nSendBuf,sizeof(int));
+    SocketBind(localsocket, &serveraddr);
+    int nSendBuf=32*1024;//设置为32K
+    setsockopt(localsocket,SOL_SOCKET,SO_SNDBUF,(const char*)&nSendBuf,sizeof(int));
 	listen(localsocket, clientmaxnum);//开始监听
-	hThreadAccept =(HANDLE)_beginthread(AgentAccept, 0, (void *)this);
-	CloseHandle(hThreadAccept);
+	CLightThread::CreateThread(AgentAccept, (void *)this);
+	//hThreadAccept =(HANDLE)_beginthread(AgentAccept, 0, (void *)this);
+	//CloseHandle(hThreadAccept);
 
 }
 
@@ -96,14 +99,16 @@ void CCOMMServer::RunAccept( )
 {
 	SOCKET      sclient;
 	SOCKADDR_IN dclient;
-	int iaddrSize = sizeof(SOCKADDR_IN); 
-	while (TRUE)
-	{  
-	   sclient = accept(localsocket, (struct sockaddr *)&dclient, &iaddrSize);//建立连接   
+	//int iaddrSize = sizeof(SOCKADDR_IN);
+	while (true)
+	{
+	   //sclient = accept(localsocket, (struct sockaddr *)&dclient, &iaddrSize);//建立连接
+	   sclient = SocketAccept(localsocket, &dclient);
 	   vclientsocket.push_back(sclient);
 	   //vclientaddr.push_back(dclient);
-	   hThreadReceive =(HANDLE)_beginthread(AgentReceive, 0, (void *)this);
-	   CloseHandle(hThreadReceive);
+	   CLightThread::CreateThread(AgentReceive, (void *)this);
+	   //hThreadReceive =(HANDLE)_beginthread(AgentReceive, 0, (void *)this);
+	   //CloseHandle(hThreadReceive);
 
 	   //if(clientnum<clientmaxnum)
 	   //{
@@ -119,22 +124,22 @@ void CCOMMServer::RunAccept( )
 void CCOMMServer::RunReceive( )
 {
 	SOCKET      sclient = vclientsocket.back();
-	int iaddrSize = sizeof(SOCKADDR_IN); 
+	//int iaddrSize = sizeof(SOCKADDR_IN);
 	char c_Message[msgsize]; //收发缓冲区
 	int ret; //接收字节的个数
 
-	while (TRUE)
-	{  
+	while (true)
+	{
 		ret = recv(sclient, c_Message, msgsize, 0);//接收数据
-		if(ret==SOCKET_ERROR)
+		if((ret==SOCKET_ERROR)||(ret==INVALID_SOCKET))
 	    {
-			printf("\nclient is closed!");		
+			printf("\nclient is closed!");
 			vector<SOCKET>::iterator result = find( vclientsocket.begin( ), vclientsocket.end( ), sclient ); //查找
 			if (result!=vclientsocket.end( ))
 			{
 				vclientsocket.erase(result);
-				closesocket(sclient);
-			}		
+				SocketClose(sclient);
+			}
 			return;
 	    }
 		else
@@ -152,7 +157,7 @@ void CCOMMServer::SendToAllClient(char * buf, int len)
 {
 	//for(int i=1;i<=clientnum;i++)
  //  {
- //      send(clientsocket[i], buf, len, 0); 
+ //      send(clientsocket[i], buf, len, 0);
  //  }
 	for(vector<SOCKET>::iterator iter=vclientsocket.begin();
 		iter<vclientsocket.end();
@@ -163,7 +168,7 @@ void CCOMMServer::SendToAllClient(char * buf, int len)
 }
 
 
-CCOMMClient::CCOMMClient(char *pserveraddr, int serverportid) : 
+CCOMMClient::CCOMMClient(char *pserveraddr, int serverportid) :
       CCOMM(pserveraddr, serverportid)
 {
 	commtype = 0;
@@ -172,10 +177,11 @@ CCOMMClient::CCOMMClient(char *pserveraddr, int serverportid) :
 // 激活通讯对象
 void CCOMMClient::Start( )
 {
-	WSADATA     wsaData;
-	WSAStartup(0x0202, &wsaData); //Initialize Windows socket library
+	//WSADATA     wsaData;
+	//WSAStartup(0x0202, &wsaData); //Initialize Windows socket library
 
-	localsocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);//创建服务器监听套节字。TCP协议
+	//localsocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);//创建服务器监听套节字。TCP协议
+	localsocket = SocketOpen(SOCK_STREAM);
     int nRecvBuf=32*1024;//设置为32K
     setsockopt(localsocket,SOL_SOCKET,SO_RCVBUF,(const char*)&nRecvBuf,sizeof(int));
 	//unsigned long ul = 0;
@@ -192,11 +198,12 @@ void CCOMMClient::Start( )
 	//timeout.tv_usec =0;
 	//select(0, 0, &r, 0, &timeout);
 
-	//int TimeOut=10000;   //设置接受超时3秒 
+	//int TimeOut=10000;   //设置接受超时3秒
 	//::setsockopt(localsocket,SOL_SOCKET,SO_RCVTIMEO,(char *)&TimeOut,sizeof(TimeOut));
 
-    hThreadReceive =(HANDLE)_beginthread(AgentReceive, 0, (void *)this);
-	CloseHandle(hThreadReceive);
+    //hThreadReceive =(HANDLE)_beginthread(AgentReceive, 0, (void *)this);
+	//CloseHandle(hThreadReceive);
+	CLightThread::CreateThread(AgentReceive, (void *)this);
 }
 
 // Receive
@@ -207,28 +214,35 @@ void CCOMMClient::RunReceive( )
 	isnewsocket = true;
 	// 线程嵌套，缓冲一秒
 	//Sleep(1000);
-	while (TRUE)
+	while (true)
 	{
 	   ret = recv(localsocket, s_Message, msgsize, 0);
-	   if(ret==SOCKET_ERROR)
+	   if((ret==SOCKET_ERROR)||(ret==INVALID_SOCKET))
 	   {
-		   Sleep(1000);
+	        //exit(1);
+	        //sleep(1);
 			if (errornum>3)
 			{
+			    exit(1);
 				errornum = 0;
 				printf("\nServer is closed!\n");
 				// 每秒钟尝试重连
 				if (!isnewsocket)
 				{
 					isnewsocket = true;
-					closesocket(localsocket);
-					localsocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);//创建服务器监听套节字。TCP协议
-					connect(localsocket, (struct sockaddr *)&serveraddr, sizeof(SOCKADDR_IN)); //连到刚才指明的服务器上
-					hThreadReceive =(HANDLE)_beginthread(AgentReceive, 0, (void *)this);
-					CloseHandle(hThreadReceive);
+					SocketClose(localsocket);
+					//localsocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);//创建服务器监听套节字。TCP协议
+					//localsocket = SocketOpen(SOCK_STREAM);
+                    //int nRecvBuf=32*1024;//设置为32K
+                    //setsockopt(localsocket,SOL_SOCKET,SO_RCVBUF,(const char*)&nRecvBuf,sizeof(int));
+					//connect(localsocket, (struct sockaddr *)&serveraddr, sizeof(SOCKADDR_IN)); //连到刚才指明的服务器上
+					//hThreadReceive =(HANDLE)_beginthread(AgentReceive, 0, (void *)this);
+					//CloseHandle(hThreadReceive);
+					//CLightThread::CreateThread(AgentReceive, (void *)this);
+					Start();
 					return;
 				}
-				connect(localsocket, (struct sockaddr *)&serveraddr, sizeof(SOCKADDR_IN)); //连到刚才指明的服务器上
+				//connect(localsocket, (struct sockaddr *)&serveraddr, sizeof(SOCKADDR_IN)); //连到刚才指明的服务器上
 			}
 			errornum++;
 			continue;
@@ -236,15 +250,22 @@ void CCOMMClient::RunReceive( )
 	   errornum=0;
 	   isnewsocket = false;
 	   CRTMarketData* pmarketdata=(CRTMarketData* )s_Message;
-	   try 
+	   //cout << pmarketdata->constractname<<endl;
+       std::string ctname(pmarketdata->constractname);
+	   try
 	   {
-			if((pmarketdata!=NULL)
-				&&((pmarketdata->constractname.capacity()!=NULL))
-				&&((pmarketdata->constractname.capacity()!=0))
-				&&( comm_prtmarketdatamap[ pmarketdata->constractname ] != NULL))
+			if((pmarketdata!=NULL)&&(comm_prtmarketdatamap[ctname]!=NULL))
 			{
-				*comm_prtmarketdatamap[pmarketdata->constractname] = *pmarketdata;
-
+				*comm_prtmarketdatamap[ctname] = *pmarketdata;
+                /*cout << pmarketdata->constractname <<endl;
+                cout << pmarketdata->bidprice1 <<endl;
+                cout << pmarketdata->askprice1 <<endl;
+                cout << pmarketdata->openprice <<endl;
+                cout << pmarketdata->highestprice <<endl;
+                cout << pmarketdata->lowestprice <<endl;
+                cout << pmarketdata->volume <<endl;
+                cout << pmarketdata->time <<endl;
+                cout << pmarketdata->rtprice <<endl;*/
 			}
 	   }
 	   catch(exception& e)

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_layout_file>
+	<ActiveTarget name="Release" />
+	<File name="CCommodity.cpp" open="0" top="0" tabpos="2">
+		<Cursor position="1897" topLine="46" />
+	</File>
+	<File name="CCommodity.h" open="0" top="0" tabpos="0">
+		<Cursor position="390" topLine="4" />
+	</File>
+	<File name="CContract.cpp" open="0" top="0" tabpos="3">
+		<Cursor position="3614" topLine="95" />
+	</File>
+	<File name="CContract.h" open="0" top="0" tabpos="0">
+		<Cursor position="1051" topLine="34" />
+	</File>
+	<File name="CPair.cpp" open="0" top="0" tabpos="8">
+		<Cursor position="3527" topLine="37" />
+	</File>
+	<File name="CPair.h" open="0" top="0" tabpos="0">
+		<Cursor position="418" topLine="15" />
+	</File>
+	<File name="CRTMarketData.cpp" open="0" top="0" tabpos="2">
+		<Cursor position="845" topLine="0" />
+	</File>
+	<File name="CRTMarketData.h" open="0" top="0" tabpos="1">
+		<Cursor position="1333" topLine="42" />
+	</File>
+	<File name="CSpreadCostPair.cpp" open="0" top="0" tabpos="3">
+		<Cursor position="6090" topLine="147" />
+	</File>
+	<File name="CSpreadCostPair.h" open="0" top="0" tabpos="0">
+		<Cursor position="834" topLine="15" />
+	</File>
+	<File name="CUser.cpp" open="0" top="0" tabpos="10">
+		<Cursor position="1815" topLine="103" />
+	</File>
+	<File name="CUser.h" open="1" top="1" tabpos="3">
+		<Cursor position="595" topLine="9" />
+	</File>
+	<File name="SSM.cpp" open="0" top="0" tabpos="3">
+		<Cursor position="626" topLine="38" />
+	</File>
+	<File name="SSM.h" open="0" top="0" tabpos="5">
+		<Cursor position="1260" topLine="23" />
+	</File>
+	<File name="SSMCreator.cpp" open="0" top="0" tabpos="11">
+		<Cursor position="14" topLine="0" />
+	</File>
+	<File name="SSMCreator.h" open="0" top="0" tabpos="0">
+		<Cursor position="225" topLine="0" />
+	</File>
+	<File name="stdafx.h" open="0" top="0" tabpos="4">
+		<Cursor position="180" topLine="0" />
+	</File>
+</CodeBlocks_layout_file>

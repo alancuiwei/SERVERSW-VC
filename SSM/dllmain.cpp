@@ -4,7 +4,7 @@
 
 
 
-BOOL APIENTRY DllMain( HMODULE hModule,
+BOOL WINAPI DllMain( HMODULE hModule,
                        DWORD  ul_reason_for_call,
                        LPVOID lpReserved
 					 )
@@ -22,7 +22,7 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 	case DLL_THREAD_DETACH:
 		printf("SSM:DLL_THREAD_DETACH\n");
 		break;
-	case DLL_PROCESS_DETACH:    
+	case DLL_PROCESS_DETACH:
 		for(std::vector<CPair*>::size_type i=0; i<ssm_ppairvector.size();i++)
 		{
 			delete ssm_ppairvector[i];

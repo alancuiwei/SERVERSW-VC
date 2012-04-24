@@ -5,16 +5,17 @@
 
 #pragma once
 
-#include "targetver.h"
+//#include "targetver.h"
 
-#define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
+//#define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
 // Windows Header Files:
 //#include <windows.h>
 #include <string>
 #include <vector>
-#include <process.h>
+//#include <process.h>
 #include <iostream>
-#include "..\\SSM\\SSM.h"
+#include "../SSM/SSM.h"
+#include "../COMM/COMM.h"
 
 
 

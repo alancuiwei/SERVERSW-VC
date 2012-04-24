@@ -9,8 +9,8 @@
 #include "CPair.h"
 #include "CContract.h"
 #include "SSM.h"
-#include <regex>   
-#include <string>   
+#include <regex>
+#include <string.h>
 
 
 
@@ -27,12 +27,12 @@ CContract::CContract(std::string contractname)
    this->contractname = contractname;
    cout<<"contractname:"<<contractname<<"合约新建"<<endl;
    /*计算commodity*/
-    const char *first = contractname.c_str(); 
-    const char *last = first + strlen(first); 
-    std::cmatch mr; 
-	std::regex rx("^[A-Za-z][A-Za-z][0-9]"); 
+    const char *first = contractname.c_str();
+    const char *last = first + strlen(first);
+    /*gcc正则式支持不完全std::cmatch mr;
+	std::regex rx("^[A-Za-z][A-Za-z][0-9]");
 
-	if(std::regex_search(first, last, mr, rx))
+	if(std::regex_match(first, last, mr, rx))
 	{
 		std::string tempstr(first, 2);
 		commodityname=tempstr;
@@ -40,8 +40,18 @@ CContract::CContract(std::string contractname)
 	else
 	{
 		std::string tempstr(first, 1);
-		commodityname=tempstr;	
-	}
+		commodityname=tempstr;
+	}*/
+	if(((first[1]>='a')&&(first[1]<='z'))||((first[1]>='A')&&(first[1]<='Z')))
+	{
+		std::string tempstr(first, 2);
+		commodityname=tempstr;
+    }
+    else
+    {
+		std::string tempstr(first, 1);
+		commodityname=tempstr;
+    }
 	/*创建commodity对象*/
    std::vector<CCommodity*>::iterator iter;
    CCommodity* findcommodity = NULL;
@@ -87,13 +97,15 @@ CContract::~CContract()
 void CContract::initialization(void)
 {
     cout<<"contractname:"<<contractname<<"合约初始化"<<endl;
-   	CMyODBC* pmyodbc = new CMyODBC();  
-	pmyodbc->Connect(); 
+   	//CMySQLAPI* pmyodbc = new CMySQLAPI();
+    //pmyodbc->Init();
+    //pmyodbc->Open();
 	std::string sqlstr = "select daystolasttradedate,daystolastdeliverdate,uplimitprice,downlimitprice,\
 						 contractmarginrate, lendrate from contract_t c, usercontract_t u \
 						 where c.contractid='" + contractname + "' and u.userid='" + \
 						 ssm_puser->username + "' and u.contractid='" + contractname + "'";
-	std::string* contractinfo = pmyodbc->ExecuteSingleQuery(sqlstr.c_str()); 
+	//std::string* contractinfo = pmyodbc->ExecuteSingleQuery(sqlstr.c_str());
+	std::string* contractinfo = SSMDatabase.ExecuteSingleQuery(sqlstr.c_str());
 	if(contractinfo!=NULL)
 	{
 		daystolasttradedate = atoi(contractinfo[0].c_str());
@@ -101,10 +113,10 @@ void CContract::initialization(void)
 		uplimitprice = atof(contractinfo[2].c_str());
 		downlimitprice = atof(contractinfo[3].c_str());
 		actualmarginrate = atof(contractinfo[4].c_str());
-		lendrate = (contractinfo[5] == "")?commodity->lendrate:atof(contractinfo[5].c_str());
+		lendrate = (atof(contractinfo[5].c_str()) < 0)?commodity->lendrate:atof(contractinfo[5].c_str());
 		oilimit = 0;
 		delete [] contractinfo;
 	}
-	delete pmyodbc;
+	//delete pmyodbc;
 }
 

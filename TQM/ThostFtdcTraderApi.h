@@ -14,7 +14,6 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-
 #include "ThostFtdcUserApiStruct.h"
 
 #if defined(ISLIB) && defined(WIN32)
@@ -27,7 +26,7 @@
 #define TRADER_API_EXPORT 
 #endif
 
-class  CThostFtdcTraderSpi
+class CThostFtdcTraderSpi
 {
 public:
 	///当客户端与交易后台建立起通信连接时（还未登录前），该方法被调用。
@@ -45,6 +44,9 @@ public:
 	///心跳超时警告。当长时间未收到报文时，该方法被调用。
 	///@param nTimeLapse 距离上次接收报文的时间
 	virtual void OnHeartBeatWarning(int nTimeLapse){};
+	
+	///客户端认证响应
+	virtual void OnRspAuthenticate(CThostFtdcRspAuthenticateField *pRspAuthenticateField, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {};
 	
 
 	///登录请求响应
@@ -142,6 +144,9 @@ public:
 
 	///请求查询转帐流水响应
 	virtual void OnRspQryTransferSerial(CThostFtdcTransferSerialField *pTransferSerial, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {};
+
+	///请求查询银期签约关系响应
+	virtual void OnRspQryAccountregister(CThostFtdcAccountregisterField *pAccountregister, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {};
 
 	///错误应答
 	virtual void OnRspError(CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {};
@@ -241,6 +246,15 @@ public:
 
 	///期货发起查询银行余额应答
 	virtual void OnRspQueryBankAccountMoneyByFuture(CThostFtdcReqQueryAccountField *pReqQueryAccount, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {};
+
+	///银行发起银期开户通知
+	virtual void OnRtnOpenAccountByBank(CThostFtdcOpenAccountField *pOpenAccount) {};
+
+	///银行发起银期销户通知
+	virtual void OnRtnCancelAccountByBank(CThostFtdcCancelAccountField *pCancelAccount) {};
+
+	///银行发起变更银行账号通知
+	virtual void OnRtnChangeAccountByBank(CThostFtdcChangeAccountField *pChangeAccount) {};
 };
 
 class TRADER_API_EXPORT CThostFtdcTraderApi
@@ -294,6 +308,9 @@ public:
 	///        THOST_TERT_QUICK:只传送登录后公共流的内容
 	///@remark 该方法要在Init方法前调用。若不调用则不会收到公共流的数据。
 	virtual void SubscribePublicTopic(THOST_TE_RESUME_TYPE nResumeType) = 0;
+
+	///客户端认证请求
+	virtual int ReqAuthenticate(CThostFtdcReqAuthenticateField *pReqAuthenticateField, int nRequestID) = 0;
 
 	///用户登录请求
 	virtual int ReqUserLogin(CThostFtdcReqUserLoginField *pReqUserLoginField, int nRequestID) = 0;
@@ -391,6 +408,9 @@ public:
 
 	///请求查询转帐流水
 	virtual int ReqQryTransferSerial(CThostFtdcQryTransferSerialField *pQryTransferSerial, int nRequestID) = 0;
+
+	///请求查询银期签约关系
+	virtual int ReqQryAccountregister(CThostFtdcQryAccountregisterField *pQryAccountregister, int nRequestID) = 0;
 
 	///请求查询签约银行
 	virtual int ReqQryContractBank(CThostFtdcQryContractBankField *pQryContractBank, int nRequestID) = 0;

@@ -8,21 +8,17 @@
 #if !defined(__SSMClassDiagram_CRTMarketData_h)
 #define __SSMClassDiagram_CRTMarketData_h
 
-#ifdef SSM_EXPORTS
-#define SSM_API __declspec(dllexport)
-#else
-#define SSM_API __declspec(dllimport)
-#endif
 
 
 
 class CRTMarketData
 {
 public:
-   CRTMarketData(std::string constractname);
+   CRTMarketData(std::string name);
 
    /* 合约名 */
-   std::string constractname;
+   //std::string constractname;
+   char constractname[31];
    /* 实时价格 */
    double rtprice;
    /* 申卖价一 */
@@ -53,9 +49,8 @@ public:
    double lowestprice;
    /* 成交量 */
    long int volume;
-   std::string time;
-   
-   CConstract* cConstract;
+   //std::string time;
+   char time[9];
 
 protected:
 private:

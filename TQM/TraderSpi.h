@@ -1,11 +1,6 @@
 #pragma once
-#ifdef FUTURESDATA_EXPORTS
-#define FUTURESDATA_API __declspec(dllexport)
-#else
-#define FUTURESDATA_API __declspec(dllimport)
-#endif
 #include "ThostFtdcTraderApi.h"
-#pragma comment(lib, "..\\Debug\\thosttraderapi.lib")
+//#pragma comment(lib, "..\\Debug\\thosttraderapi.lib")
 class  CTraderSpi : public CThostFtdcTraderSpi
 {
 public:

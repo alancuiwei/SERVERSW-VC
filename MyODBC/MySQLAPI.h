@@ -1,21 +1,16 @@
 #pragma once
-#ifdef MYODBC_EXPORTS
-#define MYODBC_API __declspec(dllexport)
-#else
-#define MYODBC_API __declspec(dllimport)
-#endif
-#include "winsock.h"
+#include <sys/socket.h>
 //#include "iostream.h"
 #include <string>
-#include "include/mysql.h"
+#include "mysql/mysql.h"
 #include <string>
 #include <iostream>
-#include <vector>  
-#pragma comment(lib, "ws2_32.lib")
-#pragma comment(lib, "../Debug/libmysql.lib")
+#include <vector>
+//#pragma comment(lib, "ws2_32.lib")
+//#pragma comment(lib, "../Debug/libmysql.lib")
 using namespace std;
 
-MYODBC_API typedef enum
+typedef enum
 {
 	SQLCONNECT_SUCCESS = 0,
 	SQLCONNECT_FAILURE,
@@ -24,7 +19,7 @@ MYODBC_API typedef enum
 	SQLEXPECTSINGLEROW_FAILURE,
 } ENUM_SQLREPORTTYPE;
 
-class MYODBC_API  CMySQLAPI
+class   CMySQLAPI
 {
 private:
 	MYSQL mydata;                      //MySQL对象，必备的一个数据结构
@@ -52,7 +47,7 @@ public:
 	//关闭数据库
 	void Close();
 	//查询多条结果
-	vector<string*> ExecuteQueryVector(const char* pSql); 
+	vector<string*> ExecuteQueryVector(const char* pSql);
 	//查询一条结果
 	string* ExecuteSingleQuery(const char* pSql);
 	//执行查询数目
@@ -62,10 +57,10 @@ public:
 	//报告执行结果
 	void ReportResult(ENUM_SQLREPORTTYPE flag);
 	//报告错误类型
-    void CheckError(); 
-	
+    void CheckError();
 
-	            
-	
+
+
+
 };
 

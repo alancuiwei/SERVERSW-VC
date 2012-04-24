@@ -8,17 +8,11 @@
 #if !defined(__SSMClassDiagram_CPair_h)
 #define __SSMClassDiagram_CPair_h
 
-#ifdef SSM_EXPORTS
-#define SSM_API __declspec(dllexport)
-#else
-#define SSM_API __declspec(dllimport)
-#endif
-
 #include "CContract.h"
 
 class CUser;
 
-class SSM_API CPair
+class  CPair
 {
 public:
 	CPair(){};

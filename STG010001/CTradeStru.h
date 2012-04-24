@@ -1,11 +1,7 @@
 #pragma once
-#ifdef STG010001_EXPORTS
-#define STG010001_API __declspec(dllexport)
-#else
-#define STG010001_API __declspec(dllimport)
-#endif
 
-class STG010001_API CTradeStru
+
+class  CTradeStru
 {
 public:
    /* 准备买入点 */

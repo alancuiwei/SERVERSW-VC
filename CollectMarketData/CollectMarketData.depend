@@ -1,0 +1,249 @@
+# depslib dependency file v1.0
+1189868556 source:d:\users\administrator\documents\codeblocks\zr-cross\collectmarketdata\main.cpp
+	<iostream>
+
+1333184699 
+
+1321250626 source:d:\users\administrator\documents\codeblocks\zr-cross\collectmarketdata\stdafx.cpp
+	"stdafx.h"
+
+1331824461 d:\users\administrator\documents\codeblocks\zr-cross\collectmarketdata\stdafx.h
+	"targetver.h"
+	<stdio.h>
+	<tchar.h>
+	"..\\TQM\\TQM.h"
+	"..\\MyODBC\\MyODBC.h"
+
+1331824461 C\\MyODBC.h"
+
+1333201729 d:\users\administrator\documents\codeblocks\zr-cross\collectmarketdata\targetver.h
+
+1333200734 d:\users\administrator\documents\codeblocks\zr-cross\\tqm\\tqm.h
+	"stdafx.h"
+	"MdSpi.h"
+	"TraderSpi.h"
+	"CRTMarketData.h"
+
+1333200734 Data.h"
+
+1333199918 d:\users\administrator\documents\codeblocks\zr-cross\\tqm\\stdafx.h
+	"targetver.h"
+	<windows.h>
+	<map>
+	<tchar.h>
+	<string>
+	<stdio.h>
+	<stdarg.h>
+	<wtypes.h>
+	<iostream>
+	<stdio.h>
+	<vector>
+	<iostream>
+	<fstream>
+	<algorithm>
+	<process.h>
+	"..\\COMM\\COMM.h"
+	"..\\MyODBC\\MySQLAPI.h"
+
+1333199918 C\\MySQLAPI.h"
+
+1333176839 d:\users\administrator\documents\codeblocks\zr-cross\\tqm\\targetver.h
+
+1333245612 d:\users\administrator\documents\codeblocks\zr-cross\\tqm\\mdspi.h
+	"ThostFtdcMdApi.h"
+
+1333245612 MdApi.h"
+
+1251972505 d:\users\administrator\documents\codeblocks\zr-cross\\tqm\\thostftdcmdapi.h
+	"ThostFtdcUserApiStruct.h"
+
+1251971043 UserApiStruct.h"
+
+1251972502 d:\users\administrator\documents\codeblocks\zr-cross\\tqm\\thostftdcuserapistruct.h
+	"ThostFtdcUserApiDataType.h"
+
+1251972502 UserApiDataType.h"
+
+1251972501 d:\users\administrator\documents\codeblocks\zr-cross\\tqm\\thostftdcuserapidatatype.h
+
+1333201531 d:\users\administrator\documents\codeblocks\zr-cross\\tqm\\traderspi.h
+	"ThostFtdcTraderApi.h"
+
+1333201531 TraderApi.h"
+
+1251971043 d:\users\administrator\documents\codeblocks\zr-cross\\tqm\\thostftdctraderapi.h
+	"ThostFtdcUserApiStruct.h"
+
+1332482048 d:\users\administrator\documents\codeblocks\zr-cross\\tqm\\crtmarketdata.h
+
+1333184784 d:\users\administrator\documents\codeblocks\zr-cross\\myodbc\\myodbc.h
+	"MySQLAPI.h"
+	<iostream>
+	<sql.h>
+	<sqlext.h>
+	<sqltypes.h>
+	<vector>
+	<string>
+
+1333184699 d:\users\administrator\documents\codeblocks\zr-cross\\myodbc\\mysqlapi.h
+	"winsock.h"
+	<string>
+	"include/mysql.h"
+	<string>
+	<iostream>
+	<vector>
+
+1310562542 d:\users\administrator\documents\codeblocks\zr-cross\\myodbc\\include\mysql.h
+	<standards.h>
+	<sys/types.h>
+	<winsock2.h>
+	"mysql_version.h"
+	"mysql_com.h"
+	"mysql_time.h"
+	"my_list.h"
+	"typelib.h"
+	"my_alloc.h"
+
+1310562542 h"
+
+1310565002 d:\users\administrator\documents\codeblocks\zr-cross\\myodbc\\include\mysql_version.h
+	<custom_conf.h>
+
+1310565002 nf.h>
+
+1310562542 d:\users\administrator\documents\codeblocks\zr-cross\\myodbc\\include\mysql_com.h
+
+1310562542 d:\users\administrator\documents\codeblocks\zr-cross\\myodbc\\include\mysql_time.h
+
+1310562542 d:\users\administrator\documents\codeblocks\zr-cross\\myodbc\\include\my_list.h
+
+1310562542 d:\users\administrator\documents\codeblocks\zr-cross\\myodbc\\include\typelib.h
+	"my_alloc.h"
+
+1310562542 d:\users\administrator\documents\codeblocks\zr-cross\\myodbc\\include\my_alloc.h
+
+1333201847 source:d:\users\administrator\documents\codeblocks\zr-cross\collectmarketdata\collectmarketdata.cpp
+	"stdafx.h"
+	<time.h>
+	<windows.h>
+	<unistd.h>
+
+1334413885 source:/home/wukang/Documents/zr-cross/CollectMarketData/CollectMarketData.cpp
+	"../TQM/TQM.h"
+	<stdio.h>
+	<time.h>
+	<unistd.h>
+
+1333623090 /home/wukang/Documents/zr-cross/CollectMarketData/stdafx.h
+	"targetver.h"
+	<stdio.h>
+	"../TQM/TQM.h"
+
+1333201729 /home/wukang/Documents/zr-cross/CollectMarketData/targetver.h
+
+1334413845 /home/wukang/Documents/zr-cross/TQM/TQM.h
+	<map>
+	<string.h>
+	<stdio.h>
+	<stdarg.h>
+	<time.h>
+	<iostream>
+	<stdio.h>
+	<vector>
+	<iostream>
+	<fstream>
+	<algorithm>
+	<pthread.h>
+	<unistd.h>
+	<sys/errno.h>
+	"MdSpi.h"
+	"TraderSpi.h"
+	"CRTMarketData.h"
+
+1333679716 /home/wukang/Documents/zr-cross/COMM/COMM.h
+	<process.h>
+	<WINSOCK2.H>
+	<netinet/in.h>
+	<sys/socket.h>
+	<sys/types.h>
+	<arpa/inet.h>
+	<pthread.h>
+	"sock_wrap.h"
+	"lightthread.h"
+	<vector>
+	<map>
+	<iostream>
+	"CRTMarketData.h"
+
+1333589863 /home/wukang/Documents/zr-cross/COMM/sock_wrap.h
+	"platform.h"
+	<winsock2.h>
+	<netinet/in.h>
+	<sys/socket.h>
+	<sys/types.h>
+
+1333589888 /home/wukang/Documents/zr-cross/COMM/platform.h
+
+1333679598 /home/wukang/Documents/zr-cross/COMM/lightthread.h
+	"platform.h"
+	<pthread.h>
+
+1333784015 /home/wukang/Documents/zr-cross/COMM/CRTMarketData.h
+	<string>
+
+1333637755 /home/wukang/Documents/zr-cross/MyODBC/MySQLAPI.h
+	<sys/socket.h>
+	<string>
+	"mysql/mysql.h"
+	<string>
+	<iostream>
+	<vector>
+
+1330374332 /usr/include/mysql/mysql.h
+	<standards.h>
+	<sys/types.h>
+	<winsock2.h>
+	"mysql_version.h"
+	"mysql_com.h"
+	"mysql_time.h"
+	"my_list.h"
+	"typelib.h"
+	"my_alloc.h"
+
+1330374332 /usr/include/mysql/mysql_version.h
+	<custom_conf.h>
+
+1330374332 /usr/include/mysql/mysql_com.h
+
+1330374332 /usr/include/mysql/mysql_time.h
+
+1330374332 /usr/include/mysql/my_list.h
+
+1330374332 /usr/include/mysql/typelib.h
+	"my_alloc.h"
+
+1330374332 /usr/include/mysql/my_alloc.h
+
+1333614940 /home/wukang/Documents/zr-cross/TQM/MdSpi.h
+	"ThostFtdcMdApi.h"
+
+1333079268 /home/wukang/Documents/zr-cross/TQM/ThostFtdcMdApi.h
+	"ThostFtdcUserApiStruct.h"
+
+1333079268 /home/wukang/Documents/zr-cross/TQM/ThostFtdcUserApiStruct.h
+	"ThostFtdcUserApiDataType.h"
+
+1333079268 /home/wukang/Documents/zr-cross/TQM/ThostFtdcUserApiDataType.h
+
+1333201531 /home/wukang/Documents/zr-cross/TQM/TraderSpi.h
+	"ThostFtdcTraderApi.h"
+
+1333079268 /home/wukang/Documents/zr-cross/TQM/ThostFtdcTraderApi.h
+	"ThostFtdcUserApiStruct.h"
+
+1333784020 /home/wukang/Documents/zr-cross/TQM/CRTMarketData.h
+	<string>
+
+1321250626 source:/home/wukang/Documents/zr-cross/CollectMarketData/stdafx.cpp
+	"stdafx.h"
+

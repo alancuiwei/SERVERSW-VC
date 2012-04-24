@@ -8,6 +8,7 @@
 #include "stdafx.h"
 #include "CContract.h"
 #include "CRTMarketData.h"
+#include <string.h>
 
 ////////////////////////////////////////////////////////////////////////
 // Name:       CRTMarketData::CRTMarketData(std::string constractname)
@@ -17,8 +18,9 @@
 // Return:     void
 ////////////////////////////////////////////////////////////////////////
 
-CRTMarketData::CRTMarketData(std::string constractname)
+CRTMarketData::CRTMarketData(std::string name)
 {
-   this->constractname = constractname;
+   //this->constractname = constractname;
+   strcpy(this->constractname, name.c_str());
    cout<<"constractname:"<<constractname<<"实时行情数据新建"<<endl;
 }

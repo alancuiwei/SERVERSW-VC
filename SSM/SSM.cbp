@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="SSM" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/SSM" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-Wall" />
+					<Add option="-g" />
+					<Add option="-DBUILD_DLL" />
+				</Compiler>
+				<Linker>
+					<Add library="/home/wukang/Documents/zr-cross/MyODBC/bin/Debug/MyODBC.so" />
+					<Add library="/home/wukang/Documents/zr-cross/COMM/bin/Debug/COMM.so" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="../ZRApp/lib/SSM" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-Wall" />
+					<Add option="-DBUILD_DLL" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="../ZRApp/lib/MyODBC.so" />
+					<Add library="../ZRApp/lib/COMM.so" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-std=c++0x" />
+			<Add option="-fPIC" />
+		</Compiler>
+		<Unit filename="CCommodity.cpp" />
+		<Unit filename="CCommodity.h" />
+		<Unit filename="CContract.cpp" />
+		<Unit filename="CContract.h" />
+		<Unit filename="CPair.cpp" />
+		<Unit filename="CPair.h" />
+		<Unit filename="CRTMarketData.cpp" />
+		<Unit filename="CRTMarketData.h" />
+		<Unit filename="CSpreadCostPair.cpp" />
+		<Unit filename="CSpreadCostPair.h" />
+		<Unit filename="CUser.cpp" />
+		<Unit filename="CUser.h" />
+		<Unit filename="SSM.cpp" />
+		<Unit filename="SSM.h" />
+		<Unit filename="SSMCreator.cpp" />
+		<Unit filename="SSMCreator.h" />
+		<Unit filename="stdafx.h" />
+		<Unit filename="targetver.h" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

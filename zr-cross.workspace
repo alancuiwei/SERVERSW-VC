@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_workspace_file>
+	<Workspace title="zr-cross">
+		<Project filename="CollectMarketData/CollectMarketData.cbp" />
+		<Project filename="MyODBC/MyODBC.cbp" />
+		<Project filename="COMM/COMM.cbp" />
+		<Project filename="TQM/TQM.cbp" />
+		<Project filename="SSMtest/SSMtest.cbp" />
+		<Project filename="testCTP/testCTP.cbp" />
+		<Project filename="SSM/SSM.cbp" />
+		<Project filename="STG010001/STG010001.cbp" />
+		<Project filename="STG010001test/STG010001test.cbp" active="1" />
+	</Workspace>
+</CodeBlocks_workspace_file>

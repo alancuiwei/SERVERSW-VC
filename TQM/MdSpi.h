@@ -1,13 +1,8 @@
 //#include "futuresdata.h"
 
 #pragma once
-#ifdef FUTURESDATA_EXPORTS
-#define FUTURESDATA_API __declspec(dllexport)
-#else
-#define FUTURESDATA_API __declspec(dllimport)
-#endif
 #include "ThostFtdcMdApi.h"
-#pragma comment(lib, "..\\Debug\\thostmduserapi.lib")
+//#pragma comment(lib, "thostmduserapi.lib")
 
 class  CMdSpi : public CThostFtdcMdSpi
 {
@@ -33,13 +28,13 @@ public:
 
 	///登录请求响应
 	virtual void OnRspUserLogin(CThostFtdcRspUserLoginField *pRspUserLogin,	CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast);
-	
+
 	///订阅行情请求
 	virtual void SubscribeMarketData(char *ppInstrumentID[], int nCount);
 
 	///订阅行情请求
 	virtual void UnSubscribeMarketData(char *pInstrumentID[], int nCount);
-	
+
 	///订阅行情应答
 	virtual void OnRspSubMarketData(CThostFtdcSpecificInstrumentField *pSpecificInstrument, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast);
 

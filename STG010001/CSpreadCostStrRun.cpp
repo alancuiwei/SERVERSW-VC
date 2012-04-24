@@ -1,15 +1,21 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "CSpreadCostStrRun.h"
 #include <fstream>
 #include <sstream>
-HANDLE g_hEvent;
-
+#include <string>
+#include <vector>
+//#include <process.h>
+#include <iostream>
+#include "../SSM/SSM.h"
+#include "../COMM/COMM.h"
+//HANDLE g_hEvent;
 
 CSpreadCostStrRun::CSpreadCostStrRun(std::string strategyid):
 CStrategyRun(strategyid)
 {
-	
+
 }
+
 
 CSpreadCostStrRun::~CSpreadCostStrRun()
 {
@@ -31,13 +37,14 @@ void CSpreadCostStrRun::Run(void)
   for(unsigned i=0; i<runtradeparameters.size();i++)
   {
       runtradeparameters[i]->startprice = runpairs[i]->computeannualrateofreturn( );
-	  cout<<runtradeparameters[i]->startprice<<endl;
+	  cout<<runpairs[i]->firstcontract->contractname<<":"<<runtradeparameters[i]->startprice<<endl;
 	  // 保存到xml文件中
 	  xmlss<<"<pair>"<< endl;
 	  xmlss<<"<name>"<<runpairs[i]->firstcontract->contractname <<"-"
 		  <<runpairs[i]->secondcontract->contractname<<"</name>" <<endl;
-	  xmlss<<"<time>"<<((runpairs[i]->firstcontract->marketdata->time>runpairs[i]->secondcontract->marketdata->time)?
-		  runpairs[i]->firstcontract->marketdata->time:runpairs[i]->secondcontract->marketdata->time)<<" "<<"</time>"<<endl;
+      std::string time1(runpairs[i]->firstcontract->marketdata->time);
+      std::string time2(runpairs[i]->secondcontract->marketdata->time);
+	  xmlss<<"<time>"<<((time1>time2)?time1:time2)<<" "<<"</time>"<<endl;
 	  xmlss<<"<firstprice>"<<runpairs[i]->firstcontract->marketdata->rtprice<<"</firstprice>"<<endl;
 	  xmlss<<"<secondprice>"<<runpairs[i]->secondcontract->marketdata->rtprice<<"</secondprice>"<<endl;
 	  xmlss<<"<diffprice>"<<runpairs[i]->secondcontract->marketdata->rtprice-runpairs[i]->firstcontract->marketdata->rtprice<<"</diffprice>"<<endl;
@@ -114,8 +121,8 @@ void CSpreadCostStrRun::Run(void)
 		}
 
 		char filename[128] = "..//Debug//SpreadCost//CSpreadCostStrRun.txt";
-		/*sprintf(filename, "..//Debug//%s-%s_%s.txt", 
-				runpairs[i]->firstcontractname.c_str(), 
+		/*sprintf(filename, "..//Debug//%s-%s_%s.txt",
+				runpairs[i]->firstcontractname.c_str(),
 				runpairs[i]->secondcontractname.c_str(),
 				runpairs[i]->firstcontract->marketdata->time.c_str());
 		std::string filedir="..//Debug//SpreadCost//" +  runpairs[i]->firstcontractname
@@ -156,7 +163,8 @@ void CSpreadCostStrRun::Run(void)
       }
   }
   xmlss<<"</pairstrade>"<< endl;
-  char xmlfilename[128] = "C:\\Sites\\tongtianshun\\app\\assets\\images\\CSpreadCostStrRunOnTime.xml";//".//SpreadCost//CSpreadCostStrRunOnTime.xml";
+  //char xmlfilename[128] = "CSpreadCostStrRunOnTime.xml";//".//SpreadCost//CSpreadCostStrRunOnTime.xml";
+  char xmlfilename[128] =  "../tongtianshun/app/assets/images/CSpreadCostStrRunOnTime.xml";
   xmlfs.open(xmlfilename, ios::trunc);
   xmlfs<<xmlss.str();
   xmlfs.close();
@@ -164,17 +172,23 @@ void CSpreadCostStrRun::Run(void)
 
 void CSpreadCostStrRun::Start()
 {
-	g_hEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
-    hThread =(HANDLE)_beginthread(Agent, 0, (void *)this);
-	CloseHandle(hThread);
+	//g_hEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
+    //hThread =(HANDLE)_beginthread(Agent, 0, (void *)this);
+	//CloseHandle(hThread);
+	CLightThread::CreateThread(Agent, (void *)this);
+
 }
 
-void CSpreadCostStrRun::Agent(void *p)
+void* CSpreadCostStrRun::Agent(void *p)
 {
     CSpreadCostStrRun *agt = (CSpreadCostStrRun *)p;
 	// 每秒钟执行一次
-	while(WaitForSingleObject(g_hEvent,1000)!=WAIT_OBJECT_0) 
+	//while(WaitForSingleObject(g_hEvent,1000)!=WAIT_OBJECT_0)
+	while(true)
+	{
         agt->Run();
+        sleep(1);
+    }
 }
 
 HANDLE CSpreadCostStrRun::GetThread()

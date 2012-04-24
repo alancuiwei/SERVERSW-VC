@@ -8,9 +8,13 @@
 #include "CUser.h"
 #include <time.h>
 #include "SSM.h"
-
-//#include <odbcinst.h> 
-//#import "..//Debug//msado15.dll" 
+#if defined(WIN32) || defined(WIN64)
+#include <windows.h>
+#else
+#include <unistd.h>
+#endif
+//#include <odbcinst.h>
+//#import "..//Debug//msado15.dll"
 
 ////////////////////////////////////////////////////////////////////////
 // Name:       CUser::CUser(std::string username)
@@ -23,7 +27,7 @@
 
 CUser::CUser(std::string username)
 {
-   printf("%s\n",__FUNCTION__);
+   //printf("%s\n",__FUNCTION__);
    this->username = username;
    computeallowpairs( );
 }
@@ -38,10 +42,12 @@ CUser::CUser(std::string username)
 void CUser::initialization(void)
 {
     cout<<"CUser:"<<username<<"用户初始化"<<endl;
-	CMyODBC* pmyodbc = new CMyODBC();  
-	pmyodbc->Connect();
+	//CMySQLAPI* pmyodbc = new CMySQLAPI();
+    //pmyodbc->Init();
+    //pmyodbc->Open();
 	std::string sqlstr = "select usertype,ibbranchid from user_t where userid='" + username + "'";
-	std::string* userinfo = pmyodbc->ExecuteSingleQuery(sqlstr.c_str()); 
+	//std::string* userinfo = pmyodbc->ExecuteSingleQuery(sqlstr.c_str());
+	std::string* userinfo = SSMDatabase.ExecuteSingleQuery(sqlstr.c_str());
 	if(userinfo!=NULL)
 	{
 		usertype = atoi(userinfo[0].c_str());
@@ -50,7 +56,7 @@ void CUser::initialization(void)
 	}
 	cout<<"usertype:"<<usertype<<endl;
 	cout<<"ibbranchid:"<<ibbranchid<<endl;
-	delete pmyodbc;
+	//delete pmyodbc;
 	//tqm_prtmarketdatamap = ssm_prtmarketdatamap;
 	comm_prtmarketdatamap = ssm_prtmarketdatamap;
 }
@@ -65,39 +71,43 @@ void CUser::initialization(void)
 
 void CUser::computeallowpairs(void)
 {
-	printf("%s\n",__FUNCTION__);
+	//printf("%s\n",__FUNCTION__);
 	/*取得当前日期*/
 	struct tm newtime;
-	time_t curtime = time(NULL); 
-	localtime_s(&newtime,&curtime);
-	char tmp[64];    
-	strftime( tmp, sizeof(tmp), "'%Y-%m-%d'", &newtime );    
+	const time_t curtime = time(NULL);
+	//localtime_s(&newtime,&curtime);
+	newtime = *localtime(&curtime);
+	char tmp[64];
+	strftime( tmp, sizeof(tmp), "'%Y-%m-%d'", &newtime );
 	std::string datestr = tmp;
 	/*查询数据库，得到productid和对应合约名*/
  	std::string sqlstr = "select * from userright_t where userid='" +
 		username + "'" + "and invaliddate > " + datestr;
 
-	CMyODBC* pmyodbc = new CMyODBC();  
-	pmyodbc->Connect();  
-	vector<string* > userrightvector = pmyodbc->ExecuteQueryVector(sqlstr.c_str());  
-    vector<string* >::iterator rightiter;  
+	//CMySQLAPI* pmyodbc = new CMySQLAPI();
+    //pmyodbc->Init();
+    //pmyodbc->Open();
+	//vector<string* > userrightvector = pmyodbc->ExecuteQueryVector(sqlstr.c_str());
+	vector<string* > userrightvector = SSMDatabase.ExecuteQueryVector(sqlstr.c_str());
+    vector<string* >::iterator rightiter;
 	sqlstr = "select * from arbitragecontractpairs_t where rightid in  (";
-    for(rightiter=userrightvector.begin();rightiter<userrightvector.end();rightiter++)  
-    {  
-       /*for(int i=0;i<=pmyodbc->GetColCount();i++)  
-       {  
-           cout<<(*rightiter)[i]<<" ";  
+    for(rightiter=userrightvector.begin();rightiter<userrightvector.end();rightiter++)
+    {
+       /*for(int i=0;i<=pmyodbc->GetColCount();i++)
+       {
+           cout<<(*rightiter)[i]<<" ";
        }
        cout<<" "<<endl;*/
 	   allowproductids.push_back((*rightiter)[1]);
 	   sqlstr = sqlstr + "'" + (*rightiter)[1] + "',";
 	   delete [] (*rightiter);
-    } 
+    }
 	sqlstr = sqlstr + "'')";
 	userrightvector.clear();
-	userrightvector = pmyodbc->ExecuteQueryVector(sqlstr.c_str()); 
-    for(rightiter=userrightvector.begin();rightiter<userrightvector.end();rightiter++)  
-    {  
+	//userrightvector = pmyodbc->ExecuteQueryVector(sqlstr.c_str());
+	userrightvector = SSMDatabase.ExecuteQueryVector(sqlstr.c_str());
+    for(rightiter=userrightvector.begin();rightiter<userrightvector.end();rightiter++)
+    {
 	   CPair* ppair = SSMcreator.CreatePair((*rightiter)[0], (*rightiter)[1], (*rightiter)[2]);
 	   ppair->uservector.push_back(this);
 	   if( ppair != NULL )
@@ -106,6 +116,6 @@ void CUser::computeallowpairs(void)
 	   }
 	   delete [] (*rightiter);
     }
-	delete pmyodbc;
+	//delete pmyodbc;
 }
 

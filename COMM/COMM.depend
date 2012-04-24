@@ -1,0 +1,90 @@
+# depslib dependency file v1.0
+1330579892 source:d:\users\administrator\documents\codeblocks\zr-cross\comm\dllmain.cpp
+	"stdafx.h"
+
+1330579892 
+
+1330672210 d:\users\administrator\documents\codeblocks\zr-cross\comm\stdafx.h
+	"targetver.h"
+	<windows.h>
+
+1330672210 >
+
+1333177001 d:\users\administrator\documents\codeblocks\zr-cross\comm\targetver.h
+
+1330579892 source:d:\users\administrator\documents\codeblocks\zr-cross\comm\stdafx.cpp
+	"stdafx.h"
+
+1334408357 source:/home/wukang/Documents/zr-cross/COMM/COMM.cpp
+	<algorithm>
+	"COMM.h"
+	<stdio.h>
+	<string.h>
+	<sys/wait.h>
+
+1333500487 /home/wukang/Documents/zr-cross/COMM/stdafx.h
+	"targetver.h"
+
+1333177001 /home/wukang/Documents/zr-cross/COMM/targetver.h
+
+1334241718 /home/wukang/Documents/zr-cross/COMM/COMM.h
+	<process.h>
+	<WINSOCK2.H>
+	<netinet/in.h>
+	<sys/socket.h>
+	<sys/types.h>
+	<arpa/inet.h>
+	<pthread.h>
+	"sock_wrap.h"
+	"lightthread.h"
+	<vector>
+	<map>
+	<iostream>
+	"CRTMarketData.h"
+
+1333784015 /home/wukang/Documents/zr-cross/COMM/CRTMarketData.h
+	<string>
+
+1333594866 source:/home/wukang/Documents/zr-cross/COMM/dllmain.cpp
+	"stdafx.h"
+
+1330579892 source:/home/wukang/Documents/zr-cross/COMM/stdafx.cpp
+	"stdafx.h"
+
+1333589863 /home/wukang/Documents/zr-cross/COMM/sock_wrap.h
+	"platform.h"
+	<winsock2.h>
+	<netinet/in.h>
+	<sys/socket.h>
+	<sys/types.h>
+
+1333589888 /home/wukang/Documents/zr-cross/COMM/platform.h
+
+1333679598 /home/wukang/Documents/zr-cross/COMM/lightthread.h
+	"platform.h"
+	<pthread.h>
+
+1333679562 source:/home/wukang/Documents/zr-cross/COMM/lightthread.cpp
+	"lightthread.h"
+	<pthread.h>
+	<unistd.h>
+	<sys/errno.h>
+	<stdio.h>
+	<time.h>
+	<string.h>
+
+1333610714 source:/home/wukang/Documents/zr-cross/COMM/sock_wrap.cpp
+	"platform.h"
+	<stdio.h>
+	<string.h>
+	<fcntl.h>
+	"lightthread.h"
+	"sock_wrap.h"
+	<windows.h>
+	<stdlib.h>
+	<errno.h>
+	<unistd.h>
+	<sys/socket.h>
+	<netinet/in.h>
+	<arpa/inet.h>
+

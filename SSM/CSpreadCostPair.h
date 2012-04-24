@@ -8,16 +8,11 @@
 
 #if !defined(__Arbitrage_Client_CSpreadCostPair_h)
 #define __Arbitrage_Client_CSpreadCostPair_h
-#ifdef SSM_EXPORTS
-#define SSM_API __declspec(dllexport)
-#else
-#define SSM_API __declspec(dllimport)
-#endif
 
 
 #include "CPair.h"
 
-class SSM_API  CSpreadCostPair : public CPair
+class   CSpreadCostPair : public CPair
 {
 public:
 	CSpreadCostPair();
@@ -27,7 +22,7 @@ public:
    /* 计算存储费用 */
    double computestoragefee(void);
    /* 计算存储天数 */
-   int computestoragedays(void);
+   double computestoragedays(void);
    /* 计算增值税率 */
    double computevatrate(void);
    /* 计算前期合约保证金比例 */
@@ -62,7 +57,7 @@ public:
 
 
    /* 存储天数 */
-   int storagedays;
+   double storagedays;
    /* 近期合约保证金比例 */
    double firstcontractmargin;
    /* 远期合约保证金比例 */

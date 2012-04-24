@@ -1,0 +1,119 @@
+# depslib dependency file v1.0
+1334410299 source:/home/wukang/Documents/zr-cross/STG010001test/STG010001test.cpp
+	<fstream>
+	<time.h>
+	<stdio.h>
+	<stdlib.h>
+	<iostream>
+	<string>
+	<vector>
+	<map>
+	"../COMM/COMM.h"
+	"../SSM/SSM.h"
+	"../STG010001/STG010001.h"
+
+1333689610 /home/wukang/Documents/zr-cross/STG010001test/stdafx.h
+	<stdio.h>
+	<stdlib.h>
+	<iostream>
+	<string>
+	<vector>
+	<map>
+	"../COMM/COMM.h"
+	"../SSM/SSM.h"
+	"../STG010001/STG010001.h"
+
+1334241718 /home/wukang/Documents/zr-cross/COMM/COMM.h
+	<process.h>
+	<WINSOCK2.H>
+	<netinet/in.h>
+	<sys/socket.h>
+	<sys/types.h>
+	<arpa/inet.h>
+	<pthread.h>
+	"sock_wrap.h"
+	"lightthread.h"
+	<vector>
+	<map>
+	<iostream>
+	"CRTMarketData.h"
+
+1333589863 /home/wukang/Documents/zr-cross/COMM/sock_wrap.h
+	"platform.h"
+	<winsock2.h>
+	<netinet/in.h>
+	<sys/socket.h>
+	<sys/types.h>
+
+1333589888 /home/wukang/Documents/zr-cross/COMM/platform.h
+
+1333679598 /home/wukang/Documents/zr-cross/COMM/lightthread.h
+	"platform.h"
+	<pthread.h>
+
+1333784015 /home/wukang/Documents/zr-cross/COMM/CRTMarketData.h
+	<string>
+
+1333684606 /home/wukang/Documents/zr-cross/SSM/SSM.h
+	"CUser.h"
+	"CPair.h"
+	"CContract.h"
+	"CCommodity.h"
+	"SSMCreator.h"
+	"CSpreadCostPair.h"
+
+1334242253 /home/wukang/Documents/zr-cross/SSM/CUser.h
+	"CPair.h"
+
+1333684606 /home/wukang/Documents/zr-cross/SSM/CPair.h
+	"CContract.h"
+
+1333724250 /home/wukang/Documents/zr-cross/SSM/CContract.h
+	"CCommodity.h"
+
+1333684606 /home/wukang/Documents/zr-cross/SSM/CCommodity.h
+	"stdafx.h"
+
+1333684311 /home/wukang/Documents/zr-cross/SSM/stdafx.h
+	<string>
+	<vector>
+	<map>
+	<iostream>
+	<algorithm>
+	"../COMM/COMM.h"
+	"../MyODBC/MySQLAPI.h"
+	"../TQM/CRTMarketData.h"
+	"SSM.h"
+	<windows.h>
+	<unistd.h>
+	<stdio.h>
+
+1333637755 /home/wukang/Documents/zr-cross/MyODBC/MySQLAPI.h
+	<sys/socket.h>
+	<string>
+	"mysql/mysql.h"
+	<string>
+	<iostream>
+	<vector>
+
+1333784020 /home/wukang/Documents/zr-cross/TQM/CRTMarketData.h
+	<string>
+
+1320153490 /home/wukang/Documents/zr-cross/SSM/SSMCreator.h
+	"SSM.h"
+
+1333724389 /home/wukang/Documents/zr-cross/SSM/CSpreadCostPair.h
+	"CPair.h"
+
+1333689266 /home/wukang/Documents/zr-cross/STG010001/STG010001.h
+	"CTradeStru.h"
+	"CSpreadCostStrRun.h"
+
+1333688609 /home/wukang/Documents/zr-cross/STG010001/CTradeStru.h
+
+1333689266 /home/wukang/Documents/zr-cross/STG010001/CSpreadCostStrRun.h
+	"CStrategyRun.h"
+
+1333688609 /home/wukang/Documents/zr-cross/STG010001/CStrategyRun.h
+	"CTradeStru.h"
+

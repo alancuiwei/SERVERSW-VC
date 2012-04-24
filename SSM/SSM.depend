@@ -1,0 +1,316 @@
+# depslib dependency file v1.0
+1333268629 source:d:\users\administrator\documents\codeblocks\zr-cross\ssm\ccommodity.cpp
+	"stdafx.h"
+	"CContract.h"
+	"CCommodity.h"
+
+1333257506 y.h"
+
+1333251638 d:\users\administrator\documents\codeblocks\zr-cross\ssm\stdafx.h
+	<string>
+	<vector>
+	<map>
+	<iostream>
+	<algorithm>
+	"../COMM/COMM.h"
+	"../MyODBC/MyODBC.h"
+	"../TQM/CRTMarketData.h"
+	"SSM.h"
+	<windows.h>
+	<unistd.h>
+	<stdio.h>
+
+1319506238 
+
+1333248946 d:\users\administrator\documents\codeblocks\zr-cross\ssm\targetver.h
+
+1333249695 d:\users\administrator\documents\codeblocks\zr-cross\comm\comm.h
+	<process.h>
+	<WINSOCK2.H>
+	<vector>
+	<map>
+	<iostream>
+	"CRTMarketData.h"
+
+1320154178 Data.h"
+
+1332482072 d:\users\administrator\documents\codeblocks\zr-cross\comm\crtmarketdata.h
+	"stdafx.h"
+	<string>
+
+1330672210 d:\users\administrator\documents\codeblocks\zr-cross\comm\stdafx.h
+	"targetver.h"
+	<windows.h>
+
+1330672210 >
+
+1333177001 d:\users\administrator\documents\codeblocks\zr-cross\comm\targetver.h
+
+1333184784 d:\users\administrator\documents\codeblocks\zr-cross\myodbc\myodbc.h
+	"MySQLAPI.h"
+	<iostream>
+	<sql.h>
+	<sqlext.h>
+	<sqltypes.h>
+	<vector>
+	<string>
+
+1333184699 d:\users\administrator\documents\codeblocks\zr-cross\myodbc\mysqlapi.h
+	"winsock.h"
+	<string>
+	"include/mysql.h"
+	<string>
+	<iostream>
+	<vector>
+
+1310562542 d:\users\administrator\documents\codeblocks\zr-cross\myodbc\include\mysql.h
+	<standards.h>
+	<sys/types.h>
+	<winsock2.h>
+	"mysql_version.h"
+	"mysql_com.h"
+	"mysql_time.h"
+	"my_list.h"
+	"typelib.h"
+	"my_alloc.h"
+
+1310562542 h"
+
+1310565002 d:\users\administrator\documents\codeblocks\zr-cross\myodbc\include\mysql_version.h
+	<custom_conf.h>
+
+1310565002 nf.h>
+
+1310562542 d:\users\administrator\documents\codeblocks\zr-cross\myodbc\include\mysql_com.h
+
+1310562542 d:\users\administrator\documents\codeblocks\zr-cross\myodbc\include\mysql_time.h
+
+1310562542 d:\users\administrator\documents\codeblocks\zr-cross\myodbc\include\my_list.h
+
+1310562542 d:\users\administrator\documents\codeblocks\zr-cross\myodbc\include\typelib.h
+	"my_alloc.h"
+
+1310562542 d:\users\administrator\documents\codeblocks\zr-cross\myodbc\include\my_alloc.h
+
+1332482048 d:\users\administrator\documents\codeblocks\zr-cross\tqm\crtmarketdata.h
+
+1333265173 d:\users\administrator\documents\codeblocks\zr-cross\ssm\ssm.h
+	"CUser.h"
+	"CPair.h"
+	"CContract.h"
+	"CCommodity.h"
+	"SSMCreator.h"
+	"CSpreadCostPair.h"
+
+1333250262 stPair.h"
+
+1333255070 d:\users\administrator\documents\codeblocks\zr-cross\ssm\cuser.h
+	"CPair.h"
+
+1333255070 d:\users\administrator\documents\codeblocks\zr-cross\ssm\cpair.h
+	"CContract.h"
+
+1333255070 .h"
+
+1333257506 d:\users\administrator\documents\codeblocks\zr-cross\ssm\ccontract.h
+	"CCommodity.h"
+
+1333255128 d:\users\administrator\documents\codeblocks\zr-cross\ssm\ccommodity.h
+	"stdafx.h"
+
+1320153490 d:\users\administrator\documents\codeblocks\zr-cross\ssm\ssmcreator.h
+	"SSM.h"
+
+1333256812 d:\users\administrator\documents\codeblocks\zr-cross\ssm\cspreadcostpair.h
+	"CPair.h"
+
+1333268674 source:d:\users\administrator\documents\codeblocks\zr-cross\ssm\ccontract.cpp
+	"stdafx.h"
+	"CPair.h"
+	"CContract.h"
+	"SSM.h"
+	<regex>
+	<string>
+
+1333265582 source:d:\users\administrator\documents\codeblocks\zr-cross\ssm\cpair.cpp
+	"stdafx.h"
+	"CUser.h"
+	"CPair.h"
+	"SSM.h"
+
+1320030908 source:d:\users\administrator\documents\codeblocks\zr-cross\ssm\crtmarketdata.cpp
+	"stdafx.h"
+	"CContract.h"
+	"CRTMarketData.h"
+
+1320129742 d:\users\administrator\documents\codeblocks\zr-cross\ssm\crtmarketdata.h
+
+1333250262 source:d:\users\administrator\documents\codeblocks\zr-cross\ssm\cspreadcostpair.cpp
+	"stdafx.h"
+	"CSpreadCostPair.h"
+	<cmath>
+
+1333265628 source:d:\users\administrator\documents\codeblocks\zr-cross\ssm\cuser.cpp
+	"stdafx.h"
+	"CUser.h"
+	<time.h>
+	"SSM.h"
+	<windows.h>
+	<unistd.h>
+
+1333265140 source:d:\users\administrator\documents\codeblocks\zr-cross\ssm\ssm.cpp
+	"stdafx.h"
+	"SSM.h"
+
+1320154178 source:d:\users\administrator\documents\codeblocks\zr-cross\ssm\ssmcreator.cpp
+	"StdAfx.h"
+	"SSMCreator.h"
+	"CSpreadCostPair.h"
+	"CRTMarketData.h"
+
+1333249057 source:d:\users\administrator\documents\codeblocks\zr-cross\ssm\dllmain.cpp
+	"stdafx.h"
+	"SSM.h"
+
+1319506238 source:d:\users\administrator\documents\codeblocks\zr-cross\ssm\stdafx.cpp
+	"stdafx.h"
+
+1333268629 source:/home/wukang/Documents/zr-cross/SSM/CCommodity.cpp
+	"stdafx.h"
+	"CContract.h"
+	"CCommodity.h"
+
+1333684311 /home/wukang/Documents/zr-cross/SSM/stdafx.h
+	<string>
+	<vector>
+	<map>
+	<iostream>
+	<algorithm>
+	"../COMM/COMM.h"
+	"../MyODBC/MySQLAPI.h"
+	"../TQM/CRTMarketData.h"
+	"SSM.h"
+	<windows.h>
+	<unistd.h>
+	<stdio.h>
+
+1334241718 /home/wukang/Documents/zr-cross/COMM/COMM.h
+	<process.h>
+	<WINSOCK2.H>
+	<netinet/in.h>
+	<sys/socket.h>
+	<sys/types.h>
+	<arpa/inet.h>
+	<pthread.h>
+	"sock_wrap.h"
+	"lightthread.h"
+	<vector>
+	<map>
+	<iostream>
+	"CRTMarketData.h"
+
+1333589863 /home/wukang/Documents/zr-cross/COMM/sock_wrap.h
+	"platform.h"
+	<winsock2.h>
+	<netinet/in.h>
+	<sys/socket.h>
+	<sys/types.h>
+
+1333589888 /home/wukang/Documents/zr-cross/COMM/platform.h
+
+1333679598 /home/wukang/Documents/zr-cross/COMM/lightthread.h
+	"platform.h"
+	<pthread.h>
+
+1333784015 /home/wukang/Documents/zr-cross/COMM/CRTMarketData.h
+	<string>
+
+1333784020 /home/wukang/Documents/zr-cross/TQM/CRTMarketData.h
+	<string>
+
+1333684606 /home/wukang/Documents/zr-cross/SSM/SSM.h
+	"CUser.h"
+	"CPair.h"
+	"CContract.h"
+	"CCommodity.h"
+	"SSMCreator.h"
+	"CSpreadCostPair.h"
+
+1334242253 /home/wukang/Documents/zr-cross/SSM/CUser.h
+	"CPair.h"
+
+1333684606 /home/wukang/Documents/zr-cross/SSM/CPair.h
+	"CContract.h"
+
+1333724250 /home/wukang/Documents/zr-cross/SSM/CContract.h
+	"CCommodity.h"
+
+1333684606 /home/wukang/Documents/zr-cross/SSM/CCommodity.h
+	"stdafx.h"
+
+1320153490 /home/wukang/Documents/zr-cross/SSM/SSMCreator.h
+	"SSM.h"
+
+1333724389 /home/wukang/Documents/zr-cross/SSM/CSpreadCostPair.h
+	"CPair.h"
+
+1333265582 source:/home/wukang/Documents/zr-cross/SSM/CPair.cpp
+	"stdafx.h"
+	"CUser.h"
+	"CPair.h"
+	"SSM.h"
+
+1333782933 source:/home/wukang/Documents/zr-cross/SSM/CRTMarketData.cpp
+	"stdafx.h"
+	"CContract.h"
+	"CRTMarketData.h"
+	<string.h>
+
+1333785143 /home/wukang/Documents/zr-cross/SSM/CRTMarketData.h
+
+1333725978 source:/home/wukang/Documents/zr-cross/SSM/CSpreadCostPair.cpp
+	"stdafx.h"
+	"CSpreadCostPair.h"
+	<cmath>
+
+1333265628 source:/home/wukang/Documents/zr-cross/SSM/CUser.cpp
+	"stdafx.h"
+	"CUser.h"
+	<time.h>
+	"SSM.h"
+	<windows.h>
+	<unistd.h>
+
+1333265140 source:/home/wukang/Documents/zr-cross/SSM/SSM.cpp
+	"stdafx.h"
+	"SSM.h"
+
+1333684648 source:/home/wukang/Documents/zr-cross/SSM/SSMCreator.cpp
+	"stdafx.h"
+	"SSMCreator.h"
+	"CSpreadCostPair.h"
+	"CRTMarketData.h"
+
+1333249057 source:/home/wukang/Documents/zr-cross/SSM/dllmain.cpp
+	"stdafx.h"
+	"SSM.h"
+
+1319506238 source:/home/wukang/Documents/zr-cross/SSM/stdafx.cpp
+	"stdafx.h"
+
+1333637755 /home/wukang/Documents/zr-cross/MyODBC/MySQLAPI.h
+	<sys/socket.h>
+	<string>
+	"mysql/mysql.h"
+	<string>
+	<iostream>
+	<vector>
+
+1333941543 source:/home/wukang/Documents/zr-cross/SSM/CContract.cpp
+	"stdafx.h"
+	"CPair.h"
+	"CContract.h"
+	"SSM.h"
+	<regex>
+	<string.h>
+

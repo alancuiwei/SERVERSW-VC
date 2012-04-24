@@ -8,6 +8,7 @@
 
 #include "stdafx.h"
 #include "CSpreadCostPair.h"
+#include <cmath>
 
 ////////////////////////////////////////////////////////////////////////
 // Name:       CSpreadCostPair::CSpreadCostPair(std::string firstcontractname, std::string secondcontractname, std::string productid)
@@ -16,7 +17,7 @@
 // - firstcontractname
 // - secondcontractname
 // - productid
-// Return:     
+// Return:
 ////////////////////////////////////////////////////////////////////////
 
 CSpreadCostPair::CSpreadCostPair(std::string firstcontractname, std::string secondcontractname, std::string productid)
@@ -75,8 +76,8 @@ double CSpreadCostPair::computestoragefee(void)
 // Return:     int
 ////////////////////////////////////////////////////////////////////////
 
-int CSpreadCostPair::computestoragedays(void)
-{ 
+double CSpreadCostPair::computestoragedays(void)
+{
    storagedays = (secondcontract->daystolastdeliverdate - firstcontract->daystolastdeliverdate);
    return storagedays;
 }
@@ -179,11 +180,11 @@ double CSpreadCostPair::computetrademarginfee(void)
 	else
 	{
 	    ret = ( firstcontract->marketdata->rtprice * commodity->tradeunit * firstcontractmargin
-			  * firstcontract->lendrate 
+			  * firstcontract->lendrate
 			  + secondcontract->marketdata->rtprice * commodity->tradeunit * secondcontractmargin
 			  * secondcontract->lendrate) * firstcontract->daystolastdeliverdate / 365
 			  + secondcontract->marketdata->rtprice * commodity->tradeunit * secondcontractmargin
-			  * secondcontract->lendrate * storagedays / 365;	
+			  * secondcontract->lendrate * storagedays / 365;
 	}
     return ret;
 }
@@ -211,10 +212,10 @@ double CSpreadCostPair::computevatfee(void)
 double CSpreadCostPair::computearbfee(void)
 {
     return (computevatfee()
-		+ computestoragefee() 
-		+ computetransfee() 
-		+ computedeliverfee() 
-		+ computetrademarginfee() 
+		+ computestoragefee()
+		+ computetransfee()
+		+ computedeliverfee()
+		+ computetrademarginfee()
 		+ computedelivermarginfee());
 }
 
@@ -244,7 +245,7 @@ double CSpreadCostPair::computetotalincome(void)
 
 double CSpreadCostPair::computerateofreturn(void)
 {
-    return (computetotalincome() - computearbfee()) 
+    return (computetotalincome() - computearbfee())
 		    / computeinvestmoneyamount();
 }
 
