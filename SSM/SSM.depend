@@ -175,7 +175,7 @@
 1319506238 source:d:\users\administrator\documents\codeblocks\zr-cross\ssm\stdafx.cpp
 	"stdafx.h"
 
-1333268629 source:/home/wukang/Documents/zr-cross/SSM/CCommodity.cpp
+1334599286 source:/home/wukang/Documents/zr-cross/SSM/CCommodity.cpp
 	"stdafx.h"
 	"CContract.h"
 	"CCommodity.h"
@@ -245,13 +245,13 @@
 1333724250 /home/wukang/Documents/zr-cross/SSM/CContract.h
 	"CCommodity.h"
 
-1333684606 /home/wukang/Documents/zr-cross/SSM/CCommodity.h
+1334599286 /home/wukang/Documents/zr-cross/SSM/CCommodity.h
 	"stdafx.h"
 
 1320153490 /home/wukang/Documents/zr-cross/SSM/SSMCreator.h
 	"SSM.h"
 
-1333724389 /home/wukang/Documents/zr-cross/SSM/CSpreadCostPair.h
+1334760791 /home/wukang/Documents/zr-cross/SSM/CSpreadCostPair.h
 	"CPair.h"
 
 1333265582 source:/home/wukang/Documents/zr-cross/SSM/CPair.cpp
@@ -268,10 +268,11 @@
 
 1333785143 /home/wukang/Documents/zr-cross/SSM/CRTMarketData.h
 
-1333725978 source:/home/wukang/Documents/zr-cross/SSM/CSpreadCostPair.cpp
+1334800462 source:/home/wukang/Documents/zr-cross/SSM/CSpreadCostPair.cpp
 	"stdafx.h"
 	"CSpreadCostPair.h"
 	<cmath>
+	<time.h>
 
 1333265628 source:/home/wukang/Documents/zr-cross/SSM/CUser.cpp
 	"stdafx.h"
@@ -306,7 +307,7 @@
 	<iostream>
 	<vector>
 
-1333941543 source:/home/wukang/Documents/zr-cross/SSM/CContract.cpp
+1334886330 source:/home/wukang/Documents/zr-cross/SSM/CContract.cpp
 	"stdafx.h"
 	"CPair.h"
 	"CContract.h"

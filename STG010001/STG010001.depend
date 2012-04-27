@@ -27,7 +27,7 @@
 1333724250 /home/wukang/Documents/zr-cross/SSM/CContract.h
 	"CCommodity.h"
 
-1333684606 /home/wukang/Documents/zr-cross/SSM/CCommodity.h
+1334599286 /home/wukang/Documents/zr-cross/SSM/CCommodity.h
 	"stdafx.h"
 
 1333684311 /home/wukang/Documents/zr-cross/SSM/stdafx.h
@@ -89,7 +89,7 @@
 1320153490 /home/wukang/Documents/zr-cross/SSM/SSMCreator.h
 	"SSM.h"
 
-1333724389 /home/wukang/Documents/zr-cross/SSM/CSpreadCostPair.h
+1334760791 /home/wukang/Documents/zr-cross/SSM/CSpreadCostPair.h
 	"CPair.h"
 
 1333688609 /home/wukang/Documents/zr-cross/STG010001/CStrategyRun.h
@@ -109,15 +109,15 @@
 	"CTradeStru.h"
 	"CSpreadCostStrRun.h"
 
-1333689266 /home/wukang/Documents/zr-cross/STG010001/CSpreadCostStrRun.h
+1334596328 /home/wukang/Documents/zr-cross/STG010001/CSpreadCostStrRun.h
 	"CStrategyRun.h"
 
-1333874521 source:/home/wukang/Documents/zr-cross/STG010001/CSpreadCostStrRun.cpp
+1335076023 source:/home/wukang/Documents/zr-cross/STG010001/CSpreadCostStrRun.cpp
 	"stdafx.h"
 	"CSpreadCostStrRun.h"
 	<fstream>
 	<sstream>
-	<string>
+	<string.h>
 	<vector>
 	<iostream>
 	"../SSM/SSM.h"

@@ -13,7 +13,7 @@ public:
     virtual void Run(void);
 	void AddPair(CSpreadCostPair * pair);
     void Start();
-	void SaveXML();
+	void SavePairsXML( char *);
 	char xmlpath[200];
     HANDLE GetThread();
     HANDLE hThread;

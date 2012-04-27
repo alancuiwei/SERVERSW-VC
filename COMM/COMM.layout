@@ -2,27 +2,27 @@
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Release" />
 	<File name="COMM.cpp" open="1" top="0" tabpos="1">
-		<Cursor position="6750" topLine="211" />
+		<Cursor position="6025" topLine="216" />
 	</File>
-	<File name="COMM.h" open="1" top="0" tabpos="9">
+	<File name="COMM.h" open="0" top="0" tabpos="9">
 		<Cursor position="2157" topLine="59" />
 	</File>
-	<File name="CRTMarketData.h" open="1" top="0" tabpos="10">
-		<Cursor position="274" topLine="0" />
+	<File name="CRTMarketData.h" open="0" top="0" tabpos="10">
+		<Cursor position="133" topLine="0" />
 	</File>
-	<File name="lightthread.cpp" open="1" top="0" tabpos="12">
-		<Cursor position="252" topLine="8" />
+	<File name="lightthread.cpp" open="0" top="0" tabpos="12">
+		<Cursor position="1649" topLine="53" />
 	</File>
-	<File name="lightthread.h" open="1" top="0" tabpos="11">
+	<File name="lightthread.h" open="0" top="0" tabpos="11">
 		<Cursor position="316" topLine="6" />
 	</File>
 	<File name="platform.h" open="0" top="0" tabpos="0">
 		<Cursor position="104" topLine="0" />
 	</File>
-	<File name="sock_wrap.cpp" open="1" top="0" tabpos="13">
-		<Cursor position="5728" topLine="453" />
+	<File name="sock_wrap.cpp" open="0" top="0" tabpos="13">
+		<Cursor position="5728" topLine="444" />
 	</File>
-	<File name="sock_wrap.h" open="1" top="0" tabpos="7">
+	<File name="sock_wrap.h" open="0" top="0" tabpos="7">
 		<Cursor position="394" topLine="12" />
 	</File>
 </CodeBlocks_layout_file>

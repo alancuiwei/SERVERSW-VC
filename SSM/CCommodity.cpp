@@ -37,7 +37,7 @@ void CCommodity::initialization(void)
     //pmyodbc->Open();
 	std::string sqlstr = "select exchangeid,tradeunit,todayexitdiscount,cancelmonth,";
 	sqlstr = sqlstr + "delivermonth,issinglemargin,tick,tradechargetype,";
-    sqlstr = sqlstr + "tradecharge,vatrate,storagedailyfee,u.lendrate,deliverchargebyhand, b.lendrate ";
+    sqlstr = sqlstr + "tradecharge,vatrate,storagedailyfee,u.lendrate,deliverchargebyhand, b.lendrate, u.trademargingap, exchtrademargin ";
 	sqlstr = sqlstr + "from commodity_t c, usercommodity_t u, bank_t b where c.commodityid='" + commodityname + "' ";
 	sqlstr = sqlstr + "and u.userid='" + ssm_puser->username + "' and u.commodityid='" + commodityname + "' ";
 	//std::string* commodityinfo = pmyodbc->ExecuteSingleQuery(sqlstr.c_str());
@@ -57,6 +57,8 @@ void CCommodity::initialization(void)
 		storagedailyfee = atof(commodityinfo[10].c_str());
 		lendrate = (atof(commodityinfo[11].c_str()) < 0)? atof(commodityinfo[13].c_str()):atof(commodityinfo[11].c_str());
 		deliverchargebyhand = atof(commodityinfo[12].c_str());
+		trademargingap = atof(commodityinfo[14].c_str());
+		exchtrademargin = atof(commodityinfo[15].c_str());
 		delete [] commodityinfo;
 	}
 	//delete pmyodbc;

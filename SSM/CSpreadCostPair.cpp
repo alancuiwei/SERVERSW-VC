@@ -9,6 +9,7 @@
 #include "stdafx.h"
 #include "CSpreadCostPair.h"
 #include <cmath>
+#include <time.h>
 
 ////////////////////////////////////////////////////////////////////////
 // Name:       CSpreadCostPair::CSpreadCostPair(std::string firstcontractname, std::string secondcontractname, std::string productid)
@@ -38,10 +39,10 @@ void CSpreadCostPair::initialization(void)
     // TODO : implement
 	CPair::initialization();
 	commodity = firstcontract->commodity;
-   /* 计算存储费用 */
-   computestoragefee();
    /* 计算存储天数 */
    computestoragedays();
+   /* 计算存储费用 */
+   computestoragefee();
    /* 计算增值税率 */
    computevatrate();
    /* 计算前期合约保证金比例 */
@@ -53,6 +54,8 @@ void CSpreadCostPair::initialization(void)
    /* 计算交割手续费用 */
    computedeliverfee();
    cout<<"CSpreadCostPair:"<<firstcontractname<<"和"<<secondcontractname<<"套利对初始化"<<endl;
+   getmaxreturnrate();
+   arbfee=computearbfee();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -211,12 +214,13 @@ double CSpreadCostPair::computevatfee(void)
 
 double CSpreadCostPair::computearbfee(void)
 {
-    return (computevatfee()
+    arbfee = (computevatfee()
 		+ computestoragefee()
 		+ computetransfee()
 		+ computedeliverfee()
 		+ computetrademarginfee()
 		+ computedelivermarginfee());
+    return arbfee;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -279,3 +283,52 @@ double CSpreadCostPair::computeinvestmoneyamount(void)
     return (secondcontract->marketdata->rtprice * secondcontractmargin + firstcontract->marketdata->rtprice)
 		    * commodity->tradeunit;
 }
+
+void CSpreadCostPair::setmaxreturnrate(double returnrate, std::string timestr)
+{
+    std::string pairname = firstcontract->contractname + "-" + secondcontract->contractname;
+    char currenttimestr[30];
+    struct tm *nowtm;
+	time_t nowtime;
+    struct tm exittm;
+	time_t exittime;
+	double secnum;
+
+	nowtime=time(NULL);
+	nowtm=localtime(&nowtime);
+	sprintf(currenttimestr,"%4d-%02d-%02d %s", 1900+nowtm->tm_year, 1+nowtm->tm_mon, nowtm->tm_mday, timestr.c_str());
+
+    char str[1024*4];
+    sprintf(str,"update arbcostmaxreturnrate_t set \
+                firstprice=%10.2f, secondprice=%10.2f,cost=%10.1f,returnrate=%2.3f, currenttime='%s' \
+               where pairname='%s'",
+        firstcontract->marketdata->rtprice,
+        secondcontract->marketdata->rtprice,
+        arbfee,
+        returnrate,
+        currenttimestr,
+        pairname.c_str()
+        );
+    SSMDatabase.ExecuteNonQuery(str);
+}
+
+void CSpreadCostPair::getmaxreturnrate( )
+{
+    std::string pairname = firstcontract->contractname + "-" + secondcontract->contractname;
+	std::string sqlstr = "select returnrate from arbcostmaxreturnrate_t where pairname='" + pairname + "'";
+	int num=SSMDatabase.ExecuteQueryNum(sqlstr.c_str());
+	if(num!=0)
+	{
+	    std::string* pairinfo = SSMDatabase.ExecuteSingleQuery(sqlstr.c_str());
+		maxreturnrate = atof(pairinfo[0].c_str());
+		delete [] pairinfo;
+	}
+	else
+	{
+	    sqlstr = "insert into arbcostmaxreturnrate_t values('"+pairname+"',0,0,0,-10,null)";
+	    maxreturnrate = -10;
+	    SSMDatabase.ExecuteNonQuery(sqlstr.c_str());
+    }
+}
+
+

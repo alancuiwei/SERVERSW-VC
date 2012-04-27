@@ -54,6 +54,8 @@ public:
    double tradechargetype;
    double tradecharge;
    double deliverchargebyhand;
+   double trademargingap;
+   double exchtrademargin;
 
 
 

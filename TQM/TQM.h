@@ -20,7 +20,7 @@
 #include "TraderSpi.h"
 #include "CRTMarketData.h"
 
-#define USETESTDATA  0       //是否使用测试数据库，1:是/ 0:否
+#define USETESTDATA 0      //是否使用测试数据库，1:是/ 0:否
 /*internal*/
 extern char *pInstrumentID[1024];	 // 行情订阅列表
 extern int iInstrumentID;	 // 行情订阅数量

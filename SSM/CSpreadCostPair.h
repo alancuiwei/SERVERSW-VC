@@ -54,6 +54,8 @@ public:
    /* 计算当前平仓收益率 */
    double computecurrentrateofreturn(void);
    double computeinvestmoneyamount(void);
+   void setmaxreturnrate(double returnrate, std::string timestr);
+   void getmaxreturnrate(void);
 
 
    /* 存储天数 */
@@ -68,6 +70,9 @@ public:
    double transfee;
    /* 交割手续费用 */
    double deliverfee;
+
+   double maxreturnrate;
+   double arbfee;
 
    CCommodity* commodity;
 

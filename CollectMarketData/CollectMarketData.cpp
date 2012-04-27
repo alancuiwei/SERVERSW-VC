@@ -18,9 +18,9 @@ int main( )
 	exittm=*nowtm;
 
 	// 只有在7点到17间才可以正常运行
-	if((exittm.tm_hour>=8)&&(exittm.tm_hour<=25))
+	if((exittm.tm_hour>=8)&&(exittm.tm_hour<=15))
 	{
-		if(((exittm.tm_hour>8)&&(exittm.tm_hour<25))
+		if(((exittm.tm_hour>8)&&(exittm.tm_hour<15))
 			||((exittm.tm_hour==15)&&(exittm.tm_min<1))
 			||((exittm.tm_hour==8)&&(exittm.tm_min>40)))
 		{
@@ -34,8 +34,9 @@ int main( )
 			// 接受行情
 			StartTraderThreadProcess();
 			StartMdThreadProcess( );
+			std::cout << secnum << std::endl;
 
-			usleep(1000*secnum*1000);
+			sleep(secnum);
 		}
 		else
 		{
@@ -43,7 +44,7 @@ int main( )
 			tqm_issavetodb=true;
 			StartTraderThreadProcess();
 			StartMdThreadProcess( );
-			usleep(1000*900*1000);
+			sleep(600);
 		}
 	}
 

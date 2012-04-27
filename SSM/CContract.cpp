@@ -112,7 +112,7 @@ void CContract::initialization(void)
 		daystolastdeliverdate = atoi(contractinfo[1].c_str());
 		uplimitprice = atof(contractinfo[2].c_str());
 		downlimitprice = atof(contractinfo[3].c_str());
-		actualmarginrate = atof(contractinfo[4].c_str());
+		actualmarginrate = atof(contractinfo[4].c_str()) ;//- commodity->trademargingap
 		lendrate = (atof(contractinfo[5].c_str()) < 0)?commodity->lendrate:atof(contractinfo[5].c_str());
 		oilimit = 0;
 		delete [] contractinfo;

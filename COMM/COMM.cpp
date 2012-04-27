@@ -220,7 +220,7 @@ void CCOMMClient::RunReceive( )
 	   if((ret==SOCKET_ERROR)||(ret==INVALID_SOCKET))
 	   {
 	        //exit(1);
-	        //sleep(1);
+	        sleep(1);
 			if (errornum>3)
 			{
 			    exit(1);
