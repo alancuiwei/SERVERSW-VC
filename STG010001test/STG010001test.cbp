@@ -38,6 +38,23 @@
 					<Add library="../ZRApp/lib/MyODBC.so" />
 				</Linker>
 			</Target>
+			<Target title="amazon">
+				<Option output="/ZRSoftware/ZRApp/STG010001test" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="/ZRSoftware/ZRApp/lib/STG010001.so" />
+					<Add library="/ZRSoftware/ZRApp/lib/SSM.so" />
+					<Add library="/ZRSoftware/ZRApp/lib/COMM.so" />
+					<Add library="/usr/lib/libmysqlclient.so" />
+					<Add library="/ZRSoftware/ZRApp/lib/MyODBC.so" />
+				</Linker>
+			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />

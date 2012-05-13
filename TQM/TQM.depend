@@ -186,10 +186,11 @@
 1333784020 /home/wukang/Documents/zr-cross/TQM/CRTMarketData.h
 	<string>
 
-1334408670 source:/home/wukang/Documents/zr-cross/TQM/MdSpi.cpp
+1335422963 source:/home/wukang/Documents/zr-cross/TQM/MdSpi.cpp
 	"TQM.h"
 	"MdSpi.h"
 	<string.h>
+	<stdio.h>
 	"../MyODBC/MySQLAPI.h"
 	"../COMM/COMM.h"
 
@@ -229,11 +230,11 @@
 1333079268 /home/wukang/Documents/zr-cross/TQM/ThostFtdcTraderApi.h
 	"ThostFtdcUserApiStruct.h"
 
-1334220501 source:/home/wukang/Documents/zr-cross/TQM/TQM.cpp
+1335408547 source:/home/wukang/Documents/zr-cross/TQM/TQM.cpp
 	"TQM.h"
 	"../COMM/COMM.h"
 
-1333804124 source:/home/wukang/Documents/zr-cross/TQM/TraderSpi.cpp
+1335422963 source:/home/wukang/Documents/zr-cross/TQM/TraderSpi.cpp
 	"TQM.h"
 	"TraderSpi.h"
 	"../COMM/COMM.h"

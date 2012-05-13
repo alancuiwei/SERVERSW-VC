@@ -55,7 +55,6 @@ TThostFtdcInvestorIDType INVESTOR_ID = "11800387";		// 投资者代码
 TThostFtdcPasswordType  PASSWORD = "118403";			// 用户密码
 #endif
 
-//DWORD WINAPI   TraderThreadProcess( LPVOID  m)
 void*  TraderThreadProcess( void * )
 {
 	//numofstr=0;
@@ -65,6 +64,7 @@ void*  TraderThreadProcess( void * )
 	pTraderUserApi->RegisterSpi((CThostFtdcTraderSpi*)pTraderUserSpi);		// 注册事件类
 	pTraderUserApi->SubscribePublicTopic(THOST_TERT_QUICK);					// 注册公有流
 	pTraderUserApi->SubscribePrivateTopic(THOST_TERT_QUICK);				// 注册私有流
+	pTraderUserApi->RegisterFront(TRADE_FRONT_ADDR);						// connect
 	pTraderUserApi->RegisterFront(TRADE_FRONT_ADDR);						// connect
 	pTraderUserApi->Init();
 	//LPMSG pMessage = (LPMSG)new char [sizeof(MSG)];
@@ -132,6 +132,8 @@ void* MdThreadProcess( void *)
 	pMdUserSpi = new CMdSpi();
 
 	pMdUserApi->RegisterSpi(pMdUserSpi);						// 注册事件类
+	pMdUserApi->RegisterFront(MARKET_FRONT_ADDR);			    // connect
+	pMdUserApi->RegisterFront(MARKET_FRONT_ADDR);			    // connect
 	pMdUserApi->RegisterFront(MARKET_FRONT_ADDR);			    // connect
 	pMdUserApi->Init();
 	pMdUserApi->Join();

@@ -51,6 +51,31 @@ void CreateValidContractsFile(void)
     xmlfs.close();
 }
 
+void CreateContractInfo(void)
+{
+    ofstream xmlfs;
+    ostringstream xmlss;
+    xmlss<<"<contract>"<<endl;
+    std::string sqlstr = "select vc.contractid, uct.contractmarginrate, ct.dailypricelimit from validcontracts_t as vc, contract_t as ct, usercontract_t as uct ";
+    sqlstr += " where ct.contractid=vc.contractid and uct.contractid=vc.contractid and uct.userid='tester1'";
+	vector<string* > ctvector = Database.ExecuteQueryVector(sqlstr.c_str());
+    vector<string* >::iterator iter;
+    for(iter=ctvector.begin();iter<ctvector.end();iter++)
+    {
+       xmlss<<"<ct>"<<endl;
+       xmlss<<"<contractid>"<<(*iter)[0]<<"</contractid>"<< endl;
+       xmlss<<"<marginrate>"<<(*iter)[1]<<"</marginrate>"<< endl;
+       xmlss<<"<updownlimit>"<<(*iter)[2]<<"</updownlimit>"<< endl;
+       xmlss<<"</ct>"<<endl;
+	   delete [] (*iter);
+    }
+    xmlss<<"</contract>"<< endl;
+    char xmlfilename[128] =  "../tongtianshun/app/assets/images/contract.xml";
+    xmlfs.open(xmlfilename, ios::trunc);
+    xmlfs<<xmlss.str();
+    xmlfs.close();
+}
+
 
 int main()
 {
@@ -58,6 +83,8 @@ int main()
     Database.Open();
     CreateCommodityXML();
     CreateValidContractsFile();
+    CreateContractInfo();
+    Database.Close();
     return 0;
 }
 

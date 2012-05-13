@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
-	<ActiveTarget name="Release" />
-	<File name="COMM.cpp" open="1" top="0" tabpos="1">
-		<Cursor position="6025" topLine="216" />
+	<ActiveTarget name="amazon" />
+	<File name="COMM.cpp" open="0" top="0" tabpos="1">
+		<Cursor position="5593" topLine="192" />
 	</File>
 	<File name="COMM.h" open="0" top="0" tabpos="9">
 		<Cursor position="2157" topLine="59" />
@@ -10,8 +10,8 @@
 	<File name="CRTMarketData.h" open="0" top="0" tabpos="10">
 		<Cursor position="133" topLine="0" />
 	</File>
-	<File name="lightthread.cpp" open="0" top="0" tabpos="12">
-		<Cursor position="1649" topLine="53" />
+	<File name="lightthread.cpp" open="0" top="0" tabpos="2">
+		<Cursor position="681" topLine="14" />
 	</File>
 	<File name="lightthread.h" open="0" top="0" tabpos="11">
 		<Cursor position="316" topLine="6" />

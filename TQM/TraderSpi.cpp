@@ -758,6 +758,9 @@ void CTraderSpi::OnRspQryInstrument(CThostFtdcInstrumentField *pInstrument, CTho
 	{
 		if((strstr(pInstrument->InstrumentID, "SP") == NULL)&&
 			(strstr(pInstrument->InstrumentID, "efp") == NULL))
+		  //&&((strstr(pInstrument->InstrumentID, "CF") != NULL)
+		  //||(strstr(pInstrument->InstrumentID, "a") != NULL)
+		  //||(strstr(pInstrument->InstrumentID, "TA") != NULL)))
 		{
 			 pInstrumentID[iInstrumentID]= new char [10];
 			 memcpy(pInstrumentID[iInstrumentID],pInstrument->InstrumentID,10);
@@ -765,6 +768,7 @@ void CTraderSpi::OnRspQryInstrument(CThostFtdcInstrumentField *pInstrument, CTho
 			//}
 			tqm_prtmarketdatamap.insert( pair<std::string, CRTMarketData*>(pInstrumentID[iInstrumentID], marketdata) );
 			 iInstrumentID++;
+			 //cout << pInstrument->InstrumentID << endl;
 		}
 	}
 }

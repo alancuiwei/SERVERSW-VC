@@ -1,0 +1,117 @@
+# depslib dependency file v1.0
+1336468789 source:/home/wukang/Documents/zr-cross/Trader/CTrader.cpp
+	"CTrader.h"
+	"../COMM/lightthread.h"
+
+1336442212 /home/wukang/Documents/zr-cross/Trader/CTrader.h
+	<string.h>
+	<algorithm>
+	<vector>
+	<stdio.h>
+	<iostream>
+	<fstream>
+	<stdarg.h>
+	<unistd.h>
+	<time.h>
+	"ThostFtdcUserApiDataType.h"
+	"ThostFtdcUserApiStruct.h"
+	"TraderSpi.h"
+
+1335360730 /home/wukang/Documents/zr-cross/Trader/ThostFtdcUserApiDataType.h
+
+1335360729 /home/wukang/Documents/zr-cross/Trader/ThostFtdcUserApiStruct.h
+	"ThostFtdcUserApiDataType.h"
+
+1336371711 /home/wukang/Documents/zr-cross/Trader/TraderSpi.h
+	"ThostFtdcTraderApi.h"
+
+1335360729 /home/wukang/Documents/zr-cross/Trader/ThostFtdcTraderApi.h
+	"ThostFtdcUserApiStruct.h"
+
+1336371711 source:/home/wukang/Documents/zr-cross/Trader/TraderSpi.cpp
+	"CTrader.h"
+	"TraderSpi.h"
+
+1333679598 /home/wukang/Documents/zr-cross/COMM/lightthread.h
+	"platform.h"
+	<pthread.h>
+
+1333589888 /home/wukang/Documents/zr-cross/COMM/platform.h
+
+1335945998 source:/home/wukang/Documents/zr-cross/Trader/trader_wrap.cxx
+	<string.h>
+	<ruby.h>
+	"assert.h"
+	<stdexcept>
+	"CTrader.h"
+
+1264395746 /home/wukang/.rvm/rubies/ruby-1.9.2-p318/include/ruby-1.9.1/ruby.h
+	"ruby/ruby.h"
+
+1329555597 /home/wukang/.rvm/rubies/ruby-1.9.2-p318/include/ruby-1.9.1/ruby/ruby.h
+	"ruby/config.h"
+	<stdlib.h>
+	<string.h>
+	<strings.h>
+	<intrinsics.h>
+	<stdint.h>
+	<inttypes.h>
+	<stdarg.h>
+	<stddef.h>
+	<stdio.h>
+	"defines.h"
+	<alloca.h>
+	<limits.h>
+	<limits.h>
+	"ruby/missing.h"
+	"ruby/intern.h"
+
+1334046368 /home/wukang/.rvm/rubies/ruby-1.9.2-p318/include/ruby-1.9.1/x86_64-linux/ruby/config.h
+
+1262169842 /home/wukang/.rvm/rubies/ruby-1.9.2-p318/include/ruby-1.9.1/ruby/defines.h
+	<stdlib.h>
+	"ruby/win32.h"
+	<net/socket.h>
+	<sys/select.h>
+
+1280915391 /home/wukang/.rvm/rubies/ruby-1.9.2-p318/include/ruby-1.9.1/ruby/missing.h
+	<sys/time.h>
+	<sys/types.h>
+	<sys/types.h>
+	<sys/socket.h>
+
+1306709295 /home/wukang/.rvm/rubies/ruby-1.9.2-p318/include/ruby-1.9.1/ruby/intern.h
+	<stdarg.h>
+	<varargs.h>
+	"ruby/st.h"
+
+1264408574 /home/wukang/.rvm/rubies/ruby-1.9.2-p318/include/ruby-1.9.1/ruby/st.h
+	"ruby/config.h"
+	"ruby/defines.h"
+	<stddef.h>
+	<stdlib.h>
+	<stdint.h>
+	<inttypes.h>
+	<limits.h>
+
+1336636079 source:/home/wukang/Documents/zr-cross/Trader/ctrader_wrap.cxx
+	<string.h>
+	<ruby.h>
+	"assert.h"
+	<stdexcept>
+	"CTrader.h"
+	"ThostFtdcUserApiDataType.h"
+	"ThostFtdcUserApiStruct.h"
+	"ThostFtdcTraderApi.h"
+	"TraderSpi.h"
+	<iostream>
+	<stdexcept>
+	<string>
+	<stdexcept>
+	<stddef.h>
+	<stddef.h>
+	<limits.h>
+	<stdexcept>
+	<algorithm>
+	<vector>
+

@@ -1,6 +1,7 @@
 #include "MySQLAPI.h"
-#include <string.h>
-
+//#include <string.h>
+#include <string>
+using namespace std;
 
 CMySQLAPI::CMySQLAPI(void)
 {
@@ -71,7 +72,7 @@ void CMySQLAPI::ExecuteNonQuery(const char* pSql)
 //连接数据库
 bool CMySQLAPI::Open()
 {
-	if( mysql_real_connect(&mydata,pServer,pUName,pUPassword,pDSN,pPort, 0, CLIENT_ALL_FLAGS/*0,131072/*CLIENT_ALL_FLAGS*/) != NULL)
+	if( mysql_real_connect(&mydata,pServer,pUName,pUPassword,pDSN,pPort, 0, CLIENT_ALL_FLAGS/*0,131072,CLIENT_ALL_FLAGS*/) != NULL)
 		return true;
 	else
 		return false;
@@ -117,7 +118,8 @@ vector<string*> CMySQLAPI::ExecuteQueryVector(const char* pSql)
 		string* rowData=new string[colCount];
 		for(int i=0; i<colCount;i++)
 		{
-			rowData[i]=line[i];
+			//cout << (line[i]!=0?line[i]:0) <<endl;
+			rowData[i]=(line[i]!=0?line[i]:"0") ;
 		}
 		j++;
 		v.push_back(rowData);
@@ -155,7 +157,7 @@ string* CMySQLAPI::ExecuteSingleQuery(const char* pSql)
 
 	for(int i=0; i<colCount;i++)
 	{
-		rowData[i]=line[i];
+		rowData[i]=(line[i]!=0?line[i]:"0") ;
 	}
 
 	return rowData;

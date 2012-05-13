@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_layout_file>
+	<ActiveTarget name="amazon" />
+	<File name="CTrader.cpp" open="1" top="0" tabpos="3">
+		<Cursor position="13907" topLine="549" />
+	</File>
+	<File name="CTrader.h" open="1" top="0" tabpos="2">
+		<Cursor position="1853" topLine="45" />
+	</File>
+	<File name="ThostFtdcTraderApi.h" open="1" top="0" tabpos="1">
+		<Cursor position="16569" topLine="2" />
+	</File>
+	<File name="TraderSpi.cpp" open="0" top="0" tabpos="5">
+		<Cursor position="5090" topLine="165" />
+	</File>
+	<File name="TraderSpi.h" open="1" top="0" tabpos="4">
+		<Cursor position="3796" topLine="53" />
+	</File>
+</CodeBlocks_layout_file>

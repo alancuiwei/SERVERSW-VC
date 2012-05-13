@@ -1,6 +1,7 @@
 #include "TQM.h"
 #include "MdSpi.h"
 #include <string.h>
+#include <stdio.h>
 #include "../MyODBC/MySQLAPI.h"
 #include "../COMM/COMM.h"
 using namespace std;

@@ -21,13 +21,13 @@ int main( )
 	if((exittm.tm_hour>=8)&&(exittm.tm_hour<=15))
 	{
 		if(((exittm.tm_hour>8)&&(exittm.tm_hour<15))
-			||((exittm.tm_hour==15)&&(exittm.tm_min<1))
+			||((exittm.tm_hour==15)&&(exittm.tm_min<17))
 			||((exittm.tm_hour==8)&&(exittm.tm_min>40)))
 		{
 			tqm_issavetodb=false;
 			exittm.tm_hour = 15;
-			exittm.tm_min = 16;
-			exittm.tm_sec = 0;
+			exittm.tm_min = 17;
+			exittm.tm_sec = 10;
 			// 得到结束时间
 			exittime = mktime(&exittm);
 			secnum = difftime( exittime, nowtime );

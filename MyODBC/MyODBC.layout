@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
-	<ActiveTarget name="Release" />
-	<File name="MySQLAPI.cpp" open="1" top="0" tabpos="1">
-		<Cursor position="2889" topLine="136" />
+	<ActiveTarget name="amazon" />
+	<File name="MySQLAPI.cpp" open="0" top="0" tabpos="1">
+		<Cursor position="3517" topLine="146" />
 	</File>
 	<File name="MySQLAPI.h" open="0" top="0" tabpos="3">
 		<Cursor position="338" topLine="0" />

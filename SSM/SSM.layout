@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
-	<ActiveTarget name="Release" />
-	<File name="CCommodity.cpp" open="1" top="0" tabpos="2">
+	<ActiveTarget name="amazon" />
+	<File name="CCommodity.cpp" open="0" top="0" tabpos="2">
 		<Cursor position="2775" topLine="45" />
 	</File>
 	<File name="CCommodity.h" open="0" top="0" tabpos="0">
 		<Cursor position="1576" topLine="37" />
 	</File>
-	<File name="CContract.cpp" open="1" top="0" tabpos="4">
+	<File name="CContract.cpp" open="0" top="0" tabpos="4">
 		<Cursor position="3588" topLine="95" />
 	</File>
 	<File name="CContract.h" open="0" top="0" tabpos="0">
@@ -25,22 +25,22 @@
 	<File name="CRTMarketData.h" open="0" top="0" tabpos="1">
 		<Cursor position="1333" topLine="42" />
 	</File>
-	<File name="CSpreadCostPair.cpp" open="1" top="0" tabpos="3">
-		<Cursor position="5722" topLine="94" />
+	<File name="CSpreadCostPair.cpp" open="1" top="0" tabpos="1">
+		<Cursor position="3070" topLine="42" />
 	</File>
 	<File name="CSpreadCostPair.h" open="0" top="0" tabpos="3">
-		<Cursor position="2750" topLine="64" />
+		<Cursor position="2750" topLine="10" />
 	</File>
-	<File name="CUser.cpp" open="1" top="0" tabpos="11">
+	<File name="CUser.cpp" open="0" top="0" tabpos="11">
 		<Cursor position="4274" topLine="100" />
 	</File>
 	<File name="CUser.h" open="0" top="0" tabpos="3">
 		<Cursor position="595" topLine="0" />
 	</File>
-	<File name="SSM.cpp" open="1" top="0" tabpos="10">
+	<File name="SSM.cpp" open="0" top="0" tabpos="10">
 		<Cursor position="1313" topLine="44" />
 	</File>
-	<File name="SSM.h" open="1" top="0" tabpos="12">
+	<File name="SSM.h" open="0" top="0" tabpos="12">
 		<Cursor position="977" topLine="5" />
 	</File>
 	<File name="SSMCreator.cpp" open="0" top="0" tabpos="11">
@@ -49,7 +49,7 @@
 	<File name="SSMCreator.h" open="0" top="0" tabpos="0">
 		<Cursor position="225" topLine="0" />
 	</File>
-	<File name="stdafx.h" open="1" top="0" tabpos="1">
+	<File name="stdafx.h" open="0" top="0" tabpos="1">
 		<Cursor position="180" topLine="0" />
 	</File>
 </CodeBlocks_layout_file>
