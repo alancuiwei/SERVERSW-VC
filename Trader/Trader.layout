@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
-	<ActiveTarget name="amazon" />
+	<ActiveTarget name="Debug" />
 	<File name="CTrader.cpp" open="1" top="0" tabpos="3">
-		<Cursor position="13907" topLine="549" />
+		<Cursor position="24347" topLine="876" />
 	</File>
 	<File name="CTrader.h" open="1" top="0" tabpos="2">
-		<Cursor position="1853" topLine="45" />
+		<Cursor position="2639" topLine="69" />
 	</File>
 	<File name="ThostFtdcTraderApi.h" open="1" top="0" tabpos="1">
 		<Cursor position="16569" topLine="2" />

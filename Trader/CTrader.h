@@ -40,6 +40,7 @@ enum ETradePhase
 	E_TD_OnRspQryInstrument,
 	E_TD_OnRspOrderInsert,
 	E_TD_OnRspQryInstrumentMarginRate,
+	E_TD_OnRspQryOrder,
 	E_TD_OnRspQryInstrument_Done
 };
 
@@ -64,9 +65,9 @@ public:
 
     int                                        rsptimeout;
     int                                        rspcheckclip;
-    bool                                 isrsperror;
-    bool                                 issettlmentconfirmed;
-    bool                                 isstarted;
+    bool                                       isrsperror;
+    bool                                       issettlmentconfirmed;
+    bool                                       isstarted;
     static void* Agent(void *p);
     int  StartTrader(void);
     void RunTrader(void);
@@ -76,7 +77,11 @@ public:
     CTrader(STraderInfo info);
 	~CTrader(void);
 
-	int ExtOrderinsert(char* orderstr, int price);
+	//int ExtOrderinsert(char* orderstr, int price);
+	int ExtOrderinsert(CThostFtdcInputOrderField req);
+	int ExtQryOrder(CThostFtdcQryOrderField quyreq);
+	int ExtGetQryOrderNum( void );
+	CThostFtdcOrderField* ExtGetQryOrder( int id );
 
 	///µ±¿Í»§¶ËÓë½»Ò×ºóÌ¨½¨Á¢ÆðÍ¨ÐÅÁ¬½ÓÊ±£¨»¹Î´µÇÂ¼Ç°£©£¬¸Ã·½·¨±»µ÷ÓÃ¡£
 	virtual void OnFrontConnected();

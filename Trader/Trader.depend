@@ -1,9 +1,9 @@
 # depslib dependency file v1.0
-1336468789 source:/home/wukang/Documents/zr-cross/Trader/CTrader.cpp
+1337907910 source:/home/wukang/Documents/zr-cross/Trader/CTrader.cpp
 	"CTrader.h"
 	"../COMM/lightthread.h"
 
-1336442212 /home/wukang/Documents/zr-cross/Trader/CTrader.h
+1337907946 /home/wukang/Documents/zr-cross/Trader/CTrader.h
 	<string.h>
 	<algorithm>
 	<vector>
@@ -94,16 +94,11 @@
 	<inttypes.h>
 	<limits.h>
 
-1336636079 source:/home/wukang/Documents/zr-cross/Trader/ctrader_wrap.cxx
+1337216477 source:/home/wukang/Documents/zr-cross/Trader/ctrader_wrap.cxx
 	<string.h>
 	<ruby.h>
 	"assert.h"
 	<stdexcept>
-	"CTrader.h"
-	"ThostFtdcUserApiDataType.h"
-	"ThostFtdcUserApiStruct.h"
-	"ThostFtdcTraderApi.h"
-	"TraderSpi.h"
 	<iostream>
 	<stdexcept>
 	<string>
@@ -114,4 +109,9 @@
 	<stdexcept>
 	<algorithm>
 	<vector>
+	"CTrader.h"
+	"ThostFtdcUserApiDataType.h"
+	"ThostFtdcUserApiStruct.h"
+	"ThostFtdcTraderApi.h"
+	"TraderSpi.h"
 

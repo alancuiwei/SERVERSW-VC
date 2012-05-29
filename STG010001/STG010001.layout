@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
-	<ActiveTarget name="amazon" />
-	<File name="CSpreadCostStrRun.cpp" open="1" top="0" tabpos="1">
-		<Cursor position="6806" topLine="132" />
+	<ActiveTarget name="Release" />
+	<File name="CSpreadCostStrRun.cpp" open="1" top="1" tabpos="1">
+		<Cursor position="3354" topLine="53" />
 	</File>
 	<File name="CSpreadCostStrRun.h" open="0" top="0" tabpos="5">
 		<Cursor position="518" topLine="3" />

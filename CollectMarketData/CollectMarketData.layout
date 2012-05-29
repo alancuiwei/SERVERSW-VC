@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="amazon" />
-	<File name="CollectMarketData.cpp" open="1" top="0" tabpos="12">
-		<Cursor position="454" topLine="15" />
+	<File name="CollectMarketData.cpp" open="1" top="0" tabpos="1">
+		<Cursor position="642" topLine="30" />
 	</File>
 </CodeBlocks_layout_file>

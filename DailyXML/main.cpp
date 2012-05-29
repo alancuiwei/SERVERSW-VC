@@ -82,7 +82,7 @@ int main()
     Database.Init();
     Database.Open();
     CreateCommodityXML();
-    CreateValidContractsFile();
+    //CreateValidContractsFile();
     CreateContractInfo();
     Database.Close();
     return 0;

@@ -52,7 +52,7 @@ void CSpreadCostStrRun::Run(void)
           xmlss<<"<time>"<<timestr<<"</time>"<<endl;
           xmlss<<"<firstprice>"<<runpairs[i]->firstcontract->marketdata->rtprice<<"</firstprice>"<<endl;
           xmlss<<"<secondprice>"<<runpairs[i]->secondcontract->marketdata->rtprice<<"</secondprice>"<<endl;
-          xmlss<<"<diffprice>"<<runpairs[i]->secondcontract->marketdata->rtprice-runpairs[i]->firstcontract->marketdata->rtprice<<"</diffprice>"<<endl;
+          /*xmlss<<"<diffprice>"<<runpairs[i]->secondcontract->marketdata->rtprice-runpairs[i]->firstcontract->marketdata->rtprice<<"</diffprice>"<<endl;
           xmlss<<"<startprice>"<<runtradeparameters[i]->startprice<<"</startprice>"<<endl;
           xmlss<<"<computestoragefee>"<<runpairs[i]->computestoragefee()<<"</computestoragefee>"<<endl;
           xmlss<<"<computestoragedays>"<<runpairs[i]->computestoragedays()<<"</computestoragedays>"<<endl;
@@ -72,7 +72,7 @@ void CSpreadCostStrRun::Run(void)
           //xmlss<<"<computerateofreturn>"<<runpairs[i]->computerateofreturn()<<"</computerateofreturn>"<<endl;
           xmlss<<"<computerateofreturn>"<<runtradeparameters[i]->startprice<<"</computerateofreturn>"<<endl;
           xmlss<<"<lendrate>"<<runpairs[i]->commodity->lendrate<<"</lendrate>"<<endl;
-          xmlss<<"<computeinvestmoneyamount>"<<runpairs[i]->computeinvestmoneyamount()<<"</computeinvestmoneyamount>"<<endl;
+          xmlss<<"<computeinvestmoneyamount>"<<runpairs[i]->computeinvestmoneyamount()<<"</computeinvestmoneyamount>"<<endl;*/
           xmlss<<"</pair>"<<endl;
           if(runpairs[i]->maxreturnrate<runtradeparameters[i]->startprice)
           {
@@ -146,7 +146,7 @@ void CSpreadCostStrRun::SavePairsXML( char *)
 	  xmlss<<"<vatrate>"<<runpairs[i]->vatrate<<"</vatrate>"<<endl;
 	  xmlss<<"<D1>"<<runpairs[i]->firstcontract->daystolastdeliverdate<<"</D1>"<<endl;
 	  xmlss<<"<D2>"<<runpairs[i]->secondcontract->daystolastdeliverdate<<"</D2>"<<endl;
-
+      xmlss<<"<productid>"<<runpairs[i]->productid<<"</productid>"<<endl;
 	  xmlss<<"</pair>"<<endl;
   }
   xmlss<<"</pairsattr>"<< endl;

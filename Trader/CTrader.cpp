@@ -5,8 +5,13 @@ CTrader::CTrader(void)
 {
     strcpy(traderinfo.frontaddr, "tcp://gwf-front1.financial-trading-platform.com:41205");
     strcpy(traderinfo.brokerid, "8080");
+    strcpy(traderinfo.investorid, "11801100");
+    strcpy(traderinfo.password, "000777");
+
+    /*strcpy(traderinfo.frontaddr, "tcp://gwf-front1.financial-trading-platform.com:41205");
+    strcpy(traderinfo.brokerid, "8080");
     strcpy(traderinfo.investorid, "11800387");
-    strcpy(traderinfo.password, "118403");
+    strcpy(traderinfo.password, "118403");*/
 
     /*strcpy(traderinfo.frontaddr, "tcp://asp-sim2-dx-front1.financial-trading-platform.com:26205");
     strcpy(traderinfo.brokerid, "2030");
@@ -93,6 +98,7 @@ void CTrader::RunTrader(void)
 
 void CTrader::StopTrader(void)
 {
+    isstarted = false;
     pTraderUserApi->Release();
 }
 
@@ -177,8 +183,22 @@ int CTrader::ReqQrySettlementInfoConfirm()
 	memset(&req, 0, sizeof(req));
 	strcpy(req.BrokerID, traderinfo.brokerid);
 	strcpy(req.InvestorID, traderinfo.investorid);
-	int iResult = pTraderUserApi->ReqQrySettlementInfoConfirm(&req, ++requestid);
-	printf("ReqQrySettlementInfoConfirm %s \n",((iResult == 0) ? "Successful" : "failed"));
+	int iResult = -1;
+	while (true)
+	{
+        iResult = pTraderUserApi->ReqQrySettlementInfoConfirm(&req, ++requestid);
+		if (!IsFlowControl(iResult))
+		{
+			printf("ReqQrySettlementInfoConfirm %s \n",((iResult == 0) ? "Successful" : "failed"));
+			break;
+		}
+		else
+		{
+			printf("ReqQrySettlementInfoConfirm %d, FlowControl \n",iResult);
+			sleep(1);
+		}
+	} // while
+
 	return WaitRsp(E_TD_OnRspQrySettlementInfoConfirm);
 }
 
@@ -203,8 +223,22 @@ int CTrader::ReqQrySettlementInfo()
 	memset(&req, 0, sizeof(req));
 	strcpy(req.BrokerID, traderinfo.brokerid);
 	strcpy(req.InvestorID, traderinfo.investorid);
-	int iResult = pTraderUserApi->ReqQrySettlementInfo(&req, ++requestid);
-	printf("ReqQrySettlementInfo %s \n",((iResult == 0) ? "Successful" : "failed"));
+	int iResult = -1;
+	while (true)
+	{
+        iResult = pTraderUserApi->ReqQrySettlementInfo(&req, ++requestid);
+		if (!IsFlowControl(iResult))
+		{
+			printf("ReqQrySettlementInfo %s \n",((iResult == 0) ? "Successful" : "failed"));
+			break;
+		}
+		else
+		{
+			printf("ReqQrySettlementInfo %d, FlowControl \n",iResult);
+			sleep(1);
+		}
+	} // while
+
 	return WaitRsp(E_TD_OnRspQrySettlementInfo);
 }
 
@@ -322,58 +356,6 @@ void CTraderSpi::OnRspQryInvestorPosition(CThostFtdcInvestorPositionField *pInve
 */
 int CTrader::ReqOrderInsert(CThostFtdcInputOrderField req)
 {
-	///¾­¼Í¹«Ë¾´úÂë
-	strcpy(req.BrokerID, traderinfo.brokerid);
-	strcpy(req.InvestorID, traderinfo.investorid);
-	strcpy(req.UserID, traderinfo.investorid);
-
-	///±¨µ¥ÒýÓÃ
-	strcpy(req.OrderRef, sessioninfo.orderref);
-    int iNextOrderRef = atoi(sessioninfo.orderref);
-    iNextOrderRef++;
-    sprintf(sessioninfo.orderref, "%d", iNextOrderRef);
-
-    ///none
-	///ºÏÔ¼´úÂë
-	//strcpy(req.InstrumentID, "cu1209");
-	///±¨µ¥¼Û¸ñÌõ¼þ: ÏÞ¼Û
-	req.OrderPriceType = THOST_FTDC_OPT_LimitPrice;
-	///ÂòÂô·½Ïò:
-	req.Direction = THOST_FTDC_D_Buy;
-	///×éºÏ¿ªÆ½±êÖ¾: ¿ª²Ö
-	memset(req.CombOffsetFlag, 0, sizeof(req.CombOffsetFlag));
-	req.CombOffsetFlag[0] = THOST_FTDC_RA_Trade;
-	///×éºÏÍ¶»úÌ×±£±êÖ¾
-	memset(req.CombHedgeFlag, 0, sizeof(req.CombHedgeFlag));
-	req.CombHedgeFlag[0] = THOST_FTDC_HF_Speculation;
-	///¼Û¸ñ
-	//req.LimitPrice = 50000;
-	///ÊýÁ¿: 1
-	req.VolumeTotalOriginal = 1;
-	///ÓÐÐ§ÆÚÀàÐÍ: µ±ÈÕÓÐÐ§
-	req.TimeCondition = THOST_FTDC_TC_GFD;
-	///GTDÈÕÆÚ
-	strcpy(req.GTDDate, currentdate);
-	///³É½»Á¿ÀàÐÍ: ÈÎºÎÊýÁ¿
-	req.VolumeCondition = THOST_FTDC_VC_AV;
-	///×îÐ¡³É½»Á¿: 1
-	req.MinVolume = 1;
-	///´¥·¢Ìõ¼þ: Á¢¼´
-	req.ContingentCondition = THOST_FTDC_CC_Immediately;
-	///Ö¹Ëð¼Û
-	req.StopPrice = 0;
-	///Ç¿Æ½Ô­Òò: ·ÇÇ¿Æ½
-	req.ForceCloseReason = THOST_FTDC_FCC_NotForceClose;
-	///×Ô¶¯¹ÒÆð±êÖ¾: ·ñ
-	req.IsAutoSuspend = 0;
-	///ÒµÎñµ¥Ôª
-	//	TThostFtdcBusinessUnitType	BusinessUnit;
-	///ÇëÇó±àºÅ
-	req.RequestID = requestid;
-	///ÓÃ»§Ç¿ÆÀ±êÖ¾: ·ñ
-	req.UserForceClose = 0;
-
-
     isrsperror = false;
 	int iResult = pTraderUserApi->ReqOrderInsert(&req, ++requestid);
 	printf("ReqOrderInsert %s \n",((iResult == 0) ? "Successful" : "failed"));
@@ -507,16 +489,24 @@ int CTrader::ReqQryOrder(CThostFtdcQryOrderField req)
 	strcpy(req.BrokerID, traderinfo.brokerid);
 	strcpy(req.InvestorID, traderinfo.investorid);
     quyorder.clear();
-	int iResult = pTraderUserApi->ReqQryOrder(&req, ++requestid);
-	if(iResult == 0)
+    isrsperror = false;
+	int iResult = -1;
+	while (true)
 	{
-		cout<<"Send ReqQryOrder Successful"<<endl;
-	}
-	else
-	{
-		cout<<"Send ReqQryOrder failed"<<endl;
-	}
-	return iResult;
+        iResult = pTraderUserApi->ReqQryOrder(&req, ++requestid);
+		if (!IsFlowControl(iResult))
+		{
+			printf("ReqQryOrder %s \n",((iResult == 0) ? "Successful" : "failed"));
+			break;
+		}
+		else
+		{
+			printf("ReqQryOrder %d, FlowControl \n",iResult);
+			sleep(1);
+		}
+	} // while
+
+	return WaitRsp(E_TD_OnRspQryOrder);
 
 }
 ///ÇëÇó²éÑ¯³É½»
@@ -691,17 +681,17 @@ void CTrader::OnRspQryOrder(CThostFtdcOrderField *pOrder, CThostFtdcRspInfoField
     {
         cout<<pOrder->InstrumentID
             <<','<<pOrder->LimitPrice
-            <<','<<pOrder->VolumeTotalOriginal
+            <<','<<pOrder->OrderStatus << pOrder->OrderRef
             <<endl;
         quyorder.push_back(*pOrder);
     }
-	if (bIsLast && !IsErrorRspInfo(pRspInfo))
+	if (bIsLast)
 	{
-		//char filename[64] = "";
-		//sprintf(filename, "TdDebug.csv" );
-		//TdDebugLog.open(filename, ios::app);
+	    if(isrsperror)
+	    {
 
-		//TdDebugLog.close();
+	    }
+	    tradephase = E_TD_OnRspQryOrder;
 	}
 }
 
@@ -847,16 +837,108 @@ void CTrader::OnRspQryInstrumentMarginRate(CThostFtdcInstrumentMarginRateField *
 	}
 }
 
-int CTrader::ExtOrderinsert(char* orderstr, int price)
+int CTrader::ExtOrderinsert(CThostFtdcInputOrderField req)
 {
     if(!isstarted)
     {
         StartTrader();
     }
-    CThostFtdcInputOrderField req;
-    strcpy(req.InstrumentID,orderstr);
-    req.LimitPrice = price;
+	///¾­¼Í¹«Ë¾´úÂë
+	strcpy(req.BrokerID, traderinfo.brokerid);
+	strcpy(req.InvestorID, traderinfo.investorid);
+	strcpy(req.UserID, traderinfo.investorid);
+
+	///±¨µ¥ÒýÓÃ
+	strcpy(req.OrderRef, sessioninfo.orderref);
+    int iNextOrderRef = atoi(sessioninfo.orderref);
+    iNextOrderRef++;
+    sprintf(sessioninfo.orderref, "%d", iNextOrderRef);
+
+    ///none
+	///ºÏÔ¼´úÂë
+	//strcpy(req.InstrumentID, "cu1209");
+	///±¨µ¥¼Û¸ñÌõ¼þ: ÏÞ¼Û
+	req.OrderPriceType = THOST_FTDC_OPT_LimitPrice;
+	///ÂòÂô·½Ïò:
+	req.Direction = THOST_FTDC_D_Buy;
+	///×éºÏ¿ªÆ½±êÖ¾: ¿ª²Ö
+	memset(req.CombOffsetFlag, 0, sizeof(req.CombOffsetFlag));
+	req.CombOffsetFlag[0] = THOST_FTDC_RA_Trade;
+	///×éºÏÍ¶»úÌ×±£±êÖ¾
+	memset(req.CombHedgeFlag, 0, sizeof(req.CombHedgeFlag));
+	req.CombHedgeFlag[0] = THOST_FTDC_HF_Speculation;
+	///¼Û¸ñ
+	//req.LimitPrice = 50000;
+	///ÊýÁ¿: 1
+	req.VolumeTotalOriginal = 1;
+	///ÓÐÐ§ÆÚÀàÐÍ: µ±ÈÕÓÐÐ§
+	req.TimeCondition = THOST_FTDC_TC_GFD;
+	///GTDÈÕÆÚ
+	strcpy(req.GTDDate, currentdate);
+	///³É½»Á¿ÀàÐÍ: ÈÎºÎÊýÁ¿
+	req.VolumeCondition = THOST_FTDC_VC_AV;
+	///×îÐ¡³É½»Á¿: 1
+	req.MinVolume = 1;
+	///´¥·¢Ìõ¼þ: Á¢¼´
+	req.ContingentCondition = THOST_FTDC_CC_Immediately;
+	///Ö¹Ëð¼Û
+	req.StopPrice = 0;
+	///Ç¿Æ½Ô­Òò: ·ÇÇ¿Æ½
+	req.ForceCloseReason = THOST_FTDC_FCC_NotForceClose;
+	///×Ô¶¯¹ÒÆð±êÖ¾: ·ñ
+	req.IsAutoSuspend = 0;
+	///ÒµÎñµ¥Ôª
+	//	TThostFtdcBusinessUnitType	BusinessUnit;
+	///ÇëÇó±àºÅ
+	req.RequestID = requestid;
+	///ÓÃ»§Ç¿ÆÀ±êÖ¾: ·ñ
+	req.UserForceClose = 0;
+
+    //strcpy(req.InstrumentID,orderstr);
+    //req.LimitPrice = price;
     int rtn = ReqOrderInsert(req);
     StopTrader();
     return rtn;
 }
+
+int CTrader::ExtQryOrder(CThostFtdcQryOrderField quyreq)
+{
+    if(!isstarted)
+    {
+        StartTrader();
+    }
+    CThostFtdcQryOrderField req;
+    memset(&req, 0, sizeof(req));
+    cout << "InstrumentID:" << quyreq.InstrumentID << endl;
+    cout << "strlen(InstrumentID):" << strlen(quyreq.InstrumentID) << endl;
+    if(strlen(quyreq.InstrumentID) != 0)
+    {
+        strcpy(req.InstrumentID,quyreq.InstrumentID);
+    }
+
+    if((strlen(quyreq.InsertTimeStart) != 0)&&(strlen(quyreq.InsertTimeEnd) != 0))
+    {
+        strcpy(req.InsertTimeStart,quyreq.InsertTimeStart);
+        strcpy(req.InsertTimeEnd,quyreq.InsertTimeEnd);
+    }
+
+    int rtn = ReqQryOrder(req);
+    StopTrader();
+    return rtn;
+}
+
+int CTrader::ExtGetQryOrderNum( void )
+{
+    return quyorder.size();
+}
+
+CThostFtdcOrderField* CTrader::ExtGetQryOrder( int id )
+{
+    CThostFtdcOrderField* prtn = NULL;
+    if((id < ExtGetQryOrderNum())&&( id >=0 ))
+    {
+        prtn = &quyorder[id];
+    }
+    return prtn;
+}
+
