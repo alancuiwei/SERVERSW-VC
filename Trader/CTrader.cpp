@@ -3,12 +3,13 @@
 
 CTrader::CTrader(void)
 {
-    strcpy(traderinfo.frontaddr, "tcp://gwf-front1.financial-trading-platform.com:41205");
+    /*strcpy(traderinfo.frontaddr, "tcp://gwf-front1.financial-trading-platform.com:41205");
     strcpy(traderinfo.brokerid, "8080");
     strcpy(traderinfo.investorid, "11801100");
-    strcpy(traderinfo.password, "000777");
+    strcpy(traderinfo.password, "000777");*/
 
-    /*strcpy(traderinfo.frontaddr, "tcp://gwf-front1.financial-trading-platform.com:41205");
+    /*
+    strcpy(traderinfo.frontaddr, "tcp://gwf-front1.financial-trading-platform.com:41205");
     strcpy(traderinfo.brokerid, "8080");
     strcpy(traderinfo.investorid, "11800387");
     strcpy(traderinfo.password, "118403");*/
@@ -799,9 +800,9 @@ int CTrader::ReqQryInstrumentMarginRate()
     isrsperror = false;
 	CThostFtdcQryInstrumentMarginRateField req;
 	memset(&req, 0, sizeof(req));
-	//strcpy(req.BrokerID, traderinfo.brokerid);
-	//strcpy(req.InvestorID, traderinfo.investorid);
-	//strcpy(req.InstrumentID ,"a1205");
+	strcpy(req.BrokerID, traderinfo.brokerid);
+	strcpy(req.InvestorID, traderinfo.investorid);
+	strcpy(req.InstrumentID ,"a1211");
 	//req.HedgeFlag = '1';
 
 	int iResult = -1;
@@ -826,7 +827,7 @@ void CTrader::OnRspQryInstrumentMarginRate(CThostFtdcInstrumentMarginRateField *
     CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast)
 {
     if (pInstrumentMarginRate !=NULL)
-       cout<<pInstrumentMarginRate->InstrumentID<<":"<<pInstrumentMarginRate->ShortMarginRatioByMoney<<endl;
+       cout<<pInstrumentMarginRate->InstrumentID<<","<<pInstrumentMarginRate->ShortMarginRatioByMoney<<endl;
 	if (bIsLast)
 	{
 	    if(isrsperror)

@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1337907910 source:/home/wukang/Documents/zr-cross/Trader/CTrader.cpp
+1341383812 source:/home/wukang/Documents/zr-cross/Trader/CTrader.cpp
 	"CTrader.h"
 	"../COMM/lightthread.h"
 
@@ -94,7 +94,7 @@
 	<inttypes.h>
 	<limits.h>
 
-1337216477 source:/home/wukang/Documents/zr-cross/Trader/ctrader_wrap.cxx
+1341385483 source:/home/wukang/Documents/zr-cross/Trader/ctrader_wrap.cxx
 	<string.h>
 	<ruby.h>
 	"assert.h"
